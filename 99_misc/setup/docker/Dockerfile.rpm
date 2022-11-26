@@ -1,0 +1,10 @@
+FROM rockylinux/rockylinux:8.6
+RUN dnf install -y sudo iputils ansible-core less openssh-clients openssh-server vim python39\
+    && mkdir /root/.ssh && useradd -m -d /home/rocky -s /bin/bash rocky \
+    && mkdir -p /home/debbie/.ssh
+COPY id_rsa /root/.ssh/
+COPY id_rsa /home/debbie/.ssh/
+RUN chmod -R 600 /root/.ssh && chmod -R 600 /home/debbie/.ssh/ && chown rocky:rocky /home/rocky \
+    && echo 'rocky        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
+WORKDIR /home/rocky
+USER rocky

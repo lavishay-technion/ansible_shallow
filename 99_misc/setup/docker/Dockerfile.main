@@ -1,0 +1,10 @@
+FROM debian:11
+RUN apt-get update && apt-get install -y sudo iputils-ping ansible less openssh-client vim \
+    && mkdir /root/.ssh && useradd -m -d /home/debbie -s /bin/bash debbie \
+    && mkdir -p /home/debbie/.ssh
+COPY id_rsa /root/.ssh/
+COPY id_rsa /home/debbie/.ssh/
+RUN chmod -R 600 /root/.ssh && chmod -R 600 /home/debbie/.ssh/ && chown debbie:debbie /home/debbie \
+    && echo 'debbie        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
+WORKDIR /home/debbie
+USER debbie
