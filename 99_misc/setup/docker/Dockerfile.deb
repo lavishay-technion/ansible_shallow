@@ -1,8 +1,8 @@
 FROM ubuntu:20.04
 EXPOSE 22
-RUN apt-get -y update && apt-get -y install openssh-server passwd sudo python3 && rm -rf /var/lib/apt/lists/* && mkdir /root/.ssh
+RUN apt-get -y update && apt-get -y install openssh-server passwd sudo python3 \
+    && rm -rf /var/lib/apt/lists/* && mkdir /root/.ssh && chmod 600 /root/.ssh/ 
 COPY id_rsa.pub  /root/.ssh/authorized_keys
-RUN chmod 700 /root/.ssh/ && chmod 600 /root/.ssh/authorized_keys
 COPY node.sh /entrypoint.sh
 RUN chmod 775 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

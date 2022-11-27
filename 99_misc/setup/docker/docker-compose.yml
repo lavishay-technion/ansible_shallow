@@ -20,7 +20,7 @@ services:
     networks:
       - vaiolabs.io
   node2:
-    hostname: node2
+    hostname: srv2
     build:
       context: .
       dockerfile: Dockerfile.rpm
