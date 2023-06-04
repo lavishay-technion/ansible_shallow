@@ -1,6 +1,11 @@
-.vagrant
-.vscode
+
+# files
 build.md
 presentation.html
 presentation.md
 presentation.pdf
+
+
+# folders
+.vagrant
+.vscode
