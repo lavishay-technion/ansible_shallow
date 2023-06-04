@@ -11,7 +11,7 @@ lint_presentation:
   script:
     - apt-get update && apt-get install -y codespell darkslide weasyprint
     - echo "[+] Running Spell Check"
-    - for folder in 0[0-9]_*;do codespell  $folder/README.md ; done
+    - for folder in 0[0-9]_*;do codespell -I spell.txt $folder/README.md ; done
 
 
 build_presentation:

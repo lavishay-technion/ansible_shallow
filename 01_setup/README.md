@@ -85,7 +85,7 @@ Inventory file structure is crucial for Ansible. The structure can be provided a
 
 ## Why do we need `Dynamic Inventory`, if you already have `Static Inventory` ?
 ## And
-## If `Dynamic Inventory` exists , Whats the point in having `Static Inventory` ?
+## If `Dynamic Inventory` exists , What's the point in having `Static Inventory` ?
 
 Dynamic inventories are implemented mainly in environments where 3rd party application can `feed` Ansible with data regarding to hosts on the network. Most of these are cloud environments, yet there are custom made applications with api that can serve as host inventory provider in closed networks. There are also specific hardware that can provide with same capability.
 
