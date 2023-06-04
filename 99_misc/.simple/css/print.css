@@ -5,6 +5,11 @@
 
 @page {
     size: landscape;
+    margin: 10%;
+
+    @bottom-right-corner {
+      content: counter(page);
+    }
 }
 
 body {
