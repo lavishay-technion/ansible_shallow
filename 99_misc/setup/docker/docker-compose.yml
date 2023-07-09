@@ -1,8 +1,8 @@
 version: "3.0"
 
 services:
-  control:
-    hostname: main
+  ansible-host:
+    hostname: ansible-host
     build:
       context: .
       dockerfile: Dockerfile.main
@@ -33,7 +33,7 @@ services:
     hostname: node2
     build:
       context: .
-      dockerfile: Dockerfile.rpm
+      dockerfile: Dockerfile.deb
     environment:
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
@@ -43,7 +43,7 @@ services:
     hostname: node4
     build:
       context: .
-      dockerfile: Dockerfile.rpm
+      dockerfile: Dockerfile.deb
     environment:
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]

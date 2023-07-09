@@ -6,9 +6,7 @@
 .footer: Created By Alex M. Schapelle, VAioLabs.io
 
 ---
-# Ansible Ad-Hoc Commands
-
-## Ansible command
+# Ansible command
 
 ```sh
 ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
@@ -20,21 +18,52 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 - `-i`: use specific inventory and not the default.
 - `-e`: pass extra variable of your choice
 
-- Runs Ansible executable according to its `inventory` file.
+- We `ansible` executable according to its commands parameters onto `inventory` file hosts.
 - Ansible runs ad-hoc commands
     - Ad-Hoc commands are basic commands used by Ansible
     - `Commands` essentially are python written code to behave as simple system call.
     - By default it is running with `command` ad-hoc module
----
-# Ansible Ad-Hoc Commands
 
-## Ansible modules
+---
+
+# Ansible environment variables
+
+Like any other python application, there is long list of environment variables the ansible ingests, some of them will be provided as we go on with our course.
+When we run ansible commands, it tries to connect to remote servers by writing digital fingerprint to `known_host` file in your local users `.ssh` folder. To bypass it you can use `ANSIBLE_HOST_KEY_CHECKING` file.
+
+```sh
+ANSIBLE_HOST_KEY_CHECKING=False  ansible  all -m ping
+```
+---
+
+# Ansible configuration file
+
+Although somewhat straight forward, but all the ansible main configurations, can be found under file named `ansible.cfg`. The thing is that file can be found in different places:
+- `/etc/ansible/ansible.cfg`: in case ansible was install with OS's package manager, for example `apt-get`
+- `/home/$USER/.local/share/ansible/ansible.cfg`: in case ansible was installed with pip/pipx
+
+That configuration file will hold the default configurations of the ansible.
+
+#### What if I prefer to use version control on my ansible ?
+- Great question:
+    - Ansible seeks for the configuration file recursively, meaning it has map of locations where it searches for the file named `ansible.cfg`
+    - The folder it starts to search for the `ansible.cfg` file, start from the current invocation folder.
+    - If `Ansible.cfg` is not found will go back, on folder to check if the file is there, if not, it will `cd` another folder back, until the file is found.
+    - If not found, it will check the above mentioned `map` to check existing configurations.
+    - IF STILL NOT FOUND: then you are on wrong host...
+
+---
+# Ansible modules
 
 - When ever we wish to use Ansible capabilities, we'd prefer to do it with module designated for that.
 
 - Here is a list of 100 most used modules: [check it out](https://mike42.me/blog/2019-01-the-top-100-ansible-modules)
   - No : We are not gonna learn them all.
   - Yes: We'll go through most of them.
+
+> `[!]` Note: Ansible project has been disassembled due to its massive size and currently the modules that we are covering are called `builtin` modules.
+> `[!]` Note: Additional modules can be found under official documentation: `https://docs.ansible.com` and also at ansible galaxy repository: `https://galaxy.ansible.com`
+
 
 ---
 
@@ -51,14 +80,17 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 - Module: setup
     - Purpose: Collect Ansible facts.
     - Arguments: None
-- Module: yum
-    - Purpose: Install software with yum.
-    - Arguments: name=<PACKAGE_NAME\> state=<STATE\>
+- Module: debug
+    - Purpose: Print statements during execution.
+    - Arguments: msg=<The customized message that is printed\> state=<A variable name to debug\>
 ---
 
 # Ansible modules (cont.)
 
 - Module: apt
+    - Purpose: Install software with apt.
+    - Arguments: name=<PACKAGE_NAME\> state=<STATE\>
+- Module: dnf/yum
     - Purpose: Install software with apt.
     - Arguments: name=<PACKAGE_NAME\> state=<STATE\>
 - Module: service
@@ -92,7 +124,7 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 
 ---
 
-# Lab
+# Practice
 
 - Run ansible command to with needed module to:
   - List all hosts in inventory file.

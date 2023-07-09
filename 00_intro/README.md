@@ -47,12 +47,12 @@
 - Fell in love with AS-400 unix system at IDF.
 - 5 times tried to finish degree in computer science field
     - Between each semester, I tried to take IT course at various places.
-        - Yes, one of them was A+.
-        - Yes, one of them was Cisco.
-        - Yes, one of them was RedHat course.
-        - Yes, one of them was LPIC1 and Shell scripting.
-        - No, others i learned alone.
-        - No, not maintaining debian packages any more.
+        -  A+.
+        -  Cisco CCNA.
+        -  RedHat RHCSA.
+        -  LPIC1 and Shell scripting.
+        -  Other stuff I've learned alone.
+
 ---
 
 # About Me (cont.)
@@ -129,9 +129,7 @@ Lets assume that you have a couple of remote instances running some services. Du
 - Lets discuss
 
 ---
-
-# Ansible (cont.)
-### What are prerequisites ?
+# What are pre requisites ?
 
 Ansible requires Python to be installed on all `managing` machines, including pip package manager along with configuration-management software and its dependent packages. 
 Managed network devices require no extra dependencies and are agent less. We can sum it up with:
@@ -141,34 +139,30 @@ Managed network devices require no extra dependencies and are agent less. We can
 
 ## How Ansible works ?
 
-### inventory file
+### Inventory file
 
 - The Inventory is a description of the nodes that can be accessed by Ansible. 
 - The Inventory is described by a configuration file, in INI or YAML format, whose default location is in /etc/ansible/hosts. 
 - The configuration file lists either the IP address or hostname of each node that is accessible by Ansible. In addition, nodes can be assigned to groups
 
 ---
-
-# Ansible (cont.)
-## How Ansible works ?
+# How Ansible works ?
 ### ansible modules
 
 - Modules are mostly standalone and can be written in a standard scripting language (such as Python, Perl, Ruby, Bash, etc.). 
 - One of the guiding properties of modules is idempotence, which means that even if an operation is repeated multiple times (e.g., upon recovery from an outage), it will always place the system into the same state
 
 ---
-
-# Ansible (cont.)
-## How Ansible works ?
+# How Ansible works ?
 ### ansible playbooks
 
 - Playbooks are YAML files that express configurations, deployment, and orchestration in Ansible, and allow Ansible to perform operations on managed nodes. 
 - Each Playbook maps a group of hosts to a set of roles. Each role is represented by calls to Ansible tasks
 
 ---
+# How Ansible works ?
 
-# Ansible (cont.)
-## How Ansible works ?
 ### ansible roles
+
 - Each Playbook maps a group of hosts to a set of roles. Each role is represented by calls to Ansible tasks.
 
