@@ -1,4 +1,4 @@
-image: python:3.9-slim
+image: debian:11
 
 stages:
     - lint
@@ -9,7 +9,7 @@ stages:
 lint_presentation:
   stage: lint
   script:
-    - apt-get update && apt-get install -y codespell darkslide weasyprint
+    - apt-get update && apt-get install -y python3 python3-dev codespell darkslide weasyprint
     - echo "[+] Running Spell Check"
     - for folder in 0[0-9]_*;do codespell -I spell.txt $folder/README.md ; done
 
@@ -17,7 +17,7 @@ lint_presentation:
 build_presentation:
   stage: build
   script:
-    - apt-get update && apt-get install -y codespell darkslide weasyprint
+    - apt-get update && apt-get install -y python3 python3-dev codespell darkslide weasyprint
     - echo "[+] Testing Build Script"
     - echo "${CI_JOB_ID}" > CI_JOB_ID.txt
     - bash -x build.sh -b
