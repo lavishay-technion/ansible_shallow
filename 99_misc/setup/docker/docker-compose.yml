@@ -10,7 +10,17 @@ services:
     networks:
       - vaiolabs.io
   node1:
-    hostname: srv1
+    hostname: node1
+    build:
+      context: .
+      dockerfile: Dockerfile.deb
+    environment:
+      SSH_USERPASS: docker
+    command: ["/usr/sbin/sshd", "-D"]
+    networks:
+      - vaiolabs.io
+  node3:
+    hostname: node3
     build:
       context: .
       dockerfile: Dockerfile.deb
@@ -20,7 +30,17 @@ services:
     networks:
       - vaiolabs.io
   node2:
-    hostname: srv2
+    hostname: node2
+    build:
+      context: .
+      dockerfile: Dockerfile.rpm
+    environment:
+      SSH_USERPASS: docker
+    command: ["/usr/sbin/sshd", "-D"]
+    networks:
+      - vaiolabs.io
+  node4:
+    hostname: node4
     build:
       context: .
       dockerfile: Dockerfile.rpm
