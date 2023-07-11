@@ -13,7 +13,7 @@ set -o pipefail
 
 PROJECT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 WORKDIR="$PROJECT/out"
-THEME="${PROJECT}/99_misc/.simple/"
+THEME="${PROJECT}/99_misc/.theme/"
 STYLE="fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,md_in_html,tables"
 BUILD_DIR_ARRAY=($(ls $PROJECT|grep -vE '99_*|README.md|LICENSE|TODO.md|build.sh|presentation.*'))
 BUILDER=$(which darkslide)
