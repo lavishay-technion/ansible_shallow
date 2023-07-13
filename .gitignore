@@ -4,8 +4,10 @@ build.md
 presentation.html
 presentation.md
 presentation.pdf
-
+hosts.ini
+ansible.cfg
 
 # folders
 .vagrant
 .vscode
+out
