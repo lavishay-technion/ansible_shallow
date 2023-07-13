@@ -240,7 +240,7 @@ div.slide div.presenter_notes, div.slides div.presenter_notes {
 /* Slide styles */
 
 div.slide p {
-  font-size: 15px;
+  font-size: 20px;
 }
 
 .slide.far-past {
@@ -354,7 +354,7 @@ pre {
 li {
   list-style: none;
   padding: 10px 0;
-  font-size: 15px;
+  font-size: 20px;
 }
 
 li:before {
@@ -372,7 +372,7 @@ li:before {
 li li {
   list-style: none;
   padding: 5px 0;
-  font-size: 13px;
+  font-size: 18px;
 }
 
 li li:before {
@@ -384,7 +384,7 @@ li li:before {
   left: -18px;
   top: -0px;
   color: #515151;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .slide header:only-child h1 {
@@ -570,8 +570,4 @@ aside {
   height: 100%;
   z-index: 64;
   display: none;
-}
-
-.code {
-  background-color: #515151;
 }
