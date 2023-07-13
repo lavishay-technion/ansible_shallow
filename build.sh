@@ -1,12 +1,12 @@
 #!/usr/bin/env bash 
 
 #########################################
-# created by Silent-Mobius
-# purpose: build script for docker class
-# verion: 0.7.6
 set -x
 set -o errexit
 set -o pipefail
+#created by Silent-Mobius
+#purpose: build script for ansible class
+#verion: 0.6.74
 #########################################
 
 . /etc/os-release
@@ -14,8 +14,7 @@ set -o pipefail
 PROJECT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 WORKDIR="$PROJECT/out"
 THEME="${PROJECT}/99_misc/.theme/"
-STYLE="fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,md_in_html,tables"
-BUILD_DIR_ARRAY=($(ls $PROJECT|grep -vE '99_*|README.md|LICENSE|TODO.md|build.sh|presentation.*'))
+BUILD_DIR_ARRAY=($(ls $PROJECT|grep -vE '99_*|README.md|LICENSE|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf'))
 BUILDER=$(which darkslide)
 DEPENDENCY_ARRAY=(python3-darkslide python3-landslide weasyprint) # single crucial point of failure for multi-type environments (Linux-Distro's,MacOS)
 SEPERATOR='-------------------------------------------'
@@ -28,13 +27,13 @@ main(){
     fi
     if [[ ! -d $WORKDIR ]];then
         mkdir -p $WORKDIR
-        for _dir in ${BUILD_DIR_ARRAY[@]}
+        for _dir in "${BUILD_DIR_ARRAY[@]}"
             do 
                 ln -s "$PROJECT/$_dir" "$WORKDIR/$_dir"
             done
     fi
     
-    BUILD_WORKDIR_ARRAY=($(ls $WORKDIR|grep -vE '99_*|README.md|TODO.md|build.sh|presentation.*'))
+    BUILD_WORKDIR_ARRAY=($(ls $WORKDIR|grep -vE '99_*|README.md|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf'))
     
     get_installer
     get_builder
@@ -42,16 +41,22 @@ main(){
     while getopts "bch" opt
     do
         case $opt in
-            b|-build)
-                clean_up  
-                seek_all_md_files
-                convert_md_to_html "$WORKDIR/presentation.md" "$WORKDIR/presentation.html"
-                verify_html_convert_theme "$WORKDIR/presentation.html"
-                convert_html_to_pdf "$WORKDIR/presentation.html" "$WORKDIR/presentation.pdf"
+            b)
+                deco  '[+] Cleaning Up The Previous Builds' 
+                    clean_up  
+                deco '[+] Building presentation' 
+                    seek_all_md_files "$WORKDIR/presentation.md"
+                deco '[+] Converting Data     ' 
+                    convert_data "$WORKDIR/presentation.md" "$WORKDIR/presentation.html"
+                deco '[+] Converting HTML to PDF     ' 
+                    convert_html_to_pdf "$WORKDIR/presentation.html" "$WORKDIR/presentation.pdf"
                 ;;
-            c|-clean) clean_up
+            c) 
+                deco  '[+] Cleaning Up The Previous Builds' 
+                    clean_up
                 ;;
-            h|-help) _help
+            h) _help
+                    exit 1
                 ;;
             *) _help
                 ;;
@@ -60,19 +65,26 @@ main(){
 
 }
 
+function deco(){
+    IN="$*"
+    printf "\n%s \n%s \n%s\n " \
+             "$SEPERATOR" \
+             "$IN"        \
+             "$SEPERATOR"
+}
+
 function _help() {
-    printf "\n%s \n%s \n%s\n " "[?] Incorrect use" \
-    "[?] Please use $0 \"-b\" for build and \"-c\" for clean up"  \
-    "[?] example: $0 -c"
+    deco "[?] Incorrect use" \
+         "[?] Please use $0 \"-b\" for build and \"-c\" for clean up"  \
+         "[?] example: $0 -c"
 }
 
 function clean_up() {
-    printf "\n%s \n%s \n%s\n " "$SEPERATOR" '[+] Cleaning Up The Previous Builds' "$SEPERATOR"
-    if find ${BUILD_WORKDIR_ARRAY[@]} -type f \( -name "presentation.*" -o -name "presentation.md" -o -name "out" \) &> $NULL ;then
-         find ${BUILD_WORKDIR_ARRAY[@]} -type f \( -name "presentation.*" -o -name "presentation.md" -o -name "out" \) -exec rm {} \;
+    if find "${BUILD_WORKDIR_ARRAY[@]}" -type f \( -name "presentation.*" -o -name "build.md" -o -name "out" \) &> $NULL ;then
+         find "${BUILD_WORKDIR_ARRAY[@]}" -type f \( -name "presentation.*" -o -name "build.md" -o -name "out" \) -exec rm {} \;
     fi
     # rm -rf $WORKDIR
-    printf "\n%s \n%s \n%s\n " "$SEPERATOR" '[+] Cleanup Ended Successfully   ' "$SEPERATOR"
+    deco '[+] Cleanup Ended Successfully   '
 }
 
 function get_installer(){
@@ -81,9 +93,8 @@ function get_installer(){
     elif [[ $ID == 'redhat' ]] || [[ $ID == 'fedora' ]] || [[ $ID == 'rocky' ]];then
          INSTALLER=yum
     else  
-        printf "\n%s \n%s \n%s\n \n%s \n%s \n%s\n" \
-        "$SEPERATOR" '[!] OS Not Supported [!]   ' "$SEPERATOR" \
-        "$SEPERATOR" '[+] Please Contact Instructor   ' "$SEPERATOR"
+        deco '[!] OS Not Supported [!]' \
+             '[+] Please Contact Instructor   '
     fi
 }
 
@@ -93,15 +104,13 @@ function get_builder(){
     elif ! which darkslide &> $NULL ;then
         BUILDER=$(which landslide)
     else
-        printf "\n%s \n%s \n%s\n " "$SEPERATOR" '[+] Dependency Missing: Trying To Fix   ' "$SEPERATOR"
-        for dep in ${DEPENDENCY_ARRAY[@]}
+        deco '[+] Dependency Missing: Trying To Fix   '
+        for dep in "${DEPENDENCY_ARRAY[@]}"
             do
                 printf "\n%s \n " "[+] Trying To Install:  $dep"
-                if ! sudo ${INSTALLER} install -y ${dep} &> /dev/null;then
-                    printf "\n%s \n%s \n%s\n %s\n" "$SEPERATOR" \
-                                                        '[!] Install Failed [!] ' \
-                                                        '[+] Please Contact Instructor   ' \
-                                                        "$SEPERATOR"
+                if ! sudo "${INSTALLER}" install -y "${dep}" &> /dev/null;then
+                    deco '[!] Install Failed [!] ' \
+                         '[+] Please Contact Instructor   '
                     exit 1
                 fi
             done
@@ -115,47 +124,33 @@ function get_builder(){
 }
 
 function seek_all_md_files() {
-    printf "\n%s \n%s \n%s\n " "$SEPERATOR" '[+] Building presentation' "$SEPERATOR"
-    find ${BUILD_WORKDIR_ARRAY[@]} -name '*.md' | sort|xargs cat > ${WORKDIR}/presentation.md 2> /dev/null
+    IN=$1
+    find "${BUILD_WORKDIR_ARRAY[@]}" -name '*.md' | sort|xargs cat > $IN 2> $NULL
 
-    printf "\n%s \n%s \n%s\n " "$SEPERATOR"  '[+] Generate ended successfully  '  "$SEPERATOR"
 }
 
-function convert_md_to_html() {
+function convert_data() {
     IN=$1
     OUT=$2
-    printf "\n%s \n%s \n%s\n " "$SEPERATOR" '[+] Converting MD to HTML    ' "$SEPERATOR"
         if [[ $ID == 'ubuntu' ]] || [[ $ID == 'linuxmint' ]];then
             ${BUILDER} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,tables $IN -d $OUT
         elif [[ $ID == 'fedora' ]] || [[ $ID == 'rocky' ]];then
             ${BUILDER} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,tables $IN -d $OUT
         else
-            ${BUILDER} -v  -t $THEME -x $STYLE $IN -d $OUT
+            ${BUILDER} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,md_in_html,tables $IN -d $OUT
         fi
-}
-
-function verify_html_convert_theme(){
-    IN=$1
-    if grep '<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/base.css">' $IN;
-    then
-        sed -i 's#<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/base.css">##' $IN
-    fi
-   
-    if grep '<link rel="stylesheet" media="all" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/theme.css">' $IN;
-    then
-        sed -i 's#<link rel="stylesheet" media="all" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/theme.css">##' $IN
-    fi
 }
 
 function convert_html_to_pdf(){
     IN=$1
     OUT=$2
-    printf "\n%s \n%s \n%s\n " "$SEPERATOR" '[+] Converting HTML to PDF     ' "$SEPERATOR"
-        weasyprint $IN $OUT
+    sed -i 's#<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/base.css">##' $IN
+    sed -i 's#<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/theme.css">##' $IN
+        weasyprint -v  $IN $OUT
 }
 
 #######
-# Main  - _ - _ - _ - _ - _ - _ - _ Do Not Remove _ - _ - _ - _ - _ - _ - _ - _ - _ - _ 
+# Main
 #######
 main "$@"
 
