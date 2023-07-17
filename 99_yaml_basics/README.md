@@ -1,7 +1,7 @@
 
 ---
 
-# YAML 
+# YAML: Yet Another Markup Language
 
 .footer: Created By Alex M. Schapelle, VAioLabs.io
 
@@ -19,14 +19,8 @@
         - Structure, Comments, Tags, Anchors.
     - Putting all your documents in one stream.
         - Just how human-readable can YAML?
-
----
-
-# YAML is a data serialization language:
-
  - "Natural and meaningful".
  - AKA Human readable.
-
 
 ---
 
@@ -312,7 +306,7 @@ Multiple directories/documents-in-one-file:
 
 ---
 
-# Lab
+# Practice
 
 Creating yaml file called `mydetails.yml`:
 
