@@ -300,7 +300,7 @@ ansible_password = docker
 - Remove db group nodes variables
 - Add to existing inventory multi-group variables of `ansible_user` and `ansible_ssh_private_key`
 - Test the variables with `id` command.
-    - If there are any errors, act accordingly to fix them
+    - If there are any errors, act accordingly to fix them.
 
 ```ini
 [multi:vars]
