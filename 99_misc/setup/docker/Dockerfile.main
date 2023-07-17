@@ -1,4 +1,7 @@
 FROM debian:11
-RUN apt-get update && apt-get install -y git sudo iputils-ping ansible less openssh-client vim \
-    && mkdir /root/.ssh 
-COPY id_rsa /root/.ssh/
+RUN apt-get update && apt-get install -y git sudo iputils-ping ansible less openssh-client vim sshpass
+RUN useradd -m ansible && mkdir -p /home/ansible/.ssh && chown ansible:ansible -R /home/ansible/.ssh
+COPY id_rsa /home/ansible/.ssh/id_rsa
+RUN chown ansible:ansible -R /home/ansible/.ssh
+USER ansible
+WORKDIR /home/ansible/ansible

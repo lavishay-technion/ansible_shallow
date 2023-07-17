@@ -9,12 +9,15 @@ services:
     command: sleep infinity
     networks:
       - vaiolabs.io
+    volumes:
+      - ./:/home/ansible/ansible
   node1:
     hostname: node1
     build:
       context: .
       dockerfile: Dockerfile.deb
     environment:
+      SSH_USERNAME: user
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
     networks:
@@ -25,6 +28,7 @@ services:
       context: .
       dockerfile: Dockerfile.deb
     environment:
+      SSH_USERNAME: user
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
     networks:
@@ -35,6 +39,7 @@ services:
       context: .
       dockerfile: Dockerfile.deb
     environment:
+      SSH_USERNAME: user
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
     networks:
@@ -45,6 +50,7 @@ services:
       context: .
       dockerfile: Dockerfile.deb
     environment:
+      SSH_USERNAME: user
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
     networks:

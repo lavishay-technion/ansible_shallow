@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
+
 set -x
+
 : ${SSH_USERNAME:=user}
-: ${SSH_USERPASS:=$(dd if=/dev/urandom bs=1 count=15 | base64)}
+: ${SSH_USERPASS:=user}
 
 function create_rundir() {
 	mkdir -p /var/run/sshd
@@ -9,7 +11,7 @@ function create_rundir() {
 
 function create_user() {
 # Create a user to SSH into as.
-useradd $SSH_USERNAME
+useradd -m -s /bin/bash $SSH_USERNAME
 echo -e "$SSH_USERPASS\n$SSH_USERPASS" | (passwd --stdin $SSH_USERNAME)
 echo ssh user password: $SSH_USERPASS
 }
@@ -18,11 +20,21 @@ function create_hostkeys() {
     ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' 
 }
 
+function copy_ssh_key() {
+    if [[ ! -d /home/user/.ssh ]];then
+        mkdir -p /home/user/.ssh/
+    fi
+        cp /root/.ssh/authorized_keys /home/user/.ssh/authorized_keys
+        chown 1000:1000 -R /home/user/.ssh
+        chmod  600 /home/user/.ssh/authorized_keys
+}
+
 function main(){
     create_rundir
     create_hostkeys
-    sed -i 's/\#Pubkey/Pubkey/g' /etc/ssh/sshd_config 
+    sed -i 's/\#Pubkey/Pubkey/g' /etc/ssh/sshd_config
     create_user
+    copy_ssh_key
 }
 
 ######################
