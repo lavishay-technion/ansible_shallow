@@ -6,6 +6,22 @@
 .footer: Created By Alex M. Schapelle, VAioLabs.io
 
 ---
+
+# Ansible Ad-Hoc Commands
+
+Let us explore how Ansible helps you quickly perform common tasks on, and gather data from, one or many servers with **ad-hoc** commands. The number of servers managed by an individual administrator has risen dramatically in the past decade, especially as virtualization and growing cloud application usage has become standard fare. As a result, admins have had to find new ways of
+managing servers in a streamlined fashion.
+On any given day, a systems administrator has many tasks:
+
+- Apply patches and updates via dnf, apt, and other package managers.
+- Monitor resource usage (disk space, memory, CPU, swap space, network).
+- Manage system users and groups.
+- Deploy applications or run application maintenance.
+- And so on ...
+
+Ansible allows admins to run ad-hoc commands on one or hundreds of machines at the same time, using the `ansible` command
+
+---
 # Ansible command
 
 ```sh
@@ -26,16 +42,6 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 
 ---
 
-# Ansible environment variables
-
-Like any other python application, there is long list of environment variables the ansible ingests, some of them will be provided as we go on with our course.
-When we run ansible commands, it tries to connect to remote servers by writing digital fingerprint to `known_host` file in your local users `.ssh` folder. To bypass it you can use `ANSIBLE_HOST_KEY_CHECKING` file.
-
-```sh
-ANSIBLE_HOST_KEY_CHECKING=False  ansible  all -m ping
-```
----
-
 # Ansible configuration file
 
 Although somewhat straight forward, but all the ansible main configurations, can be found under file named `ansible.cfg`. The thing is that file can be found in different places:
@@ -45,13 +51,30 @@ Although somewhat straight forward, but all the ansible main configurations, can
 That configuration file will hold the default configurations of the ansible.
 
 #### What if I prefer to use version control on my ansible ?
+
 - Great question:
     - Ansible seeks for the configuration file recursively, meaning it has map of locations where it searches for the file named `ansible.cfg`
     - The folder it starts to search for the `ansible.cfg` file, start from the current invocation folder.
     - If `Ansible.cfg` is not found will go back, on folder to check if the file is there, if not, it will `cd` another folder back, until the file is found.
     - If not found, it will check the above mentioned `map` to check existing configurations.
-    - IF STILL NOT FOUND: then you are on wrong host...
+    - IF STILL NOT FOUND: then you are probably on wrong host but better **ask instructor** for help.
 
+---
+
+# Practice
+
+- Connect to remote host with user `user` and become root user with sudo
+- Use module named `command` to see the output of `/etc/os-release` file on all hosts
+
+```ini
+[multi:var]
+username=user
+password=docker
+```
+
+```sh
+ansible all -m command -a 'cat /etc/os-release'
+```
 ---
 # Ansible modules
 
@@ -82,7 +105,7 @@ That configuration file will hold the default configurations of the ansible.
     - Arguments: None
 - Module: debug
     - Purpose: Print statements during execution.
-    - Arguments: msg=<The customized message that is printed\> state=<A variable name to debug\>
+    - Arguments: msg=<The customized message that is printed\> var=<A variable name to debug\>
 ---
 
 # Ansible modules (cont.)
@@ -129,13 +152,27 @@ That configuration file will hold the default configurations of the ansible.
 - Run ansible command to with needed module to:
   - List all hosts in inventory file.
   - Ping web group in hosts list.
-  - Get ip address of all remote hosts.
-  - Install: unrar, sshagent, python3 and htop.
-  - Verify that user (vagrant or any other specific) exists in system.
-  - Get information regarding rpm based host.
-  - Check if httpd service is running on all hosts.
-  - Download git source code, unzip it and compile it on all hosts (requires several modules and commands).
+  - Get environment variables of all remote hosts.
+  - Get package manager of all remote hosts.
+  - Install: git, unrar, ssh-agent/sshpass, python3 and htop on all hosts. (on redhat based system ssh-agent is as same as sshpass)
+  - Verify that user (user, vagrant or any other specific) exists in system.
+  - Install web server on web group hosts.
+  - Install db  server on db group hosts.
+  - Check if web service is running on web host group.(apache2 or nginx)
+  - Check if db service is running on db host group.(mysql or postgresql)
   - Set kernel parameter of `net.ipv4.conf.all.accept_redirects` to 1 at /etc/sysctl.conf (it will need to be uncommented).
   - Check what is the storage capacity on all hosts.
 
 
+```sh
+ansible --list-hosts all
+ansible -m ping web
+ansible -m setup -a 'filter=ansible_env' all
+ansible -m setup -a 'filter=ansible_pkg_mgr' all
+ansible -m apt -a 'name=git,unrar,sshpass,python3,htop' all
+ansible -m apt -a 'name=nginx' web
+ansible -m apt -a 'name=mysql' db
+ansible -m setup -a 'filter=*user*' all
+ansible -m command -a 'grep user /etc/passwd'
+ansille -m systemd -a 
+```
