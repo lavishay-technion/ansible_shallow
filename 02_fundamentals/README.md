@@ -102,10 +102,11 @@ ansible all -m command -a 'cat /etc/os-release'
     - Arguments: None
 - Module: setup
     - Purpose: Collect Ansible facts.
-    - Arguments: None
+    - Arguments: gather_subset=<SUBSET_GROUP\>  filter=<FILTERED_VALUE\>
 - Module: debug
     - Purpose: Print statements during execution.
-    - Arguments: msg=<The customized message that is printed\> var=<A variable name to debug\>
+    - Arguments: msg=<THE_CUSTOME_MESSAGE\> var=<A_VAR_NAME_TO_DEBULG\>
+
 ---
 
 # Ansible modules (cont.)
@@ -116,9 +117,6 @@ ansible all -m command -a 'cat /etc/os-release'
 - Module: dnf/yum
     - Purpose: Install software with apt.
     - Arguments: name=<PACKAGE_NAME\> state=<STATE\>
-- Module: service
-    - Purpose: Control service daemons.
-    - Arguments: name=<SERVICE_NAME> state=<STATE\>
 - Module: copy
     - Purpose: Copy a file to a particular location on a target host.
     - Arguments: src=<SOURCE_PATH\> dest=<ABSOLUTE_DESTINATION_PATH\>
@@ -138,6 +136,9 @@ ansible all -m command -a 'cat /etc/os-release'
 - Module: user
     - Purpose: Manage user accounts and user attributes
     - Arguments:   name=<USERNAME\> comment=<DESCRIPTION\> uid=<UID\> group=<GROUPNAME\>
+- Module: service
+    - Purpose: Control service daemons.
+    - Arguments: name=<SERVICE_NAME> state=<STATE\>
 - Module: systemd
     - Purpose: Controls systemd units (services, timers, and so on) on remote hosts.
     - Arguments: name=<SERVICE\> state=<EXPECTED_STATUS\>

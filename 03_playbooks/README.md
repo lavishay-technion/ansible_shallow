@@ -41,7 +41,7 @@ As an example:
 ```
 ---
 
-# Lab
+# Practice
 - Create folder Playbook:
   - Create initial playbook called **playbook-ping.yaml**
     - In playbooks create a task that pings all possible hosts
@@ -81,7 +81,7 @@ As an example:
 
 ```
 ---
-# Lab
+# Practice
 - In the playbooks folders
   - Create playbook named **playbook-setup.yaml**
     - Use module setup get all the information in regards to all nodes
@@ -177,11 +177,11 @@ Please refer to link and practice them as follows.
 
 ---
 
-# Lab
+# Practice
 
 - Create Ansible project that sets up 5 vm's (or containers):
   - All containers must be mix of linux distributions.
-    - 2 of cotainers must be web servers.
+    - 2 of containers must be web servers.
     - 2 servers must be mysql server and worker.
   - Create or use existing flask project that will be copied to `web server1`.
   - Use `web server2` to connect to flask app on `web server1`.
@@ -355,7 +355,7 @@ target_state: started
 ```
 ---
 
-# Lab
+# Practice
 
 Create playbook with pre-defined variables:
 
@@ -405,7 +405,7 @@ For example, to manage a system service (which requires root privileges) when co
 To run a command as the apache user:
 ```yaml
 - name: Run a command as the apache user
-  command: somecommand
+  command: some-command
   become: yes
   become_user: apache
 ```
@@ -484,13 +484,13 @@ Repeated tasks can be written as standard loops over a simple list of strings. Y
     state: present
     groups: "wheel"
   loop:
-     - testuser1
-     - testuser2
+     - test-user1
+     - test-user2
 ```
 
 You can define the list in a variables file, or in the ‘vars’ section of your play, then refer to the name of the list in the task.
 ```yaml
-loop: "{{ somelist }}"
+loop: "{{ some-list }}"
 ```
 ---
 # Standard loops
@@ -499,15 +499,15 @@ loop: "{{ somelist }}"
 
 Either of these examples would be the equivalent of
 ```yaml
-- name: Add user testuser1
+- name: Add user test-user1
   ansible.builtin.user:
-    name: "testuser1"
+    name: "test-user1"
     state: present
     groups: "wheel"
 
-- name: Add user testuser2
+- name: Add user test-user2
   ansible.builtin.user:
-    name: "testuser2"
+    name: "test-user2"
     state: present
     groups: "wheel"
 ```
@@ -537,7 +537,7 @@ Check the module documentation to see if you can pass a list to any particular m
 
 ## Iterating over a list of hashes
 
-If you have a list of hashes, you can reference subkeys in a loop. For example:
+If you have a list of hashes, you can reference sub-keys in a loop. For example:
 ```yaml
 - name: Add several users
   ansible.builtin.user:
@@ -545,8 +545,8 @@ If you have a list of hashes, you can reference subkeys in a loop. For example:
     state: present
     groups: "{{ item.groups }}"
   loop:
-    - { name: 'testuser1', groups: 'wheel' }
-    - { name: 'testuser2', groups: 'root' }
+    - { name: 'test-user1', groups: 'wheel' }
+    - { name: 'test-user2', groups: 'root' }
 ```
 When combining conditionals with a loop, the when: statement is processed separately for each item.
 
@@ -795,7 +795,7 @@ The string content of a registered variable can be empty. If you want to run ano
   tasks:
 
       - name: List contents of directory
-        ansible.builtin.command: ls mydir
+        ansible.builtin.command: ls my-dir
         register: contents
 
       - name: Check contents for emptiness
@@ -893,7 +893,7 @@ If you need to skip the whole task when the loop variable is undefined, use the 
 ```yaml
 - name: Skip the whole task when a loop variable is undefined
   ansible.builtin.command: echo {{ item }}
-  loop: "{{ mylist|default([]) }}"
+  loop: "{{ my-list|default([]) }}"
   when: item > 5
 ```
 ---
@@ -905,7 +905,7 @@ You can do the same thing when looping over a dict:
 ```yaml
 - name: The same as above using a dict
   ansible.builtin.command: echo {{ item.key }}
-  loop: "{{ query('dict', mydict|default({})) }}"
+  loop: "{{ query('dict', my-dict|default({})) }}"
   when: item.value > 5
 ```
 ---

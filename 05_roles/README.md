@@ -7,6 +7,7 @@
 
 ---
 
+# Ansible Roles
 
 Roles let us automatically load related `vars`, `files`, `tasks`, `handlers`, and other `Ansible artifacts` based on a known file structure. After you group your content in roles, you can easily use and reuse them and share them with other users.
 
@@ -31,7 +32,7 @@ roles/
         vars/
         defaults/
         meta/
-    web_servers/
+        web_servers/
         tasks/
         defaults/
         meta/
@@ -581,7 +582,7 @@ These filters can then be used in a Jinja template in any role called after ‘m
 
 # Sharing roles: Ansible Galaxy
 
-Ansible Galaxy is a free site for finding, downloading, rating, and reviewing all kinds of community-developed Ansible roles and can be a great way to get a jumpstart on your automation projects.
+Ansible Galaxy is a free site for finding, downloading, rating, and reviewing all kinds of community-developed Ansible roles and can be a great way to get a jump-start on your automation projects.
 
 The client ansible-galaxy is included in Ansible. The Galaxy client allows you to download roles from Ansible Galaxy, and also provides an excellent default framework for creating your own roles.
 
