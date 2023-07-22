@@ -21,7 +21,7 @@ We'll learn several topics mainly focused on:
 # Who is this course for ?
 
 - The name kind of mentions it:
-    - System administrators who wish to learn basic git usage.
+    - System administrators who wish to learn basic Ansible usage.
     - SysOps who are moving to DevOps jobs.
     - DevOps who wish to implement infrastructure as a code (IaC) with declarative language.
 - But it also can be useful for:
