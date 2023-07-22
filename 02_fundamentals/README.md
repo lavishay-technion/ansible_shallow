@@ -175,5 +175,5 @@ ansible -m apt -a 'name=nginx' web
 ansible -m apt -a 'name=mysql' db
 ansible -m setup -a 'filter=*user*' all
 ansible -m command -a 'grep user /etc/passwd'
-ansille -m systemd -a 
+ansible -m systemd -a 
 ```
