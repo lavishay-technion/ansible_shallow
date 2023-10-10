@@ -6,6 +6,7 @@ presentation.md
 presentation.pdf
 hosts.ini
 ansible.cfg
+inv
 
 # folders
 .vagrant
