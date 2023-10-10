@@ -2,6 +2,7 @@ FROM rockylinux/rockylinux:8.6
 EXPOSE 22
 RUN dnf install -y sudo iputils ansible-core less passwd openssh-clients openssh-server vim python39\
     && mkdir /root/.ssh
+COPY id_rsa.pub  /root/.ssh/authorized_keys
 COPY node.sh /entrypoint.sh
 RUN chmod 775 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
