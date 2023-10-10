@@ -37,7 +37,7 @@ services:
     hostname: node2
     build:
       context: .
-      dockerfile: Dockerfile.deb
+      dockerfile: Dockerfile.rpm
     environment:
       SSH_USERNAME: user
       SSH_USERPASS: docker
@@ -48,7 +48,7 @@ services:
     hostname: node4
     build:
       context: .
-      dockerfile: Dockerfile.deb
+      dockerfile: Dockerfile.rpm
     environment:
       SSH_USERNAME: user
       SSH_USERPASS: docker
