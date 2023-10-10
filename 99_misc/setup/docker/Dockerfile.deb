@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM debian:11
 EXPOSE 22
 EXPOSE 2222
 RUN apt-get -y update && apt-get -y install openssh-server passwd sudo python3 \
