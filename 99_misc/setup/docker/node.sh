@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+######################################################
+# Desc: setup script for containers to behave as server with ssh connection
+# Created by: silent-mobius aka Alex M. Schapelle
+# Update: script converted to be matchable to rpm and deb based systems
+# version: 1.1.0
+
 
 set -x
 . /etc/os-release 
@@ -7,7 +13,11 @@ set -x
 : ${SSH_USERPASS:=user}
 
 function create_rundir() {
-	mkdir -p /var/run/sshd
+    if [[ $ID == 'debian' ]];then
+	    mkdir -p /var/run/sshd
+    else
+        mkdir -p /run/sshd
+    fi
 }
 
 function create_user() {
@@ -46,5 +56,5 @@ function main(){
 # Call all functions
 ######################
 main 
-echo calling $@
+echo calling "$@"
 exec "$@"
