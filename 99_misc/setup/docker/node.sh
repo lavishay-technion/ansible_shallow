@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -x
+. /etc/os-release 
 
 : ${SSH_USERNAME:=user}
 : ${SSH_USERPASS:=user}
@@ -10,10 +11,14 @@ function create_rundir() {
 }
 
 function create_user() {
-# Create a user to SSH into as.
-useradd -m -s /bin/bash $SSH_USERNAME
-echo -e "$SSH_USERPASS\n$SSH_USERPASS" | (passwd --stdin $SSH_USERNAME)
-echo ssh user password: $SSH_USERPASS
+    # Create a user to SSH into as.
+    useradd -m -s /bin/bash $SSH_USERNAME
+    if [[ "$ID" == 'debian' ]];then
+        (echo $SSH_USERPASS ;echo $SSH_USERPASS )| passwd  $SSH_USERNAME 
+    else
+        echo -e "$SSH_USERPASS" | passwd  $SSH_USERNAME --stdin
+    fi
+    echo ssh user password: $SSH_USERPASS
 }
 
 function create_hostkeys() {
