@@ -1,12 +1,12 @@
 #!/usr/bin/env bash 
 
 #########################################
-set -x
+# set -x
 set -o errexit
 set -o pipefail
 #created by: Silent-Mobius aka Alex M. Schapelle for Vaiolabs ltd.
 #purpose: build script for jetporch class
-#verion: 0.7.9
+#verion: 0.7.11
 #########################################
 
 . /etc/os-release
@@ -15,7 +15,8 @@ PROJECT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 WORKDIR="$PROJECT/out"
 THEME="${PROJECT}/99_misc/.theme/"
 BUILD_DIR_ARRAY=($(ls $PROJECT|grep -vE '99_*|README.md|LICENSE|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf'))
-BUILDER=$(which darkslide)
+BUILD_TOOL=$(which darkslide)
+BUILD_TOOL_VERSION=$(darkslide --version|awk '{print $2}')
 DEPENDENCY_ARRAY=(python3-darkslide python3-landslide weasyprint) # single crucial point of failure for multi-type environments (Linux-Distro's,MacOS)
 SEPERATOR='-------------------------------------------'
 NULL=/dev/null
@@ -36,7 +37,7 @@ main(){
     BUILD_WORKDIR_ARRAY=($(ls $WORKDIR|grep -vE '99_*|README.md|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf'))
     
     # get_installer
-    get_builder
+    get_build_tool
     
     while getopts "bch" opt
     do
@@ -98,26 +99,37 @@ function get_installer(){
     fi
 }
 
-function get_builder(){
-    if [[ -n $BUILDER ]];then
-        BUILDER=$(which darkslide)
-    elif ! which darkslide &> $NULL ;then
-        BUILDER=$(which landslide)
+function get_build_tool(){
+    if [[ -n $BUILD_TOOL ]];then
+        BUILD_TOOL=$(which darkslide)
+        BUILD_TOOL_VERSION=$($BUILD_TOOL --version | awk '{print $2}')
+        if [[ $BUILD_TOOL_VERSION == '6.0.0' ]];then
+            deco '
+    [!] Newer build tool detected [!]
+    [+] Downgrade to version 5.1.0 for build to work 
+    [+] Or use docker branch to build inside docker 
+    [+] Link to package: http://ftp.de.debian.org/debian/pool/main/p/python-darkslide/darkslide_5.1.0-1_all.deb
+    [+] In case package not avaible on that address check on : https://pkgs.org
+            '
+            exit 1
+        fi
+    elif ! which landslide &> $NULL ;then
+        BUILD_TOOL=$(which landslide)
     else
         deco '[+] Dependency Missing: Trying To Fix   '
         for dep in "${DEPENDENCY_ARRAY[@]}"
             do
                 printf "\n%s \n " "[+] Trying To Install:  $dep"
-                if ! sudo "${INSTALLER}" install -y "${dep}" &> /dev/null;then
+                if ! sudo "${INSTALLER}" install -y "${dep}" 1>&2 2>&1 $NULL;then
                     deco '[!] Install Failed [!] ' \
                          '[+] Please Contact Instructor   '
                     exit 1
                 fi
             done
         if which darkslide &> $NULL;then
-            BUILDER=$(which darkslide)
+            BUILD_TOOL=$(which darkslide)
         elif ! which darkslide &> $NULL ;then
-            BUILDER=$(which landslide)
+            BUILD_TOOL=$(which landslide)
         fi
     fi
 
@@ -133,19 +145,20 @@ function convert_data() {
     IN=$1
     OUT=$2
         if [[ $ID == 'ubuntu' ]] || [[ $ID == 'linuxmint' ]];then
-            ${BUILDER} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,tables $IN -d $OUT
+            ${BUILD_TOOL} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,tables $IN -d $OUT
         elif [[ $ID == 'fedora' ]] || [[ $ID == 'rocky' ]];then
-            ${BUILDER} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,tables $IN -d $OUT
+            ${BUILD_TOOL} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,tables $IN -d $OUT
         else
-            ${BUILDER} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,md_in_html,tables $IN -d $OUT
+            ${BUILD_TOOL} -v  -t $THEME -x fenced_code,codehilite,extra,toc,smarty,sane_lists,meta,md_in_html,tables $IN -d $OUT
         fi
 }
 
 function convert_html_to_pdf(){
     IN=$1
     OUT=$2
-    sed -i 's#<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/base.css">##' $IN
-    sed -i 's#<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/theme.css">##' $IN
+    # SED operation is required on darkslide version 6.0.0 + use older version of tool or user docker branch for making your life easier
+    # sed -i 's#<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/base.css">##' $IN
+    # sed -i 's#<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/theme.css">##' $IN
         weasyprint -v  $IN $OUT
 }
 
