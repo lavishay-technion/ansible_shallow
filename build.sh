@@ -4,9 +4,9 @@
 set -x
 set -o errexit
 set -o pipefail
-#created by Silent-Mobius
-#purpose: build script for ansible class
-#verion: 0.6.74
+#created by: Silent-Mobius aka Alex M. Schapelle for Vaiolabs ltd.
+#purpose: build script for jetporch class
+#verion: 0.7.9
 #########################################
 
 . /etc/os-release
@@ -35,7 +35,7 @@ main(){
     
     BUILD_WORKDIR_ARRAY=($(ls $WORKDIR|grep -vE '99_*|README.md|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf'))
     
-    get_installer
+    # get_installer
     get_builder
     
     while getopts "bch" opt
@@ -88,7 +88,7 @@ function clean_up() {
 }
 
 function get_installer(){
-    if [[ $ID == 'debian' ]] || [[ $ID == 'debian' ]] || [[ $ID == 'linuxmint' ]];then
+    if [[ $ID == 'debian' ]] || [[ $ID == 'ubnutu' ]] || [[ $ID == 'linuxmint' ]];then
          INSTALLER=apt-get
     elif [[ $ID == 'redhat' ]] || [[ $ID == 'fedora' ]] || [[ $ID == 'rocky' ]];then
          INSTALLER=yum
@@ -154,4 +154,4 @@ function convert_html_to_pdf(){
 #######
 main "$@"
 
-# TODO - build script: fix dependency use
+# TODO - build script: wrap up in docker
