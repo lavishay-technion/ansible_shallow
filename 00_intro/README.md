@@ -195,18 +195,10 @@ Ansible uses combination of inventories, executable, modules, yaml playbooks and
 - Modules are mostly standalone and can be written in a standard scripting language (such as Python, Perl, Ruby, Bash, etc.). 
 - One of the guiding properties of modules is idempotence, which means that even if an operation is repeated multiple times (e.g., upon recovery from an outage), it will always place the system into the same state
 
----
-
-# How Ansible works ? (cont.)
-
 #### Ansible playbooks
 
 - Playbooks are YAML files that express configurations, deployment, and orchestration in Ansible, and allow Ansible to perform operations on managed nodes. 
 - Each Playbook maps a group of hosts to a set of roles. Each role is represented by calls to Ansible tasks
-
----
-
-# How Ansible works ? (cont.)
 
 ### Ansible roles
 
