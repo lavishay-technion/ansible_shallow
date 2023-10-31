@@ -5,6 +5,9 @@
 
 @page {
     size: landscape;
+    @bottom-right-corner {
+	    content: counter(page)
+    }
 }
 
 body {
