@@ -92,10 +92,10 @@ By default, Ansible looks for roles in the following locations:
 
 - in collections, if you are using them
 - in a directory called roles/, relative to the playbook file
-- in the configured roles_path. The default search path is ~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles.
+- in the configured roles_path. The default search path is  `~/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles`
 - in the directory where the playbook file is located
 
-If you store your roles in a different location, set the `roles_path` configuration option so Ansible can find your roles. Checking shared roles into a single location makes them easier to use in multiple playbooks. See Configuring Ansible for details about managing settings in ansible.cfg.
+If you store your roles in a different location, set the `roles_path` configuration option so Ansible can find your roles. Checking shared roles into a single location makes them easier to use in multiple playbooks. See Configuring Ansible for details about managing settings in `ansible.cfg`.
 
 Alternatively, you can call a role with a fully qualified path:
 
