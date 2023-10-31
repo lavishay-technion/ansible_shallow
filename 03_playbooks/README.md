@@ -9,7 +9,7 @@
 
 # Ansible Playbook/YAML Structure
 
-- By default ansible runs playbooks (YAML files) with `ansible-playbook` executable.
+- By default Ansible runs playbooks (YAML files) with `ansible-playbook` executable.
   - For the executable to run correctly it must get certain terms:
     - The file should start with triple dashes ( - - - ).
         - Not Mandatory, yet proved to be useful, in case you are storing multiple playbooks under one file.
@@ -95,9 +95,9 @@ As an example:
 - Modules are heart of Ansible
   - They are python written code.
     - Modules can be developed based on Ansible community development guidelines.
-  - They provide basic and built-in functionality with which ansible automates things.
-  - Combination of Modules with YAML provides us with automation with ansible.
-- All the modules described at ansible command module work in similar manner.
+  - They provide basic and built-in functionality with which Ansible automates things.
+  - Combination of Modules with YAML provides us with automation with Ansible.
+- All the modules described at Ansible command module work in similar manner.
 
 ---
 
@@ -174,7 +174,7 @@ As an example:
 
 # What now ? Practice !
 
-Here is a [link](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html) to basic modules of ansible modules
+Here is a [link](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html) to basic modules of Ansible modules
 
 Please refer to link and practice them as follows.
 

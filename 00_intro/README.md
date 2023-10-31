@@ -125,21 +125,24 @@ But there’s a reason why many developers and sysadmins stick to shell scriptin
 
 <img src="../99_misc/.img/ansible_logo.png" alt="ansible_logo" style="float:right;width:180px;">
 
-Ansible was built by developers and sysadmins who know the command line—and want to make a tool that helps them manage their servers exactly the same as they have in the past, but in a repeatable and centrally managed way. Ansible also has other tricks up its sleeve, making it a true Swiss Army knife for people involved in DevOps.
-
 The term "Ansible" was coined by Ursula K. Le Guin in her 1966 novel Rocannon's World, and refers to fictional **instantaneous communication systems**.
 
-The Ansible tool was developed by Michael DeHaan, the author of the provisioning server application Cobbler and co-author of the Fedora Unified Network Controller (Func) framework for remote administration.
+The Ansible tool was developed by [Michael DeHaan](), the author of the provisioning server application Cobbler and co-author of the Fedora Unified Network Controller (Func) framework for remote administration.
 
 Ansible, Inc. (originally AnsibleWorks, Inc.) was the company founded in 2013 by Michael DeHaan, Timothy Gerla, and Saïd Ziouani to commercially support and sponsor Ansible. Red Hat acquired Ansible in October 2015.
 
 Ansible is included as part of the Fedora distribution of Linux, owned by Red Hat, and is also available for Red Hat Enterprise Linux, CentOS, openSUSE, SUSE Linux Enterprise, Debian, Ubuntu, Scientific Linux, and Oracle Linux via Extra Packages for Enterprise Linux (EPEL), as well as for other operating systems
 
+As we can see, Ansible was built by developers and sysadmins who know the command line—and want to make a tool that helps them manage their servers exactly the same as they have in the past, but in a repeatable and centrally managed way. Ansible also has other tricks up its sleeve, making it a true Swiss Army knife for people involved in DevOps.
+
+
 ---
 
 # What is Ansible?
 
-Ansible is an open-source software provisioning, configuration management, and application-deployment tool enabling infrastructure as code.
+As James Spurin explained in one of his videos, Ansible is multitude of tools, modules, and software defined Infrastructre, that are collectively ansible tool set.
+For me and majority of other users, Ansible is an open-source software provisioning, configuration management, and application-deployment tool enabling infrastructure as code.
+You are welcome to use either of those definitions.
 
 #### Why we need it?
 
@@ -155,6 +158,10 @@ Lets assume that you have a couple of remote instances running some services. Du
 
 <img src="../99_misc/.img/logos.png" alt="logos" style="float:right;width:600px;">
 - Let's discuss
+    - Code development process
+    - Declarative Vs. Scripted
+    - Code maintainence
+    - Complexity management
 
 ---
 
@@ -169,10 +176,12 @@ Managed network devices require no extra dependencies and are agent less. We can
 
 ### How Ansible works ?
 
-#### Inventory file
+Ansible uses combination of inventories, executable, modules, yaml playbooks and playbook roles.
 
-- The Inventory is a description of the nodes that can be accessed by Ansible. 
-- The Inventory is described by a configuration file, in INI or YAML format, whose default location is in `/etc/ansible/hosts`. 
+#### Inventories and Inventory file
+
+- The inventory is a description of the nodes that can be accessed by Ansible. 
+- `INI` or `YAML` are used as a default configuration format, while default configuration file is either located at `/etc/ansible/hosts` or under the users home directory. Depends on type of installation. 
 - The configuration file lists either the IP address or hostname of each node that is accessible by Ansible. In addition, nodes can be assigned to groups
 
 ---

@@ -9,16 +9,21 @@
 
 # Ansible Environment Setup (cont.)
 
+As mentioned, we will be working on our virtual labs with docker, thus docker installation is required.
 - What do we need ?
-  - Virtual Nodes: We'll use docker and docker-compose for out infrastructure simulation.
+  - Unix/Linux Node
+  - Docker environment installed
+  - Text editor: I'll be using `vim`, yet your are welcome to use anything you wish and are comfortable with.
+
 - To install docker and docker compose run on Debian based Linux distributions: 
+
 ```sh
 curl -L get.docker.com| sudo bash
 ```
   - In case you are using RedHat based Linux distro, like Fedora, Rocky and Alma, the above command should work in same manner.
-  - In case of RedHat itself, it will require you to use license which you need to purchase
-  - In case of Windows, Please install Docker-Desktop.
-  - In case of MacOS, do the same as with windows.
+  - With RedHat itself, it will require you to use license which you need to purchase
+  - while with Windows, Please install Docker-Desktop.
+  - In case of MacOS, Docker-Desktop is the latest .
 
 > `[!]` Note: I, myself am using Linux distribution, in case you use something else, there should not be too much of the difference, yet that is the price of learning: adaptation to the unknown.
 
