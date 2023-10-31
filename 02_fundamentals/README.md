@@ -47,7 +47,7 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 
 Although somewhat straight forward, but all the Ansible main configurations, can be found under file named `ansible.cfg`. The thing is that file can be found in different places:
 - `/etc/ansible/ansible.cfg`: in case Ansible was install with OS's package manager, for example `apt-get`
-- `/home/$USER/.local/share/ansible/ansible.cfg`: in case ansible was installed with pip/pipx
+- `/home/$USER/.local/share/ansible/ansible.cfg`: in case Ansible was installed with pip/pipx
 
 That configuration file will hold the default configurations of the Ansible.
 
