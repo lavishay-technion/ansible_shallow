@@ -22,6 +22,7 @@ On any given day, a systems administrator has many tasks:
 Ansible allows admins to run ad-hoc commands on one or hundreds of machines at the same time, using the `ansible` command
 
 ---
+
 # Ansible command
 
 ```sh
@@ -76,6 +77,7 @@ password=docker
 ansible all -m command -a 'cat /etc/os-release'
 ```
 ---
+
 # Ansible modules
 
 - When ever we wish to use Ansible capabilities, we'd prefer to do it with module designated for that.

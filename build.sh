@@ -1,7 +1,7 @@
 #!/usr/bin/env bash 
 
 #########################################
-# set -x
+#set -x
 set -o errexit
 set -o pipefail
 #created by: Silent-Mobius aka Alex M. Schapelle for Vaiolabs ltd.

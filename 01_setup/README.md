@@ -25,6 +25,7 @@ curl -L get.docker.com| sudo bash
 > `[!]` Note: You should try to use docker project from [here](https://gitlab.com/silent-mobius/ansible-compose.git)
 
 ---
+
 # Architecture  description
 
 The design goals of Ansible include:
@@ -61,6 +62,7 @@ Generally the ansible architecture should look like this, yet in some examples i
 - If Ansible won't find the local `ansible.cfg` file , it will continue to search other default folders such as `/etc` or `/opt`
 
 ---
+
 # Static Inventory
 
 ### Hosts, Groups and Variables
@@ -99,6 +101,7 @@ The structure can be provided as follows:
     - if there is suitable output kill the lab, by exiting the ansible-host container and stopping docker compose with `docker compose down` command
 
 ---
+
 # Practice (cont.)
 
 ```sh
@@ -117,6 +120,7 @@ git push -U origin master
 vi hosts.ini
 ```
 ---
+
 # Practice (cont.)
 
 ```ini
@@ -315,6 +319,7 @@ ansible all -m command -a 'id' -o
 
 
 ---
+
 # Dynamic Inventory
 
 - Mostly can be implemented where there is API for managing vm's
@@ -339,3 +344,5 @@ Also we can find [official documentation](https://docs.ansible.com/ansible/lates
   <!-- - test connection with `ping` module to verify the connection -->
 
 > `[!]` Note: We'll talk about Dynamic inventories later during the course.
+
+

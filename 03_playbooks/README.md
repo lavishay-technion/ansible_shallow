@@ -64,6 +64,7 @@ As an example:
   - Instead of keeping all the info in one file, we can save pre-defined variables in external file and use for our use cases
 
 ---
+
 # Ansible Mappings: What to define ?(cont.)
 
 - Lets see an example:
@@ -81,6 +82,7 @@ As an example:
 
 ```
 ---
+
 # Practice
 - In the playbooks folders
   - Create playbook named **playbook-setup.yaml**
@@ -113,6 +115,7 @@ As an example:
 - systemd/service
 
 ---
+
 # Special Builtin Modules
 
 - debug
@@ -166,8 +169,8 @@ As an example:
 
 ```
 
+--- 
 --- -->
----
 
 # What now ? Practice !
 
@@ -203,6 +206,7 @@ Please refer to link and practice them as follows.
 - It is possible to use `"{{ ansible_facts }}"` for conditional plays based on facts.
 
 ---
+
 # Variables
 
 Typical uses of variables:
@@ -256,6 +260,7 @@ person:
   favorite_color: green
 ```
 ---
+
 # Variables (cont.)
 
 Variables may be defined in a number of ways:
@@ -308,6 +313,7 @@ hosts: "{{ my_host_var }}"
 - Variables may also be stored in files and included using the vars_file directive.
 
 ---
+
 # Variables (cont.)
 
 ## Example
@@ -363,6 +369,7 @@ Create playbook with pre-defined variables:
 - main.yml, that uses variables file and prints it using command module.
 
 ---
+
 # Privilege escalation: become
 
 Ansible uses existing privilege escalation systems to execute tasks with root privileges or with another user’s permissions. Because this feature allows you to `become` another user, different from the user that logged into the machine (remote user), we call it `become`. The `become` keyword uses existing privilege escalation tools like sudo, su, pfexec, doas, pbrun, dzdo, ksu, runas, machinectl and others.
@@ -370,6 +377,7 @@ Ansible uses existing privilege escalation systems to execute tasks with root pr
 ---
 
 # Privilege escalation(cont.)
+
 ## Using become
 
 You can control the use of become with play or task directives, connection variables, or at the command line. If you set privilege escalation properties in multiple ways, review the general precedence rules to understand which settings will be used.
@@ -379,6 +387,7 @@ A full list of all become plugins that are included in Ansible can be found in t
 ---
 
 # Privilege escalation(cont.)
+
 ## Become directives
 
 You can set the directives that control become at the play or task level. You can override these by setting connection variables, which often differ from one host to another. These variables and directives are independent. For example, setting become_user does not set become.
@@ -391,6 +400,7 @@ You can set the directives that control become at the play or task level. You ca
 ---
 
 # Privilege escalation(cont.)
+
 ## Become directives
 
 For example, to manage a system service (which requires root privileges) when connected as a non-root user, you can use the default value of become_user (root):
@@ -450,6 +460,7 @@ Ansible offers the loop, with_<lookup>, and until keywords to execute a task mul
 
 Generally speaking, any use of with_* covered in Migrating from with_X to loop can be updated to use loop.
 Be careful when changing with_items to loop, as with_items performed implicit single-level flattening. You may need to use flatten(1) with loop to match the exact outcome. For example, to get the same output as:
+
 ```yaml
 with_items:
   - 1
@@ -462,6 +473,7 @@ you would need rewrite it as:
 loop: "{{ [1, [2, 3], 4] | flatten(1) }}"
 ```
 Any with_* statement that requires using lookup within a loop should not be converted to use the loop keyword. For example, instead of doing:
+
 ```yaml
 loop: "{{ lookup('fileglob', '*.txt', wantlist=True) }}"
 ```
@@ -493,6 +505,7 @@ You can define the list in a variables file, or in the ‘vars’ section of you
 loop: "{{ some-list }}"
 ```
 ---
+
 # Standard loops
 
 ## Iterating over a simple list
@@ -736,6 +749,7 @@ tasks:
 ```
 
 --- 
+
 # Conditions based on `registered variables`
 
 Often in a playbook you want to execute or skip a task based on the outcome of an earlier task. For example, you might want to configure a service after it is upgraded by an earlier task. To create a conditional based on a registered variable:
@@ -787,6 +801,7 @@ You can use registered results in the loop of a task if the variable is a list. 
 ---
 
 # Conditions based on `registered variables`
+
 The string content of a registered variable can be empty. If you want to run another task only on hosts where the stdout of your registered variable is empty, check the registered variable’s string contents for emptiness:
 ```yaml
 - name: check registered variable for emptiness
@@ -832,9 +847,8 @@ tasks:
 ---
 
 # Conditions based on `registered variables`
-> Note
 
-> Older versions of Ansible used success and fail, but succeeded and failed use the correct tense. All of these options are now valid.
+> `[!]` Note: Older versions of Ansible used success and fail, but succeeded and failed use the correct tense. All of these options are now valid.
 Conditionals based on variables
 
 You can also create conditionals based on variables defined in the playbooks or inventory. Because conditionals require boolean input (a test must evaluate as True to trigger the condition), you must apply the | bool filter to non boolean variables, such as string variables with content like `yes`, `on`, `1`, or `true`. You can define variables like this:
@@ -845,9 +859,11 @@ vars:
   monumental: "yes"
 ```
 With the variables above, Ansible would run one of these tasks and skip the other:
+
 ---
 
 # Conditions based on `registered variables`
+
 ```yaml
 tasks:
     - name: Run the command if "epic" or "monumental" is true
@@ -896,6 +912,7 @@ If you need to skip the whole task when the loop variable is undefined, use the 
   loop: "{{ my-list|default([]) }}"
   when: item > 5
 ```
+
 ---
 
 # Conditions based on `registered variables`
@@ -909,6 +926,7 @@ You can do the same thing when looping over a dict:
   when: item.value > 5
 ```
 ---
+
 # Loading custom facts
 
 You can provide your own facts, as described in Should you develop a module?. To run them, just make a call to your own custom fact gathering module at the top of your list of tasks, and variables returned there will be accessible to future tasks:
