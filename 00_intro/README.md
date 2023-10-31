@@ -157,11 +157,13 @@ Lets assume that you have a couple of remote instances running some services. Du
 <img src="../99_misc/.img/yesbutno.png" alt="yesbutno" style="float:right;width:400px;">
 
 <img src="../99_misc/.img/logos.png" alt="logos" style="float:right;width:600px;">
-- Let's discuss
-    - Code development process
-    - Declarative Vs. Scripted
-    - Code maintainence
-    - Complexity management
+
+Let's discuss:
+
+- Code development process
+- Declarative Vs. Scripted
+- Code maintainence
+- Complexity management
 
 ---
 
