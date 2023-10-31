@@ -46,7 +46,7 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 # Ansible configuration file
 
 Although somewhat straight forward, but all the Ansible main configurations, can be found under file named `ansible.cfg`. The thing is that file can be found in different places:
-- `/etc/ansible/ansible.cfg`: in case Ansible was install with OS's package manager, for example `apt-get`
+- `/etc/ansible/ansible.cfg`: in case Ansible was install with OS's package manager, for example `apt-get` or `dnf`
 - `/home/$USER/.local/share/ansible/ansible.cfg`: in case Ansible was installed with pip/pipx
 
 That configuration file will hold the default configurations of the Ansible.
@@ -56,7 +56,7 @@ That configuration file will hold the default configurations of the Ansible.
 - Great question:
     - Ansible seeks for the configuration file recursively, meaning it has map of locations where it searches for the file named `ansible.cfg`
     - The folder it starts to search for the `ansible.cfg` file, start from the current invocation folder.
-    - If `Ansible.cfg` is not found will go back, on folder to check if the file is there, if not, it will `cd` another folder back, until the file is found.
+    - If `ansible.cfg` is not found will go back, on folder to check if the file is there, if not, it will `cd` another folder back, until the file is found.
     - If not found, it will check the above mentioned `map` to check existing configurations.
     - IF STILL NOT FOUND: then you are probably on wrong host but better **ask instructor** for help.
 

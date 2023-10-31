@@ -49,22 +49,36 @@ The design goals of Ansible include:
 Generally the Ansible architecture should look like this, yet in some examples it might differ.
 
 <img src="../99_misc/.img/ansible_arch.png" alt="our class arch" style="float:right;width:400px;">
-
-- We'll setup our local inventory file that will manage our nodes
-- No need to install Ansible from system repository
-- We'll install it from `pip3`
-- Lets call the inventory file: `hosts.ini`
+But in order to make it work, we'll need existing software packages, modules and configuration files to work on.
+When we issue `ansible --version` command it will provide us with information about ansible referencing the configuration files.
+```sh
+ansible --version
+ansible [core 2.14.3]
+  config file = None
+  configured module search path = ['/home/aschapelle/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  ansible collection location = /home/aschapelle/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/bin/ansible
+  python version = 3.11.2
+```
+> `[!]` Note: `config file = None` that is reference to main ansible configuration is set to `None`, thus it gives us possibility to learn to build the file from scratch.
 
 ---
 
-# Ansible configuration files
+# Ansible configuration file
 
-- Install we won't get some of those files for Ansible.
-- That's why we'll create those files manually.
-- This course works on files as if they were `IaC`, thus please manage your code with `version control`.
+We initially suggested that there are no default config files with Ansible, yet Ansible still requires to have one. Ansible seeks that file in various places with multiple locations based on the installation method, and the search has precedence within our working system.
+The locations ansible will search for config file from the highest to lowest precedence are:
+<!-- Show example from 4 to 1 -->
+1. `ANSIBLE_CONFIG`: Environment variable with filename 
+2. `./ansible.cfg`: An Ansible config file in current directory
+3. `~/.ansible.cfg`: Hidden file in your users hoime directory.
+4. `/etc/ansible/ansible.cfg`: Typically provided, through package manager of our system.
+
+- This course works on files as if they were `Infra-As-a-Code` or `IaC`, thus the most usable way for us to use `git` with Ansible config file would be option 2.
 - Ansible seeks for default config file in your shells current location
   - That's why we'll need to create local config file named `ansible.cfg`
-- If Ansible won't find the local `ansible.cfg` file , it will continue to search other default folders such as `/etc` or `/opt`
+- If Ansible won't find the local `ansible.cfg` file , it will not work so,
 
 ---
 
@@ -88,6 +102,18 @@ The structure can be provided as follows:
     - Each host can be in several groups at the same time.
     - Groups can have parent/child relationships.Parent groups are also known as nested groups or groups of groups.
         - To create parent/child relationships for groups in INI format, use the `:children` suffix
+
+---
+
+# What now ?
+
+- We'll setup our configuration and local inventory files that will manage our nodes
+    - In virtual labs, there is no need to install Ansible, because it is installed already
+    - We can install Ansible from `pip3` to use the latest version.
+        - In python3.11 `pipx` is the tool required to do so and it also requires virtual-environments either with `venv`, `pipenv` or `poetry`
+- Also we'll connect to all virtual nodes (containers)
+- In addition, we will create version control to  manage our changes
+- Finally we'll start using Ansible command line utility to learn its capabilities
 
 ---
 
