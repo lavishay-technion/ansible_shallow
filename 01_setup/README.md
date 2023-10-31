@@ -35,11 +35,12 @@ curl -L get.docker.com| sudo bash
 
 The design goals of Ansible include:
 
-- Minimal in nature. Management systems should not impose additional dependencies on the environment.
-- Consistent. With Ansible one should be able to create consistent environments.
-- Secure. Ansible does not deploy agents to nodes. Only OpenSSH and Python are required on the managed nodes.
-- Reliable. When carefully written, an Ansible playbook can be idempotent, to prevent unexpected side-effects on the managed systems. It is possible to write playbooks that are not idempotent.
-- Minimal learning required. Playbooks use an easy and descriptive language based on YAML and Jinja templates.
+- __Minimal in nature__: Management systems should not impose additional dependencies on the environment.
+    - That said if you are implementing Ansible from the begining, it requires ssh/ssh-keys
+- __Consistent__: With Ansible one should be able to create consistent environments.
+- __Secure__: Ansible does not deploy agents to nodes. Only OpenSSH and Python are required on the managed nodes.
+- __Reliable__: When carefully written, an Ansible playbook can be idempotent, to prevent unexpected side-effects on the managed systems. It is possible to write playbooks that are not idempotent.
+- __Minimal learning required__: Playbooks use an easy and descriptive language based on YAML and Jinja templates.
 
 ---
 
@@ -53,7 +54,6 @@ Generally the Ansible architecture should look like this, yet in some examples i
 - No need to install Ansible from system repository
 - We'll install it from `pip3`
 - Lets call the inventory file: `hosts.ini`
-  
 
 ---
 
@@ -78,12 +78,12 @@ Inventory file structure is crucial for Ansible. You can create your inventory f
 
 The structure can be provided as follows:
 - defaults :Even if you do not define any groups in your inventory file, Ansible creates two default groups:
-    - [all] : group contains every host
-    - [ungrouped] : all hosts that don’t have another group aside from all
+    - `[all]` : group contains every host
+    - `[ungrouped]` : all hosts that don’t have another group aside from all
 
 > `[!]` Note: Every host will always belong to at least 2 groups: `all` and `ungrouped` or `all` and some other group
 
-- [groups]: Any name in square brackets is considered as custom group
+- `[groups]`: Any name in square brackets is considered as custom group
     - Any hostname or ip address, under group name will be considered as part of a group
     - Each host can be in several groups at the same time.
     - Groups can have parent/child relationships.Parent groups are also known as nested groups or groups of groups.
@@ -225,8 +225,8 @@ ansible --list-hosts all
 
 # Hosts, Groups and Variables (cont.)
 
-When using ansible, it will try to connect via ssh service, which in return requires digital fingerprint writing to `known_hosts` as well as ssh certificates, private and public.
-The issue with digital fingerprints, are that in some cases we just want to check connectivity and to by pass that we can use custom ansible environment variables as in any other UNIX/Linux command.
+When using Ansible, it will try to connect via ssh service, which in return requires digital fingerprint writing to `known_hosts` as well as ssh certificates, private and public.
+The issue with digital fingerprints, are that in some cases we just want to check connectivity and to by pass that we can use custom Ansible environment variables as in any other UNIX/Linux command.
 
 ```sh
 ANSIBLE_HOST_KEY_CHECKING=False  ansible  all -m ping
