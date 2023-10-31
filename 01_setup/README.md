@@ -40,12 +40,12 @@ The design goals of Ansible include:
 
 # Architecture  description (cont.)
 
-Generally the ansible architecture should look like this, yet in some examples it might differ.
+Generally the Ansible architecture should look like this, yet in some examples it might differ.
 
 <img src="../99_misc/.img/ansible_arch.png" alt="our class arch" style="float:right;width:400px;">
 
 - We'll setup our local inventory file that will manage our nodes
-- No need to install ansible from system repository
+- No need to install Ansible from system repository
 - We'll install it from `pip3`
 - Lets call the inventory file: `hosts.ini`
   
@@ -54,7 +54,7 @@ Generally the ansible architecture should look like this, yet in some examples i
 
 # Ansible configuration files
 
-- Install we won't get some of those files for ansible.
+- Install we won't get some of those files for Ansible.
 - That's why we'll create those files manually.
 - This course works on files as if they were `IaC`, thus please manage your code with `version control`.
 - Ansible seeks for default config file in your shells current location
@@ -90,9 +90,10 @@ The structure can be provided as follows:
 
 - `cd` to 99_misc/setup/docker
 - Execute `docker compose up -d` command to setup environment
-- Log in to ansible host container with : `docker compose exec -it ansible-host /bin/bash`
+- Log in to Ansible host container with : 
+    - `docker compose exec -it ansible-host /bin/bash`
     - You'll be logged as `root` user, something that is not production environment possible, but should be fine in Lab environment
-- Install all needed packages for ansible to work
+- Install all needed packages for Ansible to work
 - Create automation folder `/ansible`
 - Setup version control and save it to remote repository
 - Edit `hosts.ini` file
@@ -241,7 +242,7 @@ host_key_checking = False
 
 # Hosts, Groups and Variables (cont.)
 
-Each host in the `ini` file can have itself configured with ansible variables for different purposes:
+Each host in the `ini` file can have itself configured with Ansible variables for different purposes:
 - `ansible_user`: The user name to use when connecting to the host
 - `ansible_host`: The name of the host to connect to, if different from the alias you wish to give to it.
 - `ansible_password`: The password to use to authenticate to the host (never store this variable in plain text)
@@ -265,7 +266,7 @@ ansible all -m ping -o
 ansible all -m command -a 'id' -o
 ```
 When using `ping` module, we should get json output, with value `pong`. If no value comes or there are errors, it means something is wrong and we must fix it.
-When using `command`, we are asking ansible to run a `specific command` on remote hosts. The `specific command` is passed as an argument to `command` module. If we get output of the command passed as an argument, then it worked, yet if we did not get the command output, we need to fix the configuration.
+When using `command`, we are asking Ansible to run a `specific command` on remote hosts. The `specific command` is passed as an argument to `command` module. If we get output of the command passed as an argument, then it worked, yet if we did not get the command output, we need to fix the configuration.
 
 ---
 
@@ -286,7 +287,7 @@ ansible all -m command -a 'id' -o
 
 # Hosts, Groups and Variables (cont.)
 
-As seen in our first example, we can chain groups of hosts and also we can chain group of groups as `children` groups. In previous we saw that we can add to each host its own ansible variable, but one must agree that there should be better way to do so, we can setup group variables.
+As seen in our first example, we can chain groups of hosts and also we can chain group of groups as `children` groups. In previous we saw that we can add to each host its own Ansible variable, but one must agree that there should be better way to do so, we can setup group variables.
 
 ```ini
 [multi:children]

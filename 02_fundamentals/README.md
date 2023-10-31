@@ -28,30 +28,30 @@ Ansible allows admins to run ad-hoc commands on one or hundreds of machines at t
 ```sh
 ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 ```
-- `-b`: request for ansible to become root user on remote host
-- `-m`: ask ansible to use specific module (as mentioned the default is `command`)
+- `-b`: request for Ansible to become root user on remote host
+- `-m`: ask Ansible to use specific module (as mentioned the default is `command`)
 - `-a`: pass a argument to module
-- `-f`: run ansible in parallel with all
+- `-f`: run Ansible in parallel with all
 - `-i`: use specific inventory and not the default.
 - `-e`: pass extra variable of your choice
 
-- We `ansible` executable according to its commands parameters onto `inventory` file hosts.
+- We run Ansible executable according to its commands parameters with `inventory` file hosts.
 - Ansible runs ad-hoc commands
     - Ad-Hoc commands are basic commands used by Ansible
     - `Commands` essentially are python written code to behave as simple system call.
-    - By default it is running with `command` ad-hoc module
+    - By default, if no Ansible command/module is provided, it will run with `command` ad-hoc module
 
 ---
 
 # Ansible configuration file
 
-Although somewhat straight forward, but all the ansible main configurations, can be found under file named `ansible.cfg`. The thing is that file can be found in different places:
-- `/etc/ansible/ansible.cfg`: in case ansible was install with OS's package manager, for example `apt-get`
+Although somewhat straight forward, but all the Ansible main configurations, can be found under file named `ansible.cfg`. The thing is that file can be found in different places:
+- `/etc/ansible/ansible.cfg`: in case Ansible was install with OS's package manager, for example `apt-get`
 - `/home/$USER/.local/share/ansible/ansible.cfg`: in case ansible was installed with pip/pipx
 
-That configuration file will hold the default configurations of the ansible.
+That configuration file will hold the default configurations of the Ansible.
 
-#### What if I prefer to use version control on my ansible ?
+#### What if I prefer to use version control on my Ansible ?
 
 - Great question:
     - Ansible seeks for the configuration file recursively, meaning it has map of locations where it searches for the file named `ansible.cfg`
@@ -152,7 +152,7 @@ ansible all -m command -a 'cat /etc/os-release'
 
 # Practice
 
-- Run ansible command to with needed module to:
+- Run Ansible command to with needed module to:
   - List all hosts in inventory file.
   - Ping web group in hosts list.
   - Get environment variables of all remote hosts.

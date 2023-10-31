@@ -124,7 +124,6 @@ But there’s a reason why many developers and sysadmins stick to shell scriptin
 ### Enter Ansible
 
 <img src="../99_misc/.img/ansible_logo.png" alt="ansible_logo" style="float:right;width:180px;">
-<img src="../99_misc/.img/yesbutno.png" alt="yesbutno" style="float:left;width:180px;">
 
 Ansible was built by developers and sysadmins who know the command line—and want to make a tool that helps them manage their servers exactly the same as they have in the past, but in a repeatable and centrally managed way. Ansible also has other tricks up its sleeve, making it a true Swiss Army knife for people involved in DevOps.
 
@@ -152,8 +151,9 @@ Lets assume that you have a couple of remote instances running some services. Du
 
 #### Do we still need  Bash/Python/Ruby/Go scripts, then ?
 
-<img src="../99_misc/.img/logos.png" alt="logos" style="float:left;width:600px;">
+<img src="../99_misc/.img/yesbutno.png" alt="yesbutno" style="float:right;width:400px;">
 
+<img src="../99_misc/.img/logos.png" alt="logos" style="float:right;width:600px;">
 - Let's discuss
 
 ---
