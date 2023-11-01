@@ -162,7 +162,7 @@ Let's discuss:
 
 - Code development process
 - Declarative Vs. Scripted
-- Code maintainence
+- Code mainteinance
 - Complexity management
 
 ---

@@ -39,7 +39,7 @@ curl -L get.docker.com| sudo bash
 The design goals of Ansible include:
 
 - __Minimal in nature__: Management systems should not impose additional dependencies on the environment.
-    - That said if you are implementing Ansible from the begining, it requires ssh/ssh-keys
+    - That said if you are implementing Ansible from the beginning, it requires ssh/ssh-keys
 - __Consistent__: With Ansible one should be able to create consistent environments.
 - __Secure__: Ansible does not deploy agents to nodes. Only OpenSSH and Python are required on the managed nodes.
 - __Reliable__: When carefully written, an Ansible playbook can be idempotent, to prevent unexpected side-effects on the managed systems. It is possible to write playbooks that are not idempotent.
@@ -158,7 +158,7 @@ In other words: lets go and practice
 
 # Practice
 
-- Before starting the lab verify that you have emptry repository for version control on gitlab or github. I recommend the first, yet you are free to use which ever you want to, as long as you will be able to debug your own issues that are not part of the course scope
+- Before starting the lab verify that you have empty repository for version control on gitlab or github. I recommend the first, yet you are free to use which ever you want to, as long as you will be able to debug your own issues that are not part of the course scope
     - Suggested name for repository: `Ansible-Shallow-Dive`
 - `cd` to 99_misc/setup/docker
 - Execute `docker compose up -d` command to setup environment
@@ -232,8 +232,7 @@ ansible --list-hosts all
 
 The `hosts.ini` file enables us to create structured **key value** pairs, that eventually will be targets onto which we would execute remote commands.
 In previous practice we did setup up groups but did not emphasized the explanations, thus lets address that:
-Lets go back to lab in docker-compose and the edit additional configurations that we could have 
-
+Lets go back to the lab in docker-compose and edit additional configurations that we'll need.
 ```sh
 # in case you did not login
 docker compose exec anisble-host /bin/bash 
