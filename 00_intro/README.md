@@ -2,7 +2,7 @@
 
 
 
-.footer: Created By Alex M. Schapelle, VAioLabs.io
+.footnote: Created By Alex M. Schapelle, VAioLabs.io
 
 
 ---

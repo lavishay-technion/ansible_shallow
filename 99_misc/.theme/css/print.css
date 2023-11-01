@@ -88,7 +88,8 @@ code {
   font-size: 36px;
 }
 
-#toc, #help, .slide aside, .slide footer, .slide .notes,
+
+ #toc, #help, .slide aside, .slide footer, .slide .notes,
 .presenter_notes, #current_presenter_notes, #presenter_note {
   display: none;
 }

@@ -7,7 +7,7 @@
 
 ---
 
-# Ansible Environment Setup (cont.)
+# Ansible Environment Setup 
 
 As mentioned, we will be working on our virtual labs with docker, thus docker installation is required.
 - What do we need ?
@@ -49,8 +49,15 @@ The design goals of Ansible include:
 Generally the Ansible architecture should look like this, yet in some examples it might differ.
 
 <img src="../99_misc/.img/ansible_arch.png" alt="our class arch" style="float:right;width:400px;">
+
 But in order to make it work, we'll need existing software packages, modules and configuration files to work on.
 When we issue `ansible --version` command it will provide us with information about ansible referencing the configuration files.
+<br>
+<br>
+<br>
+<br>
+<br>
+
 ```sh
 ansible --version
 ansible [core 2.14.3]
@@ -82,9 +89,19 @@ The locations ansible will search for config file from the highest to lowest pre
 
 ---
 
-# Static Inventory
+# Inventories
 
-### Hosts, Groups and Variables
+Lets take a look on inventories, their types and uses on different types of Linux hosts, inventory variables, ranges, groups and group children 
+However, before diving into these, One thing we must always consider. to work with our tools at hand: As mentioned, Ansible has several configuration files, and all these need to be maintained, updates, developed and saved on remote place.
+In this course we'll be using `git` version control and `gitlab` remote server to work on the contents of Ansible files. As such the student working on their own device, will need to install git client on their working device and also create/use `gitlab/github/any remote git based repository` to follow the course.
+
+In order to start, well work in structured manner, of creating designated folders with chapter naming and under each chapter we'll practice subject at hand.
+This chapter follows `setup` topic thus we should create folder named in the same manner in continue by using sub-folder for each sub-topic.E.g.
+```sh
+mkdir -p 01_setup/{00_ansible_cfg,01_inventories}
+```
+
+### Static Inventories
 
 Inventory file structure is crucial for Ansible. You can create your inventory file in one of many formats, depending on the inventory plugins you have. The most common formats are `INI` and `YAML`
 - An `.ini` file is a configuration file for computer software that consists of a text-based content with a structure and syntax comprising **key–value** pairs for properties, and sections that organize the properties
@@ -114,6 +131,8 @@ The structure can be provided as follows:
 - Also we'll connect to all virtual nodes (containers)
 - In addition, we will create version control to  manage our changes
 - Finally we'll start using Ansible command line utility to learn its capabilities
+
+In other words: lets go and practice
 
 ---
 
@@ -352,17 +371,17 @@ ansible all -m command -a 'id' -o
 
 ---
 
-# Dynamic Inventory
+# Dynamic Inventories
 
-- Mostly can be implemented where there is API for managing vm's
-  - Cloud
-  - Virtual environment
+Mostly can be implemented where there is API for managing vm's
+- Cloud
+- Virtual environment
 
-- Why do we need `Dynamic Inventory`, if you already have `Static Inventory` ?
+Why do we need `Dynamic Inventory`, if you already have `Static Inventory` ?
 
 #### And
 
-- If `Dynamic Inventory` exists , What's the point in having `Static Inventory` ?
+If `Dynamic Inventory` exists , What's the point in having `Static Inventory` ?
 
 
 ---
