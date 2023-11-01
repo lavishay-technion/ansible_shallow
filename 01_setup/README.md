@@ -3,11 +3,14 @@
 
 # Ansible Environment Setup
 
+<img src="../99_misc/.img/setup.png" alt="setup" style="float:left;width:300px;">
+
 .footer: Created By Alex M. Schapelle, VAioLabs.io
 
 ---
 
 # Ansible Environment Setup 
+
 
 As mentioned, we will be working on our virtual labs with docker, thus docker installation is required.
 - What do we need ?
@@ -57,7 +60,7 @@ When we issue `ansible --version` command it will provide us with information ab
 <br>
 <br>
 <br>
-
+<!--the br above is to fix the padding between the picture and the code snippet below -->
 ```sh
 ansible --version
 ansible [core 2.14.3]
@@ -97,17 +100,34 @@ In this course we'll be using `git` version control and `gitlab` remote server t
 
 In order to start, well work in structured manner, of creating designated folders with chapter naming and under each chapter we'll practice subject at hand.
 This chapter follows `setup` topic thus we should create folder named in the same manner in continue by using sub-folder for each sub-topic.E.g.
+
 ```sh
-mkdir -p 01_setup/{00_ansible_cfg,01_inventories}
+mkdir -p 01_setup/01_inventories
+cd 01_inventories
+touch ansible.cfg
+ansible --version
+    ansible [core 2.14.3]
+        config file = /home/aschapelle/00_ansible_cfg/ansible.cfg # required for ansible configuration
+        configured module search path = ['/home/aschapelle/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+        ansible python module location = /usr/lib/python3/dist-packages/ansible
+        ansible collection location = /home/aschapelle/.ansible/collections:/usr/share/ansible/collections
+        executable location = /usr/bin/ansible
+        python version = 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0] (/usr/bin/python3)
+echo '[defaults]' >> ansible.cfg
+echo 'inventory=./hosts.ini' >> ansible.cfg
+ansible --version
 ```
 
 ### Static Inventories
 
-Inventory file structure is crucial for Ansible. You can create your inventory file in one of many formats, depending on the inventory plugins you have. The most common formats are `INI` and `YAML`
+Inventory file and its structure is crucial for Ansible. You can create your inventory file in one of many formats, depending on the inventory plugins you have. The most common formats are `INI` or `YAML`
+- Incentory file is suggested either with `-i` option or with `ansible.cfg` configuration line specifying the location of the file.
+    - Usually looks like this: `inventory = my_inv_file` or any other name
 - An `.ini` file is a configuration file for computer software that consists of a text-based content with a structure and syntax comprising **key–value** pairs for properties, and sections that organize the properties
 - The `hosts.ini` file can also be written in `yaml` format, with `.yml` extension, yet it is not mandatory.
 
 The structure can be provided as follows:
+
 - defaults :Even if you do not define any groups in your inventory file, Ansible creates two default groups:
     - `[all]` : group contains every host
     - `[ungrouped]` : all hosts that don’t have another group aside from all
@@ -138,18 +158,24 @@ In other words: lets go and practice
 
 # Practice
 
+- Before starting the lab verify that you have emptry repository for version control on gitlab or github. I recommend the first, yet you are free to use which ever you want to, as long as you will be able to debug your own issues that are not part of the course scope
+    - Suggested name for repository: `Ansible-Shallow-Dive`
 - `cd` to 99_misc/setup/docker
 - Execute `docker compose up -d` command to setup environment
 - Log in to Ansible host container with : 
     - `docker compose exec -it ansible-host /bin/bash`
-    - You'll be logged as `root` user, something that is not production environment possible, but should be fine in Lab environment
-- Install all needed packages for Ansible to work
-- Create automation folder `/ansible`
+    - You'll be logged as user `ansible`, some what production level environment setup, which we will discuss later on.
+- Verify that ansible is installed
+- Create automation folder `01_ansible_inventory`
+- Generate empty `ansible.cfg` `hosts.ini` `README.md` and `.gitignore` files
 - Setup version control and save it to remote repository
+- Edit gitignore not to save `*.swp` files
+- Edit `anisble.cfg` to use `hosts.ini` as a default inventory
 - Edit `hosts.ini` file
   - Setup groups all, web and db
-  - issue an `ansible --list-host all`
-    - if there is suitable output kill the lab, by exiting the ansible-host container and stopping docker compose with `docker compose down` command
+  - Issue an `ansible --list-host all`
+    - If there is suitable output,You are done, else, check with the instructor
+
 
 ---
 
@@ -158,44 +184,45 @@ In other words: lets go and practice
 ```sh
 cd 99_misc/setup/docker
 docker compose exec -it ansible-host /bin/bash
-apt update && apt install ansible -y
-mkdir automation && cd automation
+which ansible
+ansible --version
+mkdir 01_ansible_inventory && cd 01_ansible_inventory
 touch README.md .gitignore ansible.cfg hosts.ini
 git init 
 git config user.name silent-mobius
 git config user.mail alex@vaiolabs.com
+echo '*.swp' > .gitignore
 git add .
 git commit -m "initial commit to repo"
-git remote add remote-repo-url
+git remote add {YOUR_REMOTE_GITLAB_REPO_WHICH_YOU_SHOULD_HAVE_CREATED}
 git push -U origin master
-vi hosts.ini
+
 ```
 ---
 
 # Practice (cont.)
 
-```ini
-[defaults]
-inventory = hosts.ini
+```sh
+vi ansible.cfg
+    [defaults]
+    inventory = hosts.ini
 ```
 
-```ini
-[all]
-node1
-node2
+```sh
+vi hosts.init
+    [all]
+    node1
+    node2
 
-[db]
-node1
+    [db]
+    node1
 
-[web]
-node2
+    [web]
+    node2
 ```
 
 ```sh
 ansible --list-hosts all
-# if there is output
-exit
-docker compose down
 ```
 
 
@@ -203,15 +230,15 @@ docker compose down
 
 # Hosts, Groups and Variables
 
-The `hosts.ini` file enables us to create structured **key value** pairs, that eventually will be our targets on to which we would like to execute some type of command.
-In previous practice we did setup up groups but did not emphasized the explanations, thus lets fix that:
-lets start the lab again the edit additional configurations that we could have 
+The `hosts.ini` file enables us to create structured **key value** pairs, that eventually will be targets onto which we would execute remote commands.
+In previous practice we did setup up groups but did not emphasized the explanations, thus lets address that:
+Lets go back to lab in docker-compose and the edit additional configurations that we could have 
+
 ```sh
-cd 99_misc/setup/docker
-docker compose up -d
-docker exec -it ansible-host /bin/bash 
-mkdir ansible && cd ansible
-touch hosts.ini ansible.cfg
+# in case you did not login
+docker compose exec anisble-host /bin/bash 
+cd 01_ansible_inventory
+vi hosts.ini
 ```
 Once we are inside and have initial building block lets start updating files step by step to learn more:
 

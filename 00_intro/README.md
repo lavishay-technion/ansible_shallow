@@ -2,7 +2,7 @@
 
 
 
-.footnote: Created By Alex M. Schapelle, VAioLabs.io
+.note: Created By Alex M. Schapelle, VAioLabs.io
 
 
 ---
@@ -178,7 +178,10 @@ Managed network devices require no extra dependencies and are agent less. We can
 
 ### How Ansible works ?
 
-Ansible uses combination of inventories, executable, modules, yaml playbooks and playbook roles.
+<img src="../99_misc/.img/gear.png" alt="gear" style="float:right;width:300px;">
+
+Ansible uses combination of _inventories_, _executable_, _modules_, _yaml playbooks_ and _playbook roles_.
+
 
 #### Inventories and Inventory file
 
@@ -200,7 +203,7 @@ Ansible uses combination of inventories, executable, modules, yaml playbooks and
 - Playbooks are YAML files that express configurations, deployment, and orchestration in Ansible, and allow Ansible to perform operations on managed nodes. 
 - Each Playbook maps a group of hosts to a set of roles. Each role is represented by calls to Ansible tasks
 
-### Ansible roles
+#### Ansible roles
 
 - Each Playbook maps a group of hosts to a set of roles. Each role is represented by calls to Ansible tasks.
 
