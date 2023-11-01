@@ -31,6 +31,16 @@ We'll learn several topics mainly focused on:
 
 ---
 
+# Course Prerqqusits
+
+- TCP/IP knowledge - MUST
+- UNIX/Linux shell usage - MUST
+- Mild knowledge of shell scripting
+- Moderate understanding of version control (git/github/gitlab) - Recommended
+- Low-headed familiarity with containers (docker)
+
+---
+
 # Course Topics
 
 - [Setup](../01_setup/README.md)

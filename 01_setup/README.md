@@ -12,7 +12,7 @@
 # Ansible Environment Setup 
 
 
-As mentioned, we will be working on our virtual labs with docker, thus docker installation is required.
+As mentioned, we will be working on our virtual labs with `docker` and `docker-compose`, thus docker installation is required.
 - What do we need ?
   - Unix/Linux Node
   - Docker environment installed
@@ -25,12 +25,27 @@ curl -L get.docker.com| sudo bash
 ```
   - In case you are using RedHat based Linux distro, like Fedora, Rocky and Alma, the above command should work in same manner.
   - With RedHat itself, it will require you to use license which you need to purchase
-  - while with Windows, Please install Docker-Desktop.
-  - In case of MacOS, Docker-Desktop is the latest .
+  - While with Windows, Please install Docker-Desktop.
+  - In case of MacOS, Docker-Desktop is the solution at the moment, yet it changes rapidly, thus do ask instructor on the matter.
 
 > `[!]` Note: I, myself am using Linux distribution, in case you use something else, there should not be too much of the difference, yet that is the price of learning: adaptation to the unknown.
 
-> `[!]` Note: You should try to use docker project from [here](https://gitlab.com/silent-mobius/ansible-compose.git)
+> `[!]` Note: You should try to use docker project from the course repository under folder named `99_misc/setup/docker` or from [gitlab repository here](https://gitlab.com/silent-mobius/ansible-compose.git)
+
+---
+
+# The Playground
+
+The docker lab itself consist of `anisble-host` container, where we will be practicing, running, testing and validating our ansible configurations. All the code management, version control and code will be done on this very container, and the files saved will be outputted on your pc/laptop/environment under folder `99_misc/setup/docker/ansible`.
+Additionally we will have four more containers, of `debian` and `rockylinux`, that will appear as vm's or remotely connected web/database/application servers, as you have in most of the environments in different organizations.
+The main idea behind this containerized playground is to provide as with practice environment that is able to look like deployment platform, for us to practice and implement various parts of `ansible`.
+The playgound is reporoducable so you may practice on your own when even you wish.
+
+#### Are there any other places to practice `ansible` ?
+
+Yes - As mentioned, `ansible` was purchased by RedHat in 2015 and they can provide you with practice labs for their certifications, as well as other companies and self-employed instructors that teach the same course, via udemy, kodekloud, katakode, diveinto and so on ...
+
+The main goal it to practice, theories fine, but with no hands on they fly away like birds in winter...
 
 ---
 
@@ -124,7 +139,8 @@ Inventory file and its structure is crucial for Ansible. You can create your inv
 - Incentory file is suggested either with `-i` option or with `ansible.cfg` configuration line specifying the location of the file.
     - Usually looks like this: `inventory = my_inv_file` or any other name
 - An `.ini` file is a configuration file for computer software that consists of a text-based content with a structure and syntax comprising **key–value** pairs for properties, and sections that organize the properties
-- The `hosts.ini` file can also be written in `yaml` format, with `.yml` extension, yet it is not mandatory.
+    - You can read about [`ini` in the link](https://en.wikipedia.org/wiki/INI_file), but it is pretty self explanatory, thus do not dwell on it too much.
+- The inventory file can also be written in `yaml` format, with `.yml` extension, yet it is not mandatory.
 
 The structure can be provided as follows:
 
@@ -170,11 +186,11 @@ In other words: lets go and practice
 - Generate empty `ansible.cfg` `hosts.ini` `README.md` and `.gitignore` files
 - Setup version control and save it to remote repository
 - Edit gitignore not to save `*.swp` files
-- Edit `anisble.cfg` to use `hosts.ini` as a default inventory
+- Edit `anisble.cfg` with the text `[defaults]` and under it `inventory=hosts.ini`: we'll explain it later
 - Edit `hosts.ini` file
-  - Setup groups all, web and db
+  - Write down all the hosts names line by line from `node1` to `node4`
   - Issue an `ansible --list-host all`
-    - If there is suitable output,You are done, else, check with the instructor
+    - If there is suitable output of all the nodes, You are done, else, check with the instructor
 
 
 ---
@@ -210,18 +226,16 @@ vi ansible.cfg
 
 ```sh
 vi hosts.init
-    [all]
     node1
     node2
-
-    [db]
-    node1
-
-    [web]
-    node2
+    node3
+    node4
 ```
 
 ```sh
+git add *
+git commit -m "saving initial changes"
+git push
 ansible --list-hosts all
 ```
 
@@ -237,51 +251,40 @@ Lets go back to the lab in docker-compose and edit additional configurations tha
 # in case you did not login
 docker compose exec anisble-host /bin/bash 
 cd 01_ansible_inventory
-vi hosts.ini
 ```
-Once we are inside and have initial building block lets start updating files step by step to learn more:
-
-- Lets check connectivity between `ansible-host` and `node1`
+We already have initial building blocks, in shape of `anisble.cfg` and `hosts.ini` files, so all we need is to update files as we learn more and more. In order to keep the files in an uasable manner, I suggest to use git branches and keep each chapter outline and practice in different branches. Before we start updating config files, let us start by testing connectivity with the nodes:
+- Lets check connectivity between `ansible-host` and nodes 1 to 4. 
+    - Keep in mind that dns resolution is provided by `docker-compose`, so at the moment, there is no need to know IP addresses.
 ```sh
 ping node1
+ping node2
+ping node3
+ping node4
 ```
-- Configure which default inventory file should we use: 
+- Now, let's configure default inventory file inside our `ansible.cfg` config file and use to test same connection: 
+- Notice that we have created `ansible.cfg` and added `defaults` entry, which provides default configuration to ansible to feed on.
+- First configuration under defaults is location of `inventory` file, that can be a file with absolute or relative paths.
 
 ```sh
 vi ansible.cfg
+    [defaults]
+    inventory = hosts.ini
 ```
-```ini
-[defaults]
-inventory = hosts.ini
-```
-
-- When running systems it is good idea to separate them in to logical groups, so we should create  groups in `hosts.ini`
+- In previous practice, we wrote our nodes addresses by their hostnames in `hosts.ini` file.
+    - As mentioned, by default all the nodes that are not written to any group are part of `group [all]`
+- When running systems it is good idea to separate them in to logical groups, so we should regroup the content in `hosts.ini`
   
 ```sh
 vi hosts.ini
-```
-```ini
-[all]
-node1
-node2
-node3
-node4
-node5
-node6
-
-[web]
-node2
-node4
-[db]
-node1
-node3
-[monitor]
-node5
-node6
-
-[multi:children]
-web
-db
+    [web]
+    node2
+    node4
+    [db]
+    node1
+    node3
+    [multi:children]
+    web
+    db
 ```
 > `[!]` Note: for purposes of the exercise these nodes do not exists. We are just providing examples of possible environments.
 
