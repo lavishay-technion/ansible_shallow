@@ -41,7 +41,7 @@ Additionally we will have four more containers, of `debian` and `rockylinux`, th
 The main idea behind this containerized playground is to provide as with practice environment that is able to look like deployment platform, for us to practice and implement various parts of `ansible`.
 The playgound is reporoducable so you may practice on your own when even you wish.
 
-#### Are there any other places to practice `ansible` ?
+#### Are There Any Other Places To Practice `ansible` ?
 
 Yes - As mentioned, `ansible` was purchased by RedHat in 2015 and they can provide you with practice labs for their certifications, as well as other companies and self-employed instructors that teach the same course, via udemy, kodekloud, katakode, diveinto and so on ...
 
@@ -49,7 +49,7 @@ The main goal it to practice, theories fine, but with no hands on they fly away 
 
 ---
 
-# Architecture  description
+# Architecture  Description
 
 The design goals of Ansible include:
 
@@ -62,7 +62,7 @@ The design goals of Ansible include:
 
 ---
 
-# Architecture  description (cont.)
+# Architecture  Description (cont.)
 
 Generally the Ansible architecture should look like this, yet in some examples it might differ.
 
@@ -90,7 +90,7 @@ ansible [core 2.14.3]
 
 ---
 
-# Ansible configuration file
+# Ansible Configuration File
 
 We initially suggested that there are no default config files with Ansible, yet Ansible still requires to have one. Ansible seeks that file in various places with multiple locations based on the installation method, and the search has precedence within our working system.
 The locations ansible will search for config file from the highest to lowest precedence are:
@@ -158,7 +158,7 @@ The structure can be provided as follows:
 
 ---
 
-# What now ?
+# What Now ?
 
 - We'll setup our configuration and local inventory files that will manage our nodes
     - In virtual labs, there is no need to install Ansible, because it is installed already
