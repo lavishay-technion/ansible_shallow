@@ -109,9 +109,16 @@ The locations ansible will search for config file from the highest to lowest pre
 
 # Inventories
 
+
+<img src="../99_misc/.img/inventory.png" alt="our class arch" style="float:right;width:400px;">
+
 Lets take a look on inventories, their types and uses on different types of Linux hosts, inventory variables, ranges, groups and group children 
 However, before diving into these, One thing we must always consider. to work with our tools at hand: As mentioned, Ansible has several configuration files, and all these need to be maintained, updates, developed and saved on remote place.
 In this course we'll be using `git` version control and `gitlab` remote server to work on the contents of Ansible files. As such the student working on their own device, will need to install git client on their working device and also create/use `gitlab/github/any remote git based repository` to follow the course.
+
+---
+
+# Inventories (cont.)
 
 In order to start, well work in structured manner, of creating designated folders with chapter naming and under each chapter we'll practice subject at hand.
 This chapter follows `setup` topic thus we should create folder named in the same manner in continue by using sub-folder for each sub-topic.E.g.
@@ -133,14 +140,26 @@ echo 'inventory=./hosts.ini' >> ansible.cfg
 ansible --version
 ```
 
+---
+
+# Inventories (cont.)
+
 ### Static Inventories
 
 Inventory file and its structure is crucial for Ansible. You can create your inventory file in one of many formats, depending on the inventory plugins you have. The most common formats are `INI` or `YAML`
-- Incentory file is suggested either with `-i` option or with `ansible.cfg` configuration line specifying the location of the file.
+
+- Inventory file is suggested either with `-i` option or with `ansible.cfg` configuration line specifying the location of the file.
     - Usually looks like this: `inventory = my_inv_file` or any other name
 - An `.ini` file is a configuration file for computer software that consists of a text-based content with a structure and syntax comprising **key–value** pairs for properties, and sections that organize the properties
     - You can read about [`ini` in the link](https://en.wikipedia.org/wiki/INI_file), but it is pretty self explanatory, thus do not dwell on it too much.
 - The inventory file can also be written in `yaml` format, with `.yml` extension, yet it is not mandatory.
+
+---
+
+
+# Inventories (cont.)
+
+### Static Inventories
 
 The structure can be provided as follows:
 
@@ -252,14 +271,16 @@ Lets go back to the lab in docker-compose and edit additional configurations tha
 docker compose exec anisble-host /bin/bash 
 cd 01_ansible_inventory
 ```
+
 We already have initial building blocks, in shape of `anisble.cfg` and `hosts.ini` files, so all we need is to update files as we learn more and more. In order to keep the files in an uasable manner, I suggest to use git branches and keep each chapter outline and practice in different branches. Before we start updating config files, let us start by testing connectivity with the nodes:
+
 - Lets check connectivity between `ansible-host` and nodes 1 to 4. 
     - Keep in mind that dns resolution is provided by `docker-compose`, so at the moment, there is no need to know IP addresses.
 ```sh
-ping node1
-ping node2
-ping node3
-ping node4
+ping -c 1 node1
+ping -c 1 node2
+ping -c 1 node3
+ping -c 1 node4
 ```
 - Now, let's configure default inventory file inside our `ansible.cfg` config file and use to test same connection: 
 - Notice that we have created `ansible.cfg` and added `defaults` entry, which provides default configuration to ansible to feed on.

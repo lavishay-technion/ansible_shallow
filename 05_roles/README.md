@@ -14,7 +14,7 @@ Roles let us automatically load related `vars`, `files`, `tasks`, `handlers`, an
 ---
 
 
-# Role directory structure
+# Role Directory Structure
 
 An Ansible role has a defined directory structure with eight main standard directories. You must include at least one of these directories in each role. You can omit any directories the role does not use. For example:
 ```yaml
@@ -39,7 +39,8 @@ roles/
 ```
 ---
 
-# Role directory structure (cont.)
+# Role Directory Structure (cont.)
+
 By default Ansible will look in each directory within a role for a main.yml file for relevant content (also main.yaml and main):
 
 - `tasks/main.yml` - the main list of tasks that the role executes.
@@ -52,7 +53,7 @@ By default Ansible will look in each directory within a role for a main.yml file
 
 ---
 
-# Role directory structure (cont.)
+# Role Directory Structure (cont.)
 
 You can add other YAML files in some directories. For example, you can place platform-specific tasks in separate files and refer to them in the tasks/main.yml file:
 ```yaml
@@ -80,13 +81,13 @@ You can add other YAML files in some directories. For example, you can place pla
 
 ---
 
-# Role directory structure (cont.)
+# Role Directory Structure (cont.)
 
 Roles may also include modules and other plugin types in a directory called library. Will be covered in `Embedding modules and plugins` later.
 
 ---
 
-# Storing and finding roles
+# Storing And Finding Roles
 
 By default, Ansible looks for roles in the following locations:
 
@@ -108,7 +109,7 @@ Alternatively, you can call a role with a fully qualified path:
 
 ---
 
-# Using roles
+# Using Roles
 
 You can use roles in three ways:
 
@@ -118,7 +119,7 @@ You can use roles in three ways:
 
 ---
 
-# Using roles at the play level
+# Using Roles At The Play Level
 
 The classic (original) way to use roles is with the roles option for a given play:
 
@@ -132,7 +133,7 @@ The classic (original) way to use roles is with the roles option for a given pla
 
 ---
 
-# Using roles at the play level (cont.)
+# Using Roles At The Play Level (cont.)
 
 When you use the roles option at the play level, for each role ‘x’:
 
@@ -145,7 +146,7 @@ When you use the roles option at the play level, for each role ‘x’:
 
 ---
 
-# Using roles at the play level (cont.) 
+# Using Roles At The Play Level (cont.) 
 
 When you use the roles option at the play level, Ansible treats the roles as static imports and processes them during playbook parsing. Ansible executes your playbook in this order:
 
@@ -159,7 +160,7 @@ When you use the roles option at the play level, Ansible treats the roles as sta
 
 ---
 
-# Using roles at the play level (cont.) 
+# Using Roles At The Play Level (cont.) 
 
 > Note:
 
@@ -167,7 +168,7 @@ When you use the roles option at the play level, Ansible treats the roles as sta
 
 ---
 
-# Using roles at the play level (cont.) 
+# Using Roles At The Play Level (cont.) 
  
 We can pass other keywords to the roles option:
 ```yaml
@@ -192,7 +193,7 @@ When using vars: within the roles: section of a playbook, the variables are adde
 
 --- 
 
-# Including roles: dynamic reuse
+# Including Roles: Dynamic Reuse
 
 We can reuse roles dynamically anywhere in the tasks section of a play using include_role. While roles added in a roles section run before any other tasks in a playbook, included roles run in the order they are defined. If there are other tasks before an include_role task, the other tasks will run first.
 
@@ -215,7 +216,7 @@ To include a role:
 ```
 ---
 
-# Including roles: dynamic reuse (cont.)
+# Including Roles: Dynamic Reuse (cont.)
 
 We can pass other keywords, including variables and tags, when including roles:
 ```yaml
@@ -235,8 +236,8 @@ When you add a tag to an include_role task, Ansible applies the tag only to the 
 
 --- 
 
-# Including roles: dynamic reuse (cont.)
- 
+# Including Roles: Dynamic Reuse (cont.)
+
 We can conditionally include a role:
 ```yaml
 ---
@@ -248,7 +249,8 @@ We can conditionally include a role:
       when: "ansible_facts['os_family'] == 'RedHat'"
 ```
 ---
-# Importing roles: static reuse
+
+# Importing Roles: Static Reuse
 
 We can reuse roles statically anywhere in the tasks section of a play using import_role. The behavior is the same as using the roles keyword. For example:
 
@@ -270,7 +272,9 @@ We can reuse roles statically anywhere in the tasks section of a play using impo
 ```
 --- 
 
-# Importing roles: static reuse (cont.)
+ 
+# Importing Roles: Static Reuse (cont.)
+
 
 We can pass other keywords, including variables and tags, when importing roles:
 ```yaml
@@ -290,32 +294,24 @@ When you add a tag to an import_role statement, Ansible applies the tag to all t
 
 ---
 
-# Role argument validation
+# Role Argument Validation
 
 Beginning with version 2.11, you may choose to enable role argument validation based on an argument specification. This specification is defined in the meta/argument_specs.yml file (or with the .yaml file extension). When this argument specification is defined, a new task is inserted at the beginning of role execution that will validate the parameters supplied for the role against the specification. If the parameters fail validation, the role will fail execution.
 
 ---
 
-# Role argument validation (cont.)
+# Role Argument Validation (cont.)
 
 
-> Note:
-
-> Ansible also supports role specifications defined in the role meta/main.yml file, as well. However, any role that defines the specs within this file will not work on versions below 2.11. For this reason, we recommend using the meta/argument_specs.yml file to maintain backward compatibility.
-
----
-
-# Role argument validation (cont.)
+> `[!]` Note: Ansible also supports role specifications defined in the role meta/main.yml file, as well. However, any role that defines the specs within this file will not work on versions below 2.11. For this reason, we recommend using the meta/argument_specs.yml file to maintain backward compatibility.
 
 
-> Note:
-
-> When role argument validation is used on a role that has defined dependencies, then validation on those dependencies will run before the dependent role, even if argument validation fails for the dependent role.
+> `[!]` Note: When role argument validation is used on a role that has defined dependencies, then validation on those dependencies will run before the dependent role, even if argument validation fails for the dependent role.
 
 
 ---
 
-# Specification format
+# Specification Format
 
 The role argument specification must be defined in a top-level argument_specs block within the role meta/argument_specs.yml file. All fields are lower-case.
 
@@ -332,9 +328,11 @@ The role argument specification must be defined in a top-level argument_specs bl
   - `author`
     - Name of the entry point authors. 
     - Use a multi-line list if there is more than one author.
+
 ---
 
-# Specification format (cont.)
+# Specification Format (cont.)
+
   - `options`
     - Options are often called "parameters" or "arguments". This section defines those options.
     - For each role option (argument), you may include:
@@ -349,7 +347,8 @@ The role argument specification must be defined in a top-level argument_specs bl
         - Only needed if true.
         - If missing, the option is not required.
 ---
-# Specification format (cont.)
+
+# Specification Format (cont.)
 
   - `default`
     - If required is false/missing, default may be specified (assumed ‘null’ if missing).
@@ -366,7 +365,8 @@ The role argument specification must be defined in a top-level argument_specs bl
 
 ---
 
-# Sample specification
+# Sample Specification
+
 ```yaml
 # roles/myapp/meta/argument_specs.yml
 ---
@@ -389,7 +389,7 @@ argument_specs:
 
 ---
 
-# Sample specification (cont.)
+# Sample Specification (cont.)
 
 ```yaml
 
@@ -405,7 +405,7 @@ argument_specs:
 ```
 ---
 
-# Running a role multiple times in one playbook
+# Running A Role Multiple Times In One Playbook
 
 Ansible only executes each role once, even if you define it multiple times, unless the parameters defined on the role are different for each definition. For example, Ansible only runs the role foo once in a play like this:
 ```yaml
@@ -420,11 +420,12 @@ You have two options to force Ansible to run a role more than once.
 
 ---
 
-# Passing different parameters
+# Passing Different Parameters
 
 If you pass different parameters in each role definition, Ansible runs the role more than once. Providing different variable values is not the same as passing different role parameters. You must use the roles keyword for this behavior, since import_role and include_role do not accept role parameters.
 
 This playbook runs the foo role twice:
+
 ```yaml
 ---
 - hosts: web_server
@@ -445,7 +446,7 @@ This syntax also runs the foo role twice;
 In these examples, Ansible runs foo twice because each role definition has different parameters.
 
 
-# Using allow_duplicates: true
+# Using `allow_duplicates: true`
 
 Add allow_duplicates: true to the meta/main.yaml file for the role:
 ```yaml
@@ -464,7 +465,7 @@ In this example, Ansible runs foo twice because we have explicitly enabled it to
 
 --- 
 
-# Using role dependencies
+# Using Role Dependencies
 
 Role dependencies let you automatically pull in other roles when using a role. Ansible does not execute role dependencies when you include or import a role. You must use the roles keyword if you want Ansible to execute role dependencies.
 
@@ -490,7 +491,7 @@ dependencies:
 Ansible always executes roles listed in dependencies before the role that lists them. Ansible executes this pattern recursively when you use the roles keyword. For example, if you list role foo under roles:, role foo lists role bar under dependencies in its meta/main.yml file, and role bar lists role baz under dependencies in its meta/main.yml, Ansible executes baz, then bar, then foo.
 ---
 
-# Running role dependencies multiple times in one play
+# Running Role Dependencies Multiple Times In One Play
 
 Ansible treats duplicate role dependencies like duplicate roles listed under roles:: Ansible only executes role dependencies once, even if defined multiple times, unless the parameters, tags, or when clause defined on the role are different for each definition. If two roles in a play both list a third role as a dependency, Ansible only runs that role dependency once, unless you pass different parameters, tags, when clause, or use allow_duplicates: true in the role you want to run multiple times. See Galaxy role dependencies for more details.
 
@@ -543,7 +544,7 @@ To use allow_duplicates: true with role dependencies, you must specify it for th
 
 ---
 
-# Embedding modules and plugins in roles
+# Embedding Modules and Plugins In Roles
 
 If you write a custom module (see Should you develop a module?) or a plugin (see Developing plugins), you might wish to distribute it as part of a role. For example, if you write a module that helps configure your company’s internal software, and you want other people in your organization to use this module, but you do not want to tell everyone how to configure their Ansible library path, you can include the module in your internal_config role.
 
@@ -584,5 +585,5 @@ These filters can then be used in a Jinja template in any role called after ‘m
 
 Ansible Galaxy is a free site for finding, downloading, rating, and reviewing all kinds of community-developed Ansible roles and can be a great way to get a jump-start on your automation projects.
 
-The client ansible-galaxy is included in Ansible. The Galaxy client allows you to download roles from Ansible Galaxy, and also provides an excellent default framework for creating your own roles.
+The client `ansible-galaxy` is included in Ansible. The Galaxy client allows you to download roles from Ansible Galaxy, and also provides an excellent default framework for creating your own roles.
 
