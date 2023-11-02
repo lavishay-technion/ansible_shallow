@@ -2,7 +2,7 @@
 
 
 
-.note: Created By Alex M. Schapelle, VAioLabs.io
+.footer: Created By Alex M. Schapelle, VAioLabs.io
 
 
 ---
@@ -19,7 +19,7 @@ We'll learn several topics mainly focused on:
 
 ---
 
-# Who is this course for ?
+# Who Is This Course For ?
 
 - The name kind of mentions it:
     - System administrators who wish to learn basic Ansible usage.
@@ -148,13 +148,13 @@ As we can see, Ansible was built by developers and sysadmins who know the comman
 
 ---
 
-# What is Ansible?
+# What Is Ansible?
 
 As James Spurin explained in one of his videos, Ansible is multitude of tools, modules, and software defined Infrastructre, that are collectively ansible tool set.
 For me and majority of other users, Ansible is an open-source software provisioning, configuration management, and application-deployment tool enabling infrastructure as code.
 You are welcome to use either of those definitions.
 
-#### Why we need it?
+#### Why We Need It?
 
 Lets assume that you have a couple of remote instances running some services. Due to some issue or upgrade in those services you might need to alter the configurations in those remote instances. What you would have to do is make those changes in each of those instances manually. The importance of a configuration management system comes in handy in a situation like this. Do the configuration changes in a master instance and it will make sure that all other instances would have the proper changes. Ansible is a such configuration management tool. Ansible connects with its other instances using SSH. Therefore there is no concept such as an agent when using Ansible
 
@@ -162,7 +162,7 @@ Lets assume that you have a couple of remote instances running some services. Du
 
 # Ansible (cont.)
 
-#### Do we still need  Bash/Python/Ruby/Go scripts, then ?
+#### Do We Still Need  Bash/Python/Ruby/Go Scripts, Then ?
 
 <img src="../99_misc/.img/yesbutno.png" alt="yesbutno" style="float:right;width:400px;">
 
@@ -177,7 +177,7 @@ Let's discuss:
 
 ---
 
-# What are Ansible's prerequisites ?
+# What Are Ansible's Prerequisites ?
 
 Ansible requires Python to be installed on all `managed` machines, including `pip` package manager along with configuration-management software and its dependent packages. 
 Managed network devices require no extra dependencies and are agent less. We can sum it up with:
@@ -186,14 +186,14 @@ Managed network devices require no extra dependencies and are agent less. We can
 
 > `[!]` Note: essentially any minimal  UNIX/Linux machine should be managed with Ansible. In cases where python and other required packages are not found, Ansible can adapt,e.g Ansible manages windows machines with `Win-RM` and powershell.
 
-### How Ansible works ?
+### How Ansible Works ?
 
 <img src="../99_misc/.img/gear.png" alt="gear" style="float:right;width:300px;">
 
 Ansible uses combination of _inventories_, _executable_, _modules_, _yaml playbooks_ and _playbook roles_.
 
 
-#### Inventories and Inventory file
+#### Inventories And Inventory File
 
 - The inventory is a description of the nodes that can be accessed by Ansible. 
 - `INI` or `YAML` are used as a default configuration format, while default configuration file is either located at `/etc/ansible/hosts` or under the users home directory. Depends on type of installation. 
@@ -201,19 +201,19 @@ Ansible uses combination of _inventories_, _executable_, _modules_, _yaml playbo
 
 ---
 
-# How Ansible works ? (cont.)
+# How Ansible Works ? (cont.)
 
-#### Ansible modules
+#### Ansible Modules
 
 - Modules are mostly standalone and can be written in a standard scripting language (such as Python, Perl, Ruby, Bash, etc.). 
 - One of the guiding properties of modules is idempotence, which means that even if an operation is repeated multiple times (e.g., upon recovery from an outage), it will always place the system into the same state
 
-#### Ansible playbooks
+#### Ansible Playbooks
 
 - Playbooks are YAML files that express configurations, deployment, and orchestration in Ansible, and allow Ansible to perform operations on managed nodes. 
 - Each Playbook maps a group of hosts to a set of roles. Each role is represented by calls to Ansible tasks
 
-#### Ansible roles
+#### Ansible Roles
 
 - Each Playbook maps a group of hosts to a set of roles. Each role is represented by calls to Ansible tasks.
 
