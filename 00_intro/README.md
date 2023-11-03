@@ -121,6 +121,9 @@ Share some things about yourself:
 
 # History
 
+
+<img src="../99_misc/.img/pc-history.png" alt="pc history" style="float:right;width:300px;">
+
 Many developers and system administrators manage servers by logging into them via SSH, making changes, and logging off. Some of these changes would be documented, some would not. If an admin needed to make the same change to many servers, the admin would manually log into each server and repeatedly make this change.
 
 Some admins may use shell scripts to try to reach some level of sanity, but I’ve yet to see a complex shell script that handles all edge cases correctly while synchronizing multiple servers’ configuration and deploying new code
