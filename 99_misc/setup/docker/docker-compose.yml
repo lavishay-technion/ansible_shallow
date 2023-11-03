@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: Dockerfile.deb
     environment:
-      SSH_USERNAME: user
+      SSH_USERNAME: docker
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
     networks:
@@ -28,7 +28,7 @@ services:
       context: .
       dockerfile: Dockerfile.deb
     environment:
-      SSH_USERNAME: user
+      SSH_USERNAME: docker
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
     networks:
@@ -39,7 +39,7 @@ services:
       context: .
       dockerfile: Dockerfile.rpm
     environment:
-      SSH_USERNAME: user
+      SSH_USERNAME: docker
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
     networks:
@@ -50,7 +50,7 @@ services:
       context: .
       dockerfile: Dockerfile.rpm
     environment:
-      SSH_USERNAME: user
+      SSH_USERNAME: docker
       SSH_USERPASS: docker
     command: ["/usr/sbin/sshd", "-D"]
     networks:

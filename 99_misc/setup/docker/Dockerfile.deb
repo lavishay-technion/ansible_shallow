@@ -1,10 +1,8 @@
 FROM debian:11
 EXPOSE 22
-EXPOSE 2222
 RUN apt-get -y update && apt-get -y install openssh-server passwd sudo python3 vim nano \
     && rm -rf /var/lib/apt/lists/* && mkdir /root/.ssh && chmod 600 /root/.ssh/ 
 COPY id_rsa.pub  /root/.ssh/authorized_keys
 COPY node.sh /entrypoint.sh
-RUN chmod 775 /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]

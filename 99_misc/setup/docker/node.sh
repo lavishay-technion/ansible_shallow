@@ -36,12 +36,12 @@ function create_hostkeys() {
 }
 
 function copy_ssh_key() {
-    if [[ ! -d /home/user/.ssh ]];then
-        mkdir -p /home/user/.ssh/
+    if [[ ! -d "/home/$SSH_USERNAME/.ssh" ]];then
+        mkdir -p "/home/$SSH_USERNAME/.ssh"
     fi
-        cp /root/.ssh/authorized_keys /home/user/.ssh/authorized_keys
-        chown 1000:1000 -R /home/user/.ssh
-        chmod  600 /home/user/.ssh/authorized_keys
+        cp /root/.ssh/authorized_keys "/home/$SSH_USERNAME/.ssh/authorized_keys"
+        chown 1000:1000 -R /home/$SSH_USERNAME/.ssh
+        chmod  600 "/home/$SSH_USERNAME/.ssh/authorized_keys"
 }
 
 function main(){
