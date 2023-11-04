@@ -18,10 +18,14 @@ As mentioned, we will be working on our virtual labs with `docker` and `docker-c
   - Docker environment installed
   - Text editor: I'll be using `vim`, yet your are welcome to use anything you wish and are comfortable with.
 
-- To install docker and docker compose run on Debian based Linux distributions: 
+- To install `docker` and `docker compose` run on most well known (Debian,Ubuntu,Fedora,Rocky,Arch,Gentoo...) Linux distributions we will use the next command: 
 
 ```sh
 curl -L get.docker.com| sudo bash
+# it is good practice to add your user to docker group to verify that there won't be any permission issues
+sudo usermod -aG docker ${USER}
+# although the permissions are given, they are not loaded till new session is at hand, so we reload the session
+sudo su ${USER}
 ```
   - In case you are using RedHat based Linux distro, like Fedora, Rocky and Alma, the above command should work in same manner.
   - With RedHat itself, it will require you to use license which you need to purchase
@@ -34,22 +38,59 @@ curl -L get.docker.com| sudo bash
 
 ---
 
-# The Playground
+# Ansible Environment Setup (cont.)
 
-The docker lab itself consist of `anisble-host` container, where we will be practicing, running, testing and validating our ansible configurations. All the code management, version control and code will be done on this very container, and the files saved will be outputted on your pc/laptop/environment under folder `99_misc/setup/docker/ansible`.
+From here on we'll be using docker as a base of our virtual environment to test `ansible` command, configuration files, modules and so on.
+In case you still do NOT have the gitlab repository mentioned above in note, and you do NOT have repository of this pdf as well, then you should try to get the project from [gitlab repository here](https://gitlab.com/silent-mobius/ansible-compose.git). In any other case, please follow the instructions below.
+
+<img src="../99_misc/.img/do.png" alt="ansible_logo" style="float:right;width:250px;">
+
+#### The Playground
+
+The lab itself consist of `anisble-host` container, where we will be practicing, running, testing and validating our ansible configurations. All the code management, version control and code will be done on this very container, and the files saved will be outputted on your pc/laptop/environment under folder `99_misc/setup/docker/ansible`.
 Additionally we will have four more containers, of `debian` and `rockylinux`, that will appear as vm's or remotely connected web/database/application servers, as you have in most of the environments in different organizations.
 The main idea behind this containerized playground is to provide as with practice environment that is able to look like deployment platform, for us to practice and implement various parts of `ansible`.
 The playgound is reporoducable so you may practice on your own when even you wish.
+
+----
+
+# Ansible Environment Setup (cont.)
 
 #### Are There Any Other Places To Practice `ansible` ?
 
 Yes - As mentioned, `ansible` was purchased by RedHat in 2015 and they can provide you with practice labs for their certifications, as well as other companies and self-employed instructors that teach the same course, via udemy, kodekloud, katakode, diveinto and so on ...
 
-The main goal it to practice, theories fine, but with no hands on they fly away like birds in winter...
+The main goal it to practice, and although theories are fine, but with no hands-on practice, in most of the cases, theories fly away like birds in winter...
+
 
 ---
 
-# Architecture  Description
+# Staring The Lab
+
+Back to the topic of setting up the local lab based on `docker` and `docker compose`. Here are initial step required to start the lab with some explainations:
+
+- In case you do not have the required project files, clone the [repo](https://gitlab.com/silent-mobius/ansible-compose.git) to your working directory.
+    - If you have the pdf project with you, then skip this step
+- Move into project directory
+    - If you have pdf project move into `99_misc/setup/docker`
+- Initialize `docker compose` to start the process of building the lab
+    - By the end you should have 5 running containers with ansible-host and nodes 1-4 up and running. 
+- Last  but not least, we log into `anisble-host` to start our learning process
+    - We will be logged inside `anisble-host container`, with user named `ansible`, and most of tools already provided in there
+
+```sh
+git clone  https://gitlab.com/silent-mobius/ansible-compose.git
+cd ansible-compose
+docker compose up -d
+docker compose ps
+docker compose exec -it ansible-host /bin/bash
+```
+
+---
+
+# How Ansible Works
+
+#### Architecture  Description
 
 The design goals of Ansible include:
 
@@ -64,18 +105,26 @@ The design goals of Ansible include:
 
 # Architecture  Description (cont.)
 
-Generally the Ansible architecture should look like this, yet in some examples it might differ.
+Generally the Ansible architecture should be structures in a manner of remote machine or container that takes your ansible command/script/playbooks/roles/templates/anythong IaC related, and with remote connection executes the task it was requested to do. Usually one illustration is far better then thousand words, thus lets have a look:
 
-<img src="../99_misc/.img/ansible_arch.png" alt="our class arch" style="float:right;width:400px;">
+<img src="../99_misc/.img/ansible_arch.png" alt="our class arch" style="float:right;width:500px;">
+
+To discribe in bullet points:
+
+- There are several server/computers/vms/containers/anything with ssh connections available.
+- There is an `ansible host`:
+    - `ansible` is invoked with manual trigger,either with `ansible` command or `ansible-playbook` 
+        - Remote applications are also capable to invoke it (CI/CD tools)
+    - `ansible` will read the inventory provided or will get inventory dynamically
+    - `ansible` should start running the tasks it was requested to run
+
+---
+
+# Architecture  Description (cont.)
 
 But in order to make it work, we'll need existing software packages, modules and configuration files to work on.
 When we issue `ansible --version` command it will provide us with information about ansible referencing the configuration files.
-<br>
-<br>
-<br>
-<br>
-<br>
-<!--the br above is to fix the padding between the picture and the code snippet below -->
+
 ```sh
 ansible --version
 ansible [core 2.14.3]
@@ -195,8 +244,6 @@ In other words: lets go and practice
 
 - Before starting the lab verify that you have empty repository for version control on gitlab or github. I recommend the first, yet you are free to use which ever you want to, as long as you will be able to debug your own issues that are not part of the course scope
     - Suggested name for repository: `Ansible-Shallow-Dive`
-- `cd` to 99_misc/setup/docker
-- Execute `docker compose up -d` command to setup environment
 - Log in to Ansible host container with : 
     - `docker compose exec -it ansible-host /bin/bash`
     - You'll be logged as user `ansible`, some what production level environment setup, which we will discuss later on.
@@ -217,7 +264,7 @@ In other words: lets go and practice
 # Practice (cont.)
 
 ```sh
-cd 99_misc/setup/docker
+# Just in case you have not logged into ansible-host container
 docker compose exec -it ansible-host /bin/bash
 which ansible
 ansible --version
@@ -268,7 +315,7 @@ In previous practice we did setup up groups but did not emphasized the explanati
 Lets go back to the lab in docker-compose and edit additional configurations that we'll need.
 ```sh
 # in case you did not login
-docker compose exec anisble-host /bin/bash 
+docker compose exec -it anisble-host /bin/bash 
 cd 01_ansible_inventory
 ```
 
@@ -360,6 +407,11 @@ vi hosts.ini
 [all]
 node1 ansible_user=user ansible_password=docker
 ```
+
+---
+
+# Hosts, Groups and Variables (cont.)
+
 Let's test our configuration with modules. We'll cover them later in depth, but for now let's use `ping` and `command` modules.
 ```sh
 ansible all -m ping -o
@@ -432,11 +484,6 @@ Why do we need `Dynamic Inventory`, if you already have `Static Inventory` ?
 #### And
 
 If `Dynamic Inventory` exists , What's the point in having `Static Inventory` ?
-
-
----
-
-# Dynamic Inventory (cont.)
 
 Dynamic inventories are implemented mainly in environments where 3rd party application can `feed` Ansible with data regarding to hosts on the network. Most of these are `cloud` environments, yet there are custom made applications with `api`, such as cobbler, openstack and so on, that can serve as host inventory provider in closed networks. One may find an [example](https://github.com/lukaspustina/dynamic-inventory-for-ansible-with-openstack/blob/master/openstack_inventory.py) here. 
 
