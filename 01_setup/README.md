@@ -67,7 +67,7 @@ The main goal it to practice, and although theories are fine, but with no hands-
 
 # Staring The Lab
 
-Back to the topic of setting up the local lab based on `docker` and `docker compose`. Here are initial step required to start the lab with some explainations:
+Back to the topic of setting up the local lab based on `docker` and `docker compose`. Here are initial step required to start the lab with some explanations :
 
 - In case you do not have the required project files, clone the [repo](https://gitlab.com/silent-mobius/ansible-compose.git) to your working directory.
     - If you have the pdf project with you, then skip this step
@@ -109,7 +109,7 @@ Generally the Ansible architecture should be structures in a manner of remote ma
 
 <img src="../99_misc/.img/ansible_arch.png" alt="our class arch" style="float:right;width:500px;">
 
-To discribe in bullet points:
+To describe in bullet points:
 
 - There are several server/computers/vms/containers/anything with ssh connections available.
 - There is an `ansible host`:
