@@ -5,9 +5,12 @@
 
 .footer: Created By Alex M. Schapelle, VAioLabs.io
 
+
 ---
 
 # Ansible Playbook/YAML Structure
+
+<img src="../99_misc/.img/dev-playbook.png" alt="devplaybook" style="float:right;width:200px;">
 
 - By default Ansible runs playbooks (YAML files) with `ansible-playbook` executable.
   - For the executable to run correctly it must get certain terms:
