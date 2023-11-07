@@ -40,8 +40,11 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 - We run Ansible executable according to its commands parameters with `inventory` file hosts.
 - Ansible runs ad-hoc commands
     - Ad-Hoc commands are basic commands used by Ansible
-    - `Commands` essentially are python written code to behave as simple system call.
+    - `Commands` essentially are _python written code_ to behaive as simple system call.
     - By default, if no Ansible command/module is provided, it will run with `command` ad-hoc module
+    - `Command` module is NOT processed with shell, so environment variables and shell operators such as <,>,;,|,& will not work
+        - For Windows, `win_command` module is required, and by default `ansible` will fail if `command` is used.
+    - [Please see the docs](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html)
 
 ---
 
@@ -52,7 +55,7 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 
 ```ini
 [multi:var]
-username=user
+username=docker
 password=docker
 ```
 
@@ -192,34 +195,26 @@ ansible all -m file -a 'path=/tmp/test state=touch mode=600'
 - Create a file named `conf_db.yml`  and write in it name of db server with path to its configuration file
     - In case of postgresql15 -> `/etc/postgresql/15/main/postgresql.conf`
 - Use `copy` module to copy `conf_db.yml` file to `/opt` on web servers
-
+    - Bonus: change the mode of the file to 000 while copying it
 ```sh
 mkdir -p 02_fundamentals/modules/copy && cd 02_fundamentals/modules/copy
 touch conf_web.yml conf_db.yml
 echo 'nginx: /usr/share/nginx/html/index.html' > conf_web.yml
 echo 'postgresql15: /etc/postgresql/15/main/postgresql.conf' >conf_db.yml
-ansible web -m copy -a 'src=./conf_web.yml dest='
+ansible web -m copy -a 'src=./conf_web.yml dest=/opt/conf_web.yml'
+ansible db -m copy -a 'src=./conf_db.yml dest=/opt/conf_db.yml'
+ansible db -m copy -a 'src=./conf_db.yml dest=/opt/conf_db.yml mode=000'
 ```
- 
-
-<!--
-- Module: command
-    - Purpose: The `command` module takes the command name followed by a list of space-delimited arguments.The given command will be executed on all selected nodes.
-    - Arguments: chdir=<PATH\> cmd=<COMMAND_TO_RUN\> creates=<PATH\> removes=<PATH\>
-- Module: file
-    - Purpose: Set attributes of files, symlinks or directories.Also, remove files, symlinks or directories.
-    - Arguments: path=<PATH\> mode=<PERMISSIONS\>
-- Module: ping
-    - Purpose: Verify Ansible connectivity between hosts.
-    - Arguments: None
-- Module: setup
-    - Purpose: Collect Ansible facts.
-    - Arguments: gather_subset=<SUBSET_GROUP\>  filter=<FILTERED_VALUE\>
-
 ---
 
 # Ansible modules (cont.)
+As mentioned, learning all the modules and plugins, can be tiresome, and in some case pointless, due to long list of `builtin` modules and vast lists of Ansible-collections which  are essentially 3rd party modules for 
+special uses cases, such as cloud access, platform access and so on. Thus here is a list of rest plugins that is suggested to go over and learn, yet still go on reading the documentation.
 
+- [RTFM](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/)
+- Module: ping
+    - Purpose: Verify Ansible connectivity between hosts.
+    - Arguments: None
 - Module: debug
     - Purpose: Print statements during execution.
     - Arguments: msg=<THE_CUSTOME_MESSAGE\> var=<A_VAR_NAME_TO_DEBULG\>
@@ -233,26 +228,23 @@ ansible web -m copy -a 'src=./conf_web.yml dest='
 
 # Ansible modules (cont.)
 
-- Module: copy
-    - Purpose: Copy a file to a particular location on a target host.
-    - Arguments: src=<SOURCE_PATH\> dest=<ABSOLUTE_DESTINATION_PATH\>
 - Module: get_url
     - Purpose: Downloads files from HTTP, HTTPS, or FTP to the remote server
     - Arguments: url=<URL\> dest=<PATH\>
 - Module: lineinfile
     - Purpose: Ensures a particular line is in a file, or replace an existing line using a back-referenced regular expression
     - Arguments: path=<PATH\> line=<LINE_TO_ADD\> regex=<REGEX_TO_MATCH\>
-
----
-
-# Ansible modules (cont.)
-
 - Module: archives
     - Purpose: Creates or extends an archive
     - Arguments: path=<PATH\> dest=<PATH\>
 - Module: user
     - Purpose: Manage user accounts and user attributes
     - Arguments:   name=<USERNAME\> comment=<DESCRIPTION\> uid=<UID\> group=<GROUPNAME\>
+
+---
+
+# Ansible modules (cont.)
+
 - Module: service
     - Purpose: Control service daemons.
     - Arguments: name=<SERVICE_NAME> state=<STATE\>
@@ -262,10 +254,9 @@ ansible web -m copy -a 'src=./conf_web.yml dest='
 - Module: git
     - Purpose: Manage git checkouts of repositories to deploy files or software.
     - Arguments: repo:<GIT_REPO_URL\> dest:<PATH\>
--->
 ---
 
-# Practice
+#  Summary Practice
 
 - Run Ansible command to with needed module to:
   - List all hosts in inventory file.
@@ -293,7 +284,7 @@ ansible -m setup -a 'filter=ansible_env' all
 ansible -m setup -a 'filter=ansible_pkg_mgr' all
 ansible -m apt -a 'name=git,unrar,sshpass,python3,htop' all
 ansible -m apt -a 'name=nginx' web
-ansible -m apt -a 'name=mysql' db
+ansible -m apt -a 'name=postgresql15' db
 ansible -m setup -a 'filter=*user*' all
 ansible -m command -a 'grep user /etc/passwd'
 ansible -m systemd -a 
