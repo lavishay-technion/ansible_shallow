@@ -1,0 +1,13 @@
+# Every YAML file should start with three dashes 
+---
+
+example_key: |
+  this is a multi
+  line string that goes
+  on multiple line and can 
+  be used as embedded shell script
+  although use of modules is always preferred
+
+# Every YAML file file should end with three dots
+...
+
