@@ -8,6 +8,86 @@
 
 ---
 
+# Before web begin
+
+Few things that we need to consider:
+
+- Ansible was developed with python programming language
+- Python is interpreted dynamic programming language
+- Any programming language utilizes data-types, variables, conditions, loops, data-structures, classes and objects
+    - So does Python
+    - Due to YAML being developed  with python it inherits those treat
+    - Ansible can read YAML and with its own keyword implement its own variables, conditions and loops
+
+For us to continue, we only need to remember that data-type mostly used with any programming language is string and integer.
+ 
+---
+
+# YAML: Yet Another Markup Language
+
+Applications and software in general, moves information by sharing its own data with each other apps, in a type of a format that is predefined and aknowledge by all applications. For example in web applications most used format is `json`. 
+
+When it comes to Ansible, the format that was developed for it, in Python programming language, is called `yaml`:
+
+- YAML is as human readable, data-serialisation language.
+- Easy to use, easy to read and easy to collaborate with as well.
+- Reading and writing of YAML format is support in most major programming languages
+- YAML files are often described with `.yaml` or `.yml` extensions.
+    - `.yaml` is the officially recommended extension since 2006, yet in case you work with *nix based system, it does not matter
+- YAML consists of key/value pair collections also known as `dictionaries`
+    - keys need to be unique
+    - values can be the same
+    - keys and values are seperated with colon (:)
+        - everything after colon is treated as string
+        - in some cases, solely numbers are treated as integers
+            - unless they are in single or double quotes -> then they are strings
+    - `dictionaries` or `dicts` for short, are storing data structures inside programming languages
+    - There are also `list`, which also stores data, yet it does it in different manner 
+    - In python and YAML solely -> spaces and indententions
+
+
+---
+
+# How YAML Is Used In Ansible ?
+
+YAML is a structured data, that is passed to ansible modules. to illustrate it, here is an example:
+
+- Here is a simple shell script. lets name it `show_yaml_python.sh`
+    - It's purpose is to open and read yaml file named `test.yaml` with help of `yaml` library.
+
+```sh
+python3 -c 'import yaml,pprint;pprint.pprint(yaml.load(open("test.yaml").read(), Loader=yaml.FullLoader))'
+```
+
+```yaml
+# Every YAML file should start with three dashes 
+---
+
+# Every YAML file file should end with three dots
+...
+```
+- Not the end nor the start are required, yet is useful in cases where you would like to combine multiple playbooks in one single file
+- Everything starting with `#` is considered as comment and is ignored by Ansible
+
+
+---
+
+# Practice
+
+- Use test shell script to validate YAML that we  will create.
+- Create file called test.yaml with appropriate start and end markers, run the test script -> the output should be NONE
+- create a list of car manufacturers, it should include brands below, yet you are welcome to add:
+    - Acura
+    - Mazda
+    - Honda
+- Change each of these entries in the list, so they are dictionaries
+- Add as key/values to each car manufacturers, when they were founded and what is their web-site
+- Add a key of `founded_by`, but with a list of the founder or founders
+
+```yaml
+```
+---
+
 # Ansible Playbook/YAML Structure
 
 <img src="../99_misc/.img/dev-playbook.png" alt="devplaybook" style="float:right;width:200px;">
@@ -37,7 +117,7 @@ As an example:
    
 ```yaml
 ---
-- hosts: nodes
+- hosts: all
   tasks:
     - name: ping all nodes
       ping:
@@ -50,6 +130,16 @@ As an example:
     - In playbooks create a task that pings all possible hosts
     - Add another task the pings web servers
     - Add other task pings db servers
+
+```yml
+
+---
+- hosts: nodes
+  tasks:
+    - name: ping all nodes
+      ping:
+
+```
 
 ---
 
