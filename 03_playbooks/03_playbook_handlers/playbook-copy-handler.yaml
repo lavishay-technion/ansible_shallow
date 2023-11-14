@@ -1,0 +1,29 @@
+---
+# The  minus in YAML this indicates a list item. the playbook contains a list of plays,
+# with each play being a dictionary
+
+-
+  # Hosts: lists of target hosts that we'll run playbooks on
+  hosts: db
+  user: root
+  gather_facts: False
+
+  # Vars: variables that apply to the play on all target systems
+  vars:
+    motd: 'Welcome to DB server - Deployed By Ansible '
+  # Tasks: list of tasks that will be executed  within play, including pre and post tasks
+  tasks:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      copy:
+        content: "{{ motd }}"
+        dest: /etc/motd
+  # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
+  handlers:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      debug:
+        msg: The MOTD was changed
+  # Roles: list of roles (dedicated tasks ) to be imported  into the play
+  
+  # Note: not all are required to be used in single playbook
+
+
