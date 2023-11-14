@@ -1,7 +1,7 @@
 #!/usr/bin/env bash 
 
 #########################################
-#set -x
+set -x
 set -o errexit
 set -o pipefail
 #created by: Silent-Mobius aka Alex M. Schapelle for Vaiolabs ltd.
@@ -19,6 +19,7 @@ BUILD_TOOL=$(which darkslide)
 BUILD_TOOL_VERSION=$(darkslide --version|awk '{print $2}')
 DEPENDENCY_ARRAY=(python3-darkslide python3-landslide weasyprint) # single crucial point of failure for multi-type environments (Linux-Distro's,MacOS)
 SEPERATOR='-------------------------------------------'
+SPELLCHECK=$(which codespell)
 NULL=/dev/null
 
 
@@ -39,7 +40,7 @@ main(){
     # get_installer
     get_build_tool
     
-    while getopts "bch" opt
+    while getopts "bcht" opt
     do
         case $opt in
             b)
@@ -58,6 +59,13 @@ main(){
                 ;;
             h) _help
                     exit 1
+                ;;
+            t)  
+               deco '[+] Checking Spelling'
+                for folder in 0[0-9]_*;
+                    do 
+                        codespell -I spell.txt $folder/README.md 
+                    done            
                 ;;
             *) _help
                 ;;
@@ -161,6 +169,11 @@ function convert_html_to_pdf(){
     # sed -i 's#<link rel="stylesheet" href="file:///usr/lib/python3/dist-packages/darkslide/themes/default/css/theme.css">##' $IN
         weasyprint -v  $IN $OUT
 }
+
+function spell_check(){
+    IN=$1
+        $SPELLCHECK --ignore-words spell.txt $IN
+    }
 
 #######
 # Main
