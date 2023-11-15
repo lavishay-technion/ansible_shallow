@@ -21,8 +21,8 @@ Few things that we need to have general understanding:
     - It also inherits Python features 
     - YET, to simplify it adds its own keyword implementation variables, conditions, loops, block, roles and modules
         - Yes - you can develop modules in Python
-For us to continue, we only need to remember that data-type mostly used with any programming language is string and integer.
- 
+- For us to continue, we only need to remember that data-type mostly used with any programming language is string and integer.
+
 ---
 
 # YAML: Yet Another Markup Language
@@ -37,6 +37,13 @@ For example in web applications most beloved and used format is `json`. Although
 - Reading and writing of YAML format is support in most major programming languages
 - YAML files are often described with `.yaml` or `.yml` extensions.
     - `.yaml` is the officially recommended extension since 2006, yet in case you work with *nix based system, it does not matter
+
+---
+
+# YAML: Yet Another Markup Language (cont.)
+
+#### YAML to the rescue
+
 - YAML consists of key/value pair collections also known as `dictionaries`
     - Keys need to be unique
     - Values can be the same
@@ -67,14 +74,6 @@ For example in web applications most beloved and used format is `json`. Although
 - [indented key with keys/values](../03_playbooks/00_examples/09_indented_key_with_keys_values.yaml)
 - [key with list values](../03_playbooks/00_examples/10_key_with_list_value.yaml)
 - [indent key with key list values](../03_playbooks/00_examples/11_indent_key_with_key_list_values.yaml)
-
----
-
-# How YAML is used with Ansible ?
-
-As we saw from examples, YAML is a structured data, that is passed to ansible modules. Those modules pass it to predefined python scripts. these scripts are copied to target machines, and executed with the values passed from YAML
-
-<img src="../99_misc/.img/ansible_how.png" alt="how ansible works" style="float:right;width:400px;">
 
 ---
 
@@ -115,6 +114,14 @@ Nissan:
 
 ---
 
+# How YAML is used with Ansible ?
+
+As we saw from examples, YAML is a structured data, that is passed to ansible modules. Those modules pass it to predefined python scripts. these scripts are copied to target machines, and executed with the values passed from YAML
+
+<img src="../99_misc/.img/ansible_how.png" alt="how ansible works" style="float:left;width:700px;">
+
+---
+
 # Ansible Playbook/YAML Structure
 
 <img src="../99_misc/.img/dev-playbook.png" alt="devplaybook" style="float:right;width:200px;">
@@ -129,28 +136,415 @@ Nissan:
 
 ---
 
+# Ansible Playbook/YAML Structure (cont.)
+
+In side the YAML it would look like this: 
+
+```yaml
+# Every YAML file should start with three dashes 
+---
+
+# The  minus in YAML this indicates a list item. the playbook contains a list of plays,
+# with each play being a dictionary
+-
+  # Hosts: lists of target hosts that we'll run playbooks on
+  # Vars: variables that apply to the play on all target systems
+  # Tasks: list of tasks that will be executed  within play, including pre and post tasks
+  # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
+  # Roles: list of roles (dedicated tasks ) to be imported  into the play
+  # Note: not all are required to be used in single playbook
+# Every YAML file file should end with three dots
+...
+```
+
+Each line would represent the configuration tha we would use in combination  of a module/s that we would use to execute.
+> `[!]` Note: we'd also need to use our `ansible.cfg` and `hosts.ini` to make it work
+
+---
+
+# Ansible Playbook/YAML Structure (cont.)
+
+#### Example of setup
+
+```sh
+mkdir -p 03_playbooks/00_init_setup
+touch ansible.cfg hosts.ini motd_playbook.yaml db_motd
+
+echo 'This is MOTD file for DB servers - Deployed by ansible' > db_motd
+
+echo '[defaults]' > ansible.cfg
+echo 'inventory=hosts.ini' >> ansible.cfg
+```
+Then we edit the motd_playbook.yaml
+> `[!]` Note: `hosts.ini` file should be the same as we have set before, thus no point showing how to copy paste it.
+
+---
+
+# Ansible Playbook/YAML Structure (cont.)
+
+#### Example of setup (cont.)
+
+```yaml
+---
+
+# The  minus in YAML this indicates a list item. the playbook contains a list of plays,
+# with each play being a dictionary
+-
+  # Hosts: lists of target hosts that we'll run playbooks on
+  hosts: db
+  user: root
+
+  # Vars: variables that apply to the play on all target systems
+  # Tasks: list of tasks that will be executed  within play, including pre and post tasks
+
+  tasks:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      copy:
+        src: db_motd
+        dest: /etc/motd
+  # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
+  # Roles: list of roles (dedicated tasks ) to be imported  into the play
+  # Note: not all are required to be used in single playbook
+# Every YAML file file should end with three dots
+...
+
+```
+
+To execute the playbook with `ansible-playbook` command with the name of playbook
+
+```sh
+ansible-playbook motd_playbook.yaml
+```
 
 ---
 
 # Practice
-- Create folder Playbook:
+
+- Create folders 03_Playbooks/00_init and `cd` into it:
+  - Setup `hosts` file and `ansible.cfg` files appropriatly
   - Create initial playbook called **playbook-ping.yaml**
     - In playbooks create a task that pings all possible hosts
-    - Add another task the pings web servers
-    - Add other task pings db servers
+    - [RTFM](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html)
+- Go back to 03_playbooks and create new folder 01_playbook_copy and `cd` into it:
+    - Verify that you have `hosts` and `ansible.cfg`
+    - Create file db_motd with message : `Welcome to DB server- deployed by ansible`
+    - Create a plabook called **playbook-copy.yaml**
+        - use user root to perform the task
+        - Copy the db_motd file to `/etc/motd`  on all db targets
+        - [RTFM](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html)
+
+---
+
+# Practice (cont.)
 
 ```yaml
 
 ---
-- hosts: nodes
+- hosts: all
   tasks:
     - name: ping all nodes
       ping:
+
+...
+---
+hosts: db
+user: root
+tasks:
+  - name: Copy MOTD 
+    copy:
+      src: db_motd
+      dest: /etc/motd
+...
+```
+---
+
+# Ansible Playbook/YAML Structure (cont.)
+
+#### Variables use in playbooks
+
+In some of the playbooks we;ll be able to configure and setup static values to be used during the playbook. This concepts is called `variable` use.
+We create new section in out playbook called `vars` and under its indentention we add a _key_ word which is variable name and  with a _string value_ which is variable value.
+Later on we can summon the value by using double curly braces with double quotes: `"{{ variable_name }}"`
+
+Variable playbook example:
+
+```yaml
+---
+-
+  hosts: db
+  user: root
+
+  # Vars: variables that apply to the play on all target systems
+  vars:
+    motd: 'Welcome to DB server - Deployed By Ansible '
+  tasks:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      copy:
+        content: "{{ motd }}"
+        dest: /etc/motd
+```
+
+---
+
+
+# Ansible Playbook/YAML Structure (cont.)
+
+#### Variables use in playbooks
+
+One additinoal features with Variables in playbooks is that, they can also be passed externally with `-e` or `--extra-vars` option to `ansible-playbook` command 
+
+```sh
+ansible-playbook motd_playbook.yaml -e 'motd="This is a TEST motd output"'
+```
+
+---
+
+# Practice
+
+- Go back to 03_playbooks and create new folder 02_playbook_copy_vars and `cd` into it:
+    - Verify that you have `hosts` and `ansible.cfg`
+    - Copy **playbook-copy.yaml** to this folder and edit the **vars** section in playbook:
+        - Add variable `motd` with value of `Welcome to DB server- deployed by ansible`
+        - Verfiy that you are **NOT** copying the `db_motd` file
+            - Inseted use `content` key in `copy` module and place `"{{ motd }}"` variable
+        - Use user root to perform the task
+        - Run playbook on all db targets
+        - Test the MOTD on remote DB node that it has indeed changed
+        - Pass extra variable to playbook with content of `This is TEST motd`
+        - Test the MOTD on remote DB node.
+        - [RTFM](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html)
+
+---
+
+# Practice (cont.)
+
+```yaml
+---
+-
+  hosts: db
+  user: docker
+
+  vars:
+    motd: "Welcome to DB Server - Deployed by Ansible"
+  tasks:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      copy:
+        content: "{{ motd }}"
+        dest: /etc/motd
+      become: True
+...
+```
+
+```sh
+anisble-plybook motd_playbook.yaml
+anisble-plybook motd_playbook.yaml -e 'motd="This is TEST motd"'
+```
+---
+
+
+# Ansible Playbook/YAML Structure (cont.)
+
+#### Exapanding on target section
+
+If have not noticed, when running with Ansible, each time a setup module, aka fact gathering task, is run automatically. It gets values from targets to be used later in playbook.
+The setup module use in many cases adds over head which might not be useful in cases when remote ansible variables are not required.
+Thus this can be configured either to filter the required values or to disable all at once.
+
+
+```yaml
+---
+-
+  hosts: db
+  user: root
+  gather_facts: False
+  vars:
+    motd: 'Welcome to DB server - Deployed By Ansible '
+  tasks:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      copy:
+        content: "{{ motd }}"
+        dest: /etc/motd
 
 ```
 
 ---
 
+# Ansible Playbook/YAML Structure (cont.)
+
+#### Handlers
+
+Sometimes you want a task to run only when a change is made on a machine. For example, you may want to restart a service if a task updates the configuration of that service, but not if the configuration is unchanged. Ansible uses handlers to address this use case. Handlers are tasks that only run when notified.
+
+Tasks can instruct one or more handlers to execute using the `notify` keyword. Handlers must be named in order for tasks to be able to notify them using the notify keyword.
+
+Alternatively, handlers can utilize the `listen` keyword. Using this handler keyword, handlers can `listen` on topics that can group multiple handlers.
+
+```yaml
+---
+-
+  hosts: db
+  user: root
+  gather_facts: False
+
+  vars:
+    motd: 'Welcome to DB server - Deployed By Ansible '
+  tasks:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      copy:
+        content: "{{ motd }}"
+        dest: /etc/motd
+      notify: Configure of MOTD  
+
+  # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
+  handlers:
+    - name: Configure of MOTD 
+      debug:
+        msg: The MOTD was changed
+
+```
+
+---
+
+# Practice 
+
+- Go back to 03_playbooks and create new folder 03_playbook_copy_handlers and `cd` into it:
+    - Verify that you have `hosts` and `ansible.cfg`
+    - Create **playbook_copy_handlers.yaml** in this folder and add the **handlers** section in playbook:
+        - Create task with file module that will remove the /etc/motd file from target hosts
+        - Verify that you are not using fact gathering (aka setup module)
+        - Add handler with debug module that provides output message when task succeds
+        - [RTFM](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html)
+---
+
+# Practice (cont.)
+
+```yaml
+
+---
+-
+  hosts: db
+  user: root
+  gather_facts: False
+  vars:
+    motd: 'Welcome to DB server - Deployed By Ansible '
+  tasks:
+    - name: Remove MOTD file
+      file:
+        path: /etc/motd
+        state: absent
+      notify: Remove MOTD file
+
+  handlers:
+    - name: Remove MOTD file
+      debug:
+        msg: MOTD file was removed
+
+```
+
+---
+
+# Ansible Playbook/YAML Structure (cont.)
+
+#### Conditions
+
+When we mentioned `setup` module, we explained that it gathers information about the remote targets. Following that, we can make decisions based on those information facts.
+The simplest conditional statement applies to a single task. Create the task, then add a `when` statement that applies a test. The `when` clause is a raw Jinja2 expression without double curly braces
+
+```yaml
+---
+
+-
+  hosts: db
+  user: root
+  vars:
+    motd_db: 'Welcome to DB server - Deployed By Ansible '
+    motd_web: 'Welcome to Web server - Deployed By Ansible '
+  tasks:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      copy:
+        content: "{{ motd_db }}"
+        dest: /etc/motd
+      when: ansible_distribution == "Rocky"
+      notify: Configure a MOTD
+
+    - name: Configure a MOTD (Message Of The Way) on Web server
+      copy:
+        content: "{{ motd_web }}"
+        dest: /etc/motd
+      when: ansible_distribution == "Debian"
+      notify: Configure a MOTD
+
+  handlers:
+    - name: Configure a MOTD
+      debug:
+        msg: The MOTD was changed
+
+```
+---
+
+# Practice
+- Go back to 03_playbooks and create new folder 04_playbook_copy_conditions and `cd` into it:
+    - Verify that you have `hosts` and `ansible.cfg`
+    - Create **playbook_copy_conditions.yaml** in this folder and:
+        - Run task on all hosts
+        - Create task with apt or dnf modules, depending on `ansible_distribution` fact, which will install nginx web server on web group or postgresql on db group
+        - Verify that you ARE using fact gathering (aka setup module)
+        - Add handlers with service module that restarts the service once it is installed
+        - [RTFM apt ](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/apt_module.html)
+        - [RTFM dnf ](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/dnf_module.html)
+        - [RTFM service ](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/service_module.html)
+
+---
+
+# Practice (cont.)
+
+```yaml
+---
+-
+  hosts: all
+  user: root
+
+  tasks:
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      dnf:
+        name: postgresql15
+        state: present
+      when: ansible_distribution == "Rocky"
+      notify: Restart db service
+
+    - name: Configure a MOTD (Message Of The Way) on Web server
+      apt:
+        name: nginx
+        state: present
+      when: ansible_distribution == "Debian"
+      notify: Restart web service
+
+  handlers:
+    - name: Restart db service
+      service:
+        name: postgresqld
+        state: restarted
+   
+    - name: Restart web service 
+      service:
+        name: nginx
+        state: restarted
+
+...
+
+```
+---
+
+# Summary Practice
+
+- Create folder 05_summary_practice and `cd` into it
+- Setup `ansible.cfg`. `hosts.ini`, `playbook.yaml`, or you can copy it from last practice
+- Configure/update playbook.yaml to work only on all servers
+- Create task that will use copy module to copy content with shell script that prints `hello world`
+- Copy the content into /tmp/hello.sh script on all targets and give them execution permissions
+- Create task with shell module that will execute the script remotely
+
+<!--
 # Ansible Mappings: What to define ?
 
 -  List of nodes
@@ -271,7 +665,7 @@ Nissan:
 ```
 
 --- 
---- -->
+--- 
 
 # What now ? Practice !
 
@@ -293,9 +687,10 @@ Please refer to link and practice them as follows.
 
 ---
 
+
 # Storing And Passing Information 
 
-## Fact gathering
+#### Fact gathering
 
 - Ansible **facts** are simply various properties regarding a given remote system.
 - The `setup` module can retrieve facts.
@@ -326,44 +721,6 @@ Typical uses of variables:
 
 # Variables (cont.)
 
-Examples of *invalid* variable names:
-    - foo-bar
-    - 1foobar
-    - foo.bar
-
-- Variables can be scoped by group, host, or within a playbook.
-- Variables may be used to store a **simple text or numeric value**.
-
-- Example: 
-
-```yaml 
-month: January
-```
----
-
-# Variables (cont.)
-
-- Variables may also be used to store simple **lists**.
-- Example:
-```yaml
-colors:
-  - red
-  - blue
-  - yellow
-```
-- Additionally, variables may be used to store python style dictionaries.
-- A **dictionary** is a list of key value pairs.
-- Example:
-```yaml
-person:
-  name: sam
-  age: 4
-  favorite_color: green
-```
----
-
-# Variables (cont.)
-
 Variables may be defined in a number of ways:
 
 Via command line argument: 
@@ -383,83 +740,36 @@ How to defined variables via the command line:
 
 Defining variables within a playbook. 
 
-Playbook Example:
+Variable playbook example:
 
 ```yaml
 ---
-- hosts: webs
-  become: yes
+# The  minus in YAML this indicates a list item. the playbook contains a list of plays,
+# with each play being a dictionary
+
+-
+
+  # Hosts: lists of target hosts that we'll run playbooks on
+  hosts: db
+  user: docker
+
+  # Vars: variables that apply to the play on all target systems
   vars:
-    target_service: nginx
-    target_state: started
+    motd: 'Welcome to DB server - Deployed By Ansible '
+  # Tasks: list of tasks that will be executed  within play, including pre and post tasks
   tasks:
-    - name: Ensure target service is at target state
-      service:
-      name: "{{ target_service }}"
-      state: "{{ target_state }}"
-```
-
----
-
-# Variables (cont.)
-
->Note: Variables are referenced using double curly braces.
->We **ALSO NEED** to wrap variable names or statements containing variable names in double quotes.
-- Example: 
-
-```yaml
-hosts: "{{ my_host_var }}"
-```
-
-- Variables may also be stored in files and included using the vars_file directive.
-
----
-
-# Variables (cont.)
-
-## Example
-Variable ﬁle:
-
-```ini
-
-# file: /home/ansible/web_vars.ini
-target_service: nginx
-target_state: started
+    - name: Configure a MOTD (Message Of The Way) on DB server
+      copy:
+        content: "{{ motd }}"
+        dest: /etc/motd
+      become: True
+  # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
+  # Roles: list of roles (dedicated tasks ) to be imported  into the play
+  
+  # Note: not all are required to be used in single playbook
 
 ```
 
-```yaml
----
-- hosts: webs
-  become: yes
-  vars_files:
-    - /home/ansible/web_vars.ini
-  tasks:
-    - name: Ensure target service is at target state
-      systemd:
-      name: "{{ target_service }}"
-      state: "{{ target_state }}"
-
-```
-
----
-
-# Variables (cont.)
-
-- The **register** module is used to store task output in a dictionary variable.
-- It essentially can save the results of a command.
-- Several attributes are available: return code, stderr, and stdout.
-- Example:
-
-```yaml
-- hosts: all
-  tasks:
-   - shell: cat /etc/motd
-     register: motd_contents
-
-   - shell: echo "motd contains the word hi"
-     when: motd_contents.stdout.find('hi') != -1
-```
 ---
 
 # Practice
@@ -511,7 +821,7 @@ For example, to manage a system service (which requires root privileges) when co
   service:
     name: httpd
     state: started
-  become: yes
+  become: True
 ```
 To run a command as the apache user:
 ```yaml
@@ -1136,3 +1446,6 @@ Ansible expands this at execution time to the equivalent of:
 ```
 
 By using include_tasks instead of import_tasks, both tasks from other_tasks.yml will be executed as expected. For more information on the differences between include v import see Re-using Ansible artifacts.
+
+-->
+
