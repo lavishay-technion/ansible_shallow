@@ -1,0 +1,15 @@
+---
+
+- 
+
+  hosts: all
+  tasks:
+    - name: Exploring Registers
+      command: hostname -s
+      register: hostname_output
+
+    - name: show hostname_output
+      debug:
+        var: hostname_output
+
+...

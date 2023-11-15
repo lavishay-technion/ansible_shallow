@@ -1,0 +1,43 @@
+---
+
+- 
+
+  hosts: db
+  gather_facts: False
+
+  vars_files:
+    - external_vars.yaml
+
+  tasks: 
+    - name: Test external dict key
+      debug:
+        msg: "{{ ext_example_key }}"
+
+    - name: Test external dict key values
+      debug:
+        msg: "{{ ext_example_key }}"    
+
+    - name: Test ext_inline_dict
+      debug:
+        msg: "{{ ext_inline_dict }}"
+
+    - name: Test ext_inline_dict dict_key
+      debug:
+        msg: "{{ ext_inline_dict.inline_dict_key1 }} {{ ext_inline_dict.inline_dict_key2 }}"
+    
+    - name: Test ext name_list 
+      debug:
+        msg: "{{ ext_named_list }}"
+
+    - name: Test ext_named_list first item dot notation
+      debug:
+        msg: "{{ ext_named_list[0] }}"
+
+    - name: Test ext_inline_list 
+      debug:
+        msg: "{{ ext_named_list }}"
+    
+    - name: Test ext_inline_list first item square notations
+      debug:
+        msg: "{{ ext_inline_list[0] }}"
+...

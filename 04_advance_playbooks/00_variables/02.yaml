@@ -1,0 +1,31 @@
+---
+
+- 
+
+  hosts: db
+  gather_facts: False
+
+  vars:
+    named_list:
+      - item1
+      - item2
+      - item3
+      - item4
+
+
+
+  tasks: 
+    # This shows the whole named_list
+    - name: Test name_list values
+      debug:
+        msg: "{{ named_list }}"    
+    # This shows the first item in the list 
+    - name: Test name_list first item dot notation
+      debug:
+        msg: "{{ named_list.0 }}"
+    # This shows the first item in the list
+    - name: Test name_list first item dot notation
+      debug:
+        msg: "{{ named_list[0] }}"
+
+...

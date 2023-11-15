@@ -1,0 +1,11 @@
+---
+
+- 
+
+  hosts: all
+  tasks:
+    - name: Exploring Registers
+      command: hostname -s
+      register: hostname_output
+
+...

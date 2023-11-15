@@ -1,0 +1,17 @@
+---
+
+- 
+
+  hosts: db
+  gather_facts: False
+
+  vars:
+    example_key: example value
+
+  tasks:
+    - name: Test dict key value
+      debug:
+        msg: "{{ example_key}}"
+
+
+...

@@ -1,0 +1,26 @@
+---
+
+- 
+
+  hosts: db
+  gather_facts: False
+
+  vars:
+    dict:
+      dict_key: this is dictionary value
+
+  tasks: 
+    # This shows the whole dictionary
+    - name: Test dict key value
+      debug:
+        msg: "{{ dict }}"
+    # This shows specific key in dictionary
+    - name: Test dict key value
+      debug:
+        msg: "{{ dict.dict_key }}"
+    # This shows specific keys value in  dictionary
+    - name: Test dict key value
+      debug:
+        msg: "{{ dict['dict_key'] }}"
+
+...
