@@ -16,7 +16,7 @@
     - name: Configure a MOTD (Message Of The Way) on DB server
       copy:
         content: "{{ motd }}"
-        dest: /etc/motd
+        dest: /tmp/motd
   # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
   handlers:
     - name: Configure a MOTD (Message Of The Way) on DB server

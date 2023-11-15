@@ -13,7 +13,7 @@
     - name: Configure a MOTD (Message Of The Way) on DB server
       copy:
         src: db_motd
-        dest: /etc/motd
+        dest: /tmp/motd
   # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
   # Roles: list of roles (dedicated tasks ) to be imported  into the play
   

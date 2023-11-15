@@ -5,30 +5,34 @@
 -
   # Hosts: lists of target hosts that we'll run playbooks on
   hosts: db
-  user: root
-
+  user: docker
+  become: True
   # Vars: variables that apply to the play on all target systems
   vars:
-    motd_db: 'Welcome to DB server - Deployed By Ansible '
-    motd_web: 'Welcome to Web server - Deployed By Ansible '
+    motd_db: 'TEST Welcome to DB server - Deployed By Ansible\n '
+    motd_web: 'TEST Welcome to Web server - Deployed By Ansible\n '
   # Tasks: list of tasks that will be executed  within play, including pre and post tasks
   tasks:
     - name: Configure a MOTD (Message Of The Way) on DB server
       copy:
         content: "{{ motd_db }}"
         dest: /etc/motd
-      when: ansible_distribution == "rockylinux"
+      when: ansible_distribution == "Rocky"
+      notify: MOTD Conf
 
     - name: Configure a MOTD (Message Of The Way) on Web server
       copy:
         content: "{{ motd_web }}"
         dest: /etc/motd
-      when: ansible_distribution == "debian"
+      when: ansible_distribution == "Debian"
+      notify: MOTD Conf
+
   # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
   handlers:
-    - name: Configure a MOTD (Message Of The Way) on DB server
+    - name: MOTD Conf 
       debug:
-        msg: The MOTD was changed
+        msg: The MOTD was changed "{{ansible_distribution}}" 
+  
   # Roles: list of roles (dedicated tasks) to be imported  into the play
   
   # Note: gather_facts need to be enabled

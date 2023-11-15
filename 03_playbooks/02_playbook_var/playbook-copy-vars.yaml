@@ -6,7 +6,7 @@
   # Hosts: lists of target hosts that we'll run playbooks on
   hosts: db
   user: docker
-
+  become: True
   # Vars: variables that apply to the play on all target systems
   vars:
     motd: "Welcome to DB Server - Deployed by Ansible"
@@ -16,7 +16,6 @@
       copy:
         content: "{{ motd }}"
         dest: /etc/motd
-      become: True
   # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
   # Roles: list of roles (dedicated tasks ) to be imported  into the play
   
