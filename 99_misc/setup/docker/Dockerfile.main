@@ -5,4 +5,4 @@ RUN useradd -m ansible && mkdir -p /home/ansible/.ssh && chown ansible:ansible -
 COPY id_rsa /home/ansible/.ssh/id_rsa
 RUN chown ansible:ansible -R /home/ansible/.ssh
 USER ansible
-WORKDIR /home/ansible/ansible
+WORKDIR /home/ansible

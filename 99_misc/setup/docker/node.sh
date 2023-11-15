@@ -12,6 +12,17 @@ set -x
 : ${SSH_USERNAME:=user}
 : ${SSH_USERPASS:=user}
 
+
+function main(){
+    create_rundir
+    create_hostkeys
+    sed -i 's/\#Pubkey/Pubkey/g' /etc/ssh/sshd_config
+    create_user
+    copy_ssh_key
+    setup_sudo
+}
+
+
 function create_rundir() {
     if [[ $ID == 'debian' ]];then
 	    mkdir -p /var/run/sshd
@@ -31,6 +42,27 @@ function create_user() {
     echo ssh user password: $SSH_USERPASS
 }
 
+function setup_sudo(){
+    if [[ $ID == 'debian' ]];then
+        if grep -q NOPASSWD /etc/sudoers;then
+            sed -i 's/# %sudo	ALL=(ALL)	NOPASSWD: ALL/%sudo	ALL=(ALL)	NOPASSWD: ALL/g' /etc/sudoers
+        else
+            echo '%sudo	ALL=(ALL)	NOPASSWD: ALL' >> /etc/sudoers
+        fi
+    else
+        if grep -q NOPASSWD /etc/sudoers;then
+            sed -i 's/# %wheel	ALL=(ALL)	NOPASSWD: ALL/%wheel	ALL=(ALL)	NOPASSWD: ALL/g' /etc/sudoers
+        else
+            echo '%wheel	ALL=(ALL)	NOPASSWD: ALL' >> /etc/sudoers
+        fi
+    fi
+    if [[ $ID == 'debian' ]];then
+        usermod -aG sudo $SSH_USERNAME
+    else
+        usermod -aG wheel $SSH_USERNAME
+    fi
+}
+
 function create_hostkeys() {
     ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N '' 
 }
@@ -42,14 +74,6 @@ function copy_ssh_key() {
         cp /root/.ssh/authorized_keys "/home/$SSH_USERNAME/.ssh/authorized_keys"
         chown 1000:1000 -R /home/$SSH_USERNAME/.ssh
         chmod  600 "/home/$SSH_USERNAME/.ssh/authorized_keys"
-}
-
-function main(){
-    create_rundir
-    create_hostkeys
-    sed -i 's/\#Pubkey/Pubkey/g' /etc/ssh/sshd_config
-    create_user
-    copy_ssh_key
 }
 
 ######################
