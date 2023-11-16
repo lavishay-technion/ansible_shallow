@@ -37,14 +37,14 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 - `-i`: use specific inventory and not the default.
 - `-e`: pass extra variable of your choice
 
-- We run Ansible executable according to its commands parameters with `inventory` file hosts.
-- Ansible runs ad-hoc commands
-    - Ad-Hoc commands are basic commands used by Ansible
-    - `Commands` essentially are _python written code_ to behaive as simple system call.
-    - By default, if no Ansible command/module is provided, it will run with `command` ad-hoc module
-    - `Command` module is NOT processed with shell, so environment variables and shell operators such as <,>,;,|,& will not work
-        - For Windows, `win_command` module is required, and by default `ansible` will fail if `command` is used.
-    - [Please see the docs](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html)
+We run Ansible executable according to its commands parameters with `inventory` file hosts. Ansible runs ad-hoc commands
+
+- Ad-Hoc commands are basic commands used by Ansible
+- `Commands` essentially are _python written code_ to behaive as simple system call.
+- By default, if no Ansible command/module is provided, it will run with `command` ad-hoc module
+- `Command` module is NOT processed with shell, so environment variables and shell operators such as <,>,;,|,& will not work
+    - For Windows, `win_command` module is required, and by default `ansible` will fail if `command` is used.
+- [Please see the docs](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/command_module.html)
 
 ---
 
@@ -60,18 +60,18 @@ password=docker
 ```
 
 ```sh
-ansible all -m command -a 'cat /etc/os-release' -u docker
+ansible all -m command -a 'cat /etc/os-release' 
 ```
 ---
 
 # Idempotency
 
 An operation is idempotent, if the result of performing it once, is exactly the same as the result of performing it repeatedly without any intervening actions.
-As such when we use `ansible` , it tries to notify as if the action we performed was idempotent or not, by coloring the output with 3 rather intuative colors:
+As such when we use `ansible` , it tries to notify as if the action we performed was idempotent or not, by coloring the output with 3 rather intuitive colors:
 
-- Green : Success, no changes have been done.
-- Yellow : Succes, changes performed were successful.
-- Red : Failure
+- `Green` : Success, no changes have been done.
+- <span style="background:yellow">Yellow</span> : Success, changes performed were successful.
+- <span style="background:red">Red</span> : Failure
 
 ---
 
@@ -109,6 +109,7 @@ Let us begin with module named `setup`:
     - Variables/information received are called `facts`
 - `setup` is supported on all platforms with remote access (ssh/winrm)
 - [Please see the docs](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/setup_module.html)
+
 ---
 
 # Practice
@@ -137,13 +138,12 @@ echo !!  >> cmd_line.txt
 # Ansible Modules (cont.)
 
 #### `File` Module
+Sets attributes of files, symlink and directories, or removes them. Many other modules support the same options as the `file` module, including `copy`, `template` and `assemble`
 
-- Sets attributes of files, symlink and directories, or removes them.
-- Many other modules support the same options as the `file` module, including `copy`, `template` and `assemble`
-    - For Windows targets, use the `win_file` module instead 
-- Ansible project on github has moved the file module to be part of ansible-base and classed as a builtin plugin. This only effects the way we would like to invoke the `file` module
+- For Windows targets, use the `win_file` module instead 
+- Ansible project changes has modified the `file module` to be classed as a builtin plugin, thus it and other modules can be invoked with:
     - `file`
-    - `anisble.builtin.file`
+    - `ansible.builtin.file`
 - Module can be used with various `states`, meaning we can require it to perform most of the operations on files as we do on any *nix based system:
     - `absent`
     - `touch`
@@ -221,12 +221,14 @@ special uses cases, such as cloud access, platform access and so on. Thus here i
 - Module: apt
     - Purpose: Install software with apt.
     - Arguments: name=<PACKAGE_NAME\> state=<STATE\>
-- Module: dnf/yum
-    - Purpose: Install software with apt.
-    - Arguments: name=<PACKAGE_NAME\> state=<STATE\>
+
 ---
 
 # Ansible modules (cont.)
+
+- Module: dnf/yum
+    - Purpose: Install software with apt.
+    - Arguments: name=<PACKAGE_NAME\> state=<STATE\>
 
 - Module: get_url
     - Purpose: Downloads files from HTTP, HTTPS, or FTP to the remote server
@@ -237,14 +239,13 @@ special uses cases, such as cloud access, platform access and so on. Thus here i
 - Module: archives
     - Purpose: Creates or extends an archive
     - Arguments: path=<PATH\> dest=<PATH\>
-- Module: user
-    - Purpose: Manage user accounts and user attributes
-    - Arguments:   name=<USERNAME\> comment=<DESCRIPTION\> uid=<UID\> group=<GROUPNAME\>
-
 ---
 
 # Ansible modules (cont.)
 
+- Module: user
+    - Purpose: Manage user accounts and user attributes
+    - Arguments:   name=<USERNAME\> comment=<DESCRIPTION\> uid=<UID\> group=<GROUPNAME\>
 - Module: service
     - Purpose: Control service daemons.
     - Arguments: name=<SERVICE_NAME> state=<STATE\>
@@ -272,7 +273,7 @@ special uses cases, such as cloud access, platform access and so on. Thus here i
   - Set kernel parameter of `net.ipv4.conf.all.accept_redirects` to 1 at /etc/sysctl.conf (it will need to be uncommented).
   - Check what is the storage capacity on all hosts.
 
----
+<!-- ---
 
 # Practice (cont.)
 
@@ -288,5 +289,5 @@ ansible -m apt -a 'name=postgresql15' db
 ansible -m setup -a 'filter=*user*' all
 ansible -m command -a 'grep user /etc/passwd'
 ansible -m systemd -a 
-```
+``` -->
 
