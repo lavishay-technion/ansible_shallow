@@ -6,7 +6,7 @@ set -o errexit
 set -o pipefail
 #created by: Silent-Mobius aka Alex M. Schapelle for Vaiolabs ltd.
 #purpose: build script for jetporch class
-#verion: 0.7.11
+#verion: 0.8.11
 #########################################
 
 . /etc/os-release
@@ -14,7 +14,7 @@ set -o pipefail
 PROJECT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 WORKDIR="$PROJECT/out"
 THEME="${PROJECT}/99_misc/.theme/"
-BUILD_DIR_ARRAY=($(ls $PROJECT|grep -vE '99_*|README.md|LICENSE|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf'))
+BUILD_DIR_ARRAY=($(ls $PROJECT|grep -vE '99_*|README.md|LICENSE|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf|out|spell.txt'))
 BUILD_TOOL=$(which darkslide)
 BUILD_TOOL_VERSION=$(darkslide --version|awk '{print $2}')
 DEPENDENCY_ARRAY=(python3-darkslide python3-landslide weasyprint) # single crucial point of failure for multi-type environments (Linux-Distro's,MacOS)
