@@ -1,0 +1,14 @@
+---
+
+-
+  hosts: all
+  become: True
+  tasks:
+    - name: Configure MOTD
+      copy:
+        content: "Welcome to {{ item }} Linux: Ansible Rocks"
+        dest: /etc/motd
+      with_items:
+        - Rocky
+        - Debian
+      when: ansible_distribution == item

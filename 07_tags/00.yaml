@@ -1,0 +1,34 @@
+---
+
+-
+  hosts: all
+  tasks:
+    - name: Install Epel-release
+      yum:
+        update_cache: yes
+        state: latest
+      when:  ansible_distribution == 'Rocky'
+      tags:
+        - install-epel
+
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: latest
+      when: ansible_distribution == 'Debian'
+      tags:
+        - install-nginx
+
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
+      notify: Check http service
+      tags:
+        - restart-nginx
+         
+  handlers:
+    - name: Check http service
+      uri: 
+        url: https://{{ ansible_default_ipv4.address }}
+        status_code: 200
