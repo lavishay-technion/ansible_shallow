@@ -21,7 +21,7 @@ def index():
         <title>Home Page - Py app test</title>
     </head>
     <body>
-        <h1>{error_code} '''
+        <h1>{error_code} </h1>'''
 
 
 app.run(debug=DEBUG, port=PORT, host=HOST)
