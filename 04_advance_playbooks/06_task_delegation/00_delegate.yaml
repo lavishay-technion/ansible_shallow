@@ -1,0 +1,25 @@
+---
+- 
+
+  hosts: all
+  tasks:
+    - name: Copy the file from the Source to the destination
+      copy:
+        src: junkfile.txt
+        dest: /tmp/config_file
+        mode: 0644
+
+    - name: Check the website status
+      uri:
+        url: https://theautomationcode.com
+        method: GET
+        delegate_to: localhost
+      register: http_output
+
+    - name: tasks to get the variable output
+      debug: 
+        var: http_output
+
+    - name: Reboot servers after update
+      reboot:
+        reboot_timeout: 300

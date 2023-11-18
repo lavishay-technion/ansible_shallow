@@ -308,7 +308,7 @@ ansible --list-hosts all
 
 ---
 
-# Hosts and Groups  Variables
+# Hosts and Groups Variables
 
 The `hosts.ini` file enables us to create structured **key value** pairs, that eventually will be targets onto which we would execute remote commands.
 In previous practice we did setup up groups but did not emphasized the explanations, thus lets address that:
