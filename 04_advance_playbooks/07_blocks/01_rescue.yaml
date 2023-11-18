@@ -1,0 +1,29 @@
+---
+
+- 
+  hosts: all
+  tasks:
+    - name: Install with block 
+      block:
+        - name: Install patch
+          package:
+            name: patch
+
+        - name: Install python3-dnspython
+          package:
+            name: python3-dnspython
+
+      rescue:
+        - name: Rolling back patch
+          package:
+            name: patch
+            state: absent
+
+        - name: Rolling back python3-dnspython
+          package:
+            name: python3-dnspython
+            state: absent
+
+      always:
+        - debug:
+            msg: This task in block will always run
