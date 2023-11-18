@@ -40,7 +40,7 @@ ansible <HOST> -b -m <MODULE> -a "<ARG1 ARG2 ARG_N>" -f <NUM_FORKS>
 We run Ansible executable according to its commands parameters with `inventory` file hosts. Ansible runs ad-hoc commands
 
 - Ad-Hoc commands are basic commands used by Ansible
-- `Commands` essentially are _python written code_ to behaive as simple system call.
+- `Commands` essentially are _python written code_ to behave as simple system call.
 - By default, if no Ansible command/module is provided, it will run with `command` ad-hoc module
 - `Command` module is NOT processed with shell, so environment variables and shell operators such as <,>,;,|,& will not work
     - For Windows, `win_command` module is required, and by default `ansible` will fail if `command` is used.
@@ -64,7 +64,7 @@ ansible all -m command -a 'cat /etc/os-release'
 ```
 ---
 
-# Idempotency
+# Idempotence
 
 An operation is idempotent, if the result of performing it once, is exactly the same as the result of performing it repeatedly without any intervening actions.
 As such when we use `ansible` , it tries to notify as if the action we performed was idempotent or not, by coloring the output with 3 rather intuitive colors:
@@ -150,7 +150,7 @@ Sets attributes of files, symlink and directories, or removes them. Many other m
     - `directory`
     - `link`
     - `hard`
-- Every action with `file` module can be accompnied with mode of permissions like in any other *nix system
+- Every action with `file` module can be accompanied with mode of permissions like in any other *nix system
 - [Please see the docs](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html)
 
 ---
@@ -161,7 +161,7 @@ Sets attributes of files, symlink and directories, or removes them. Many other m
 - Execute module file while creating file named `test` at `/tmp` path on all the nodes
 - Use file module to create empty folder `config` at `/opt` folder
 - Change the `test` file permission to be read and written by user only
-- save all commands in to cmd_line.txt and save it on git versino control
+- save all commands in to cmd_line.txt and save it on git version control
 
 ```sh
 mkdir -p 02_fundamentals/modules/File && cd 02_fundamentals/modules/File
@@ -217,7 +217,7 @@ special uses cases, such as cloud access, platform access and so on. Thus here i
     - Arguments: None
 - Module: debug
     - Purpose: Print statements during execution.
-    - Arguments: msg=<THE_CUSTOME_MESSAGE\> var=<A_VAR_NAME_TO_DEBULG\>
+    - Arguments: msg=<THE_CUSTOM_MESSAGE\> var=<A_VAR_NAME_TO_DEBUG\>
 - Module: apt
     - Purpose: Install software with apt.
     - Arguments: name=<PACKAGE_NAME\> state=<STATE\>

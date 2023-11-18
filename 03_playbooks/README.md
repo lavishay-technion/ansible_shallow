@@ -14,7 +14,7 @@ Few things that we need to have general understanding:
 
 - Python is interpreted dynamic programming language
 - Any programming language utilizes data-types, variables, conditions, loops, data-structures, classes, objects and Python is not an exception
-    - Unique feature of python is indentention
+    - Unique feature of python is indentation
     - Due to YAML being developed  with Python, it inherits those treats
     - Python can read/write/pass data, mainly values from YAML to YAML 
 - Ansible was developed with Python programming language
@@ -27,12 +27,12 @@ Few things that we need to have general understanding:
 
 # YAML: Yet Another Markup Language
 
-Applications and software in general, moves information by sharing its own data with each other apps, in a type of a format that is predefined and aknowledge by all applications.
+Applications and software in general, moves information by sharing its own data with each other apps, in a type of a format that is predefined and acknowledge by all applications.
 For example in web applications most beloved and used format is `json`. Although `json` syntax in many cases can be confusing, and hard to read.
 
 #### YAML to the rescue
 
-- YAML is as human readable, data-serialisation language.
+- YAML is as human readable, data-serialization language.
 - Easy to use, easy to read and easy to collaborate with as well.
 - Reading and writing of YAML format is support in most major programming languages
 - YAML files are often described with `.yaml` or `.yml` extensions.
@@ -47,7 +47,7 @@ For example in web applications most beloved and used format is `json`. Although
 - YAML consists of key/value pair collections also known as `dictionaries`
     - Keys need to be unique
     - Values can be the same
-    - Keys and values are seperated with colon (:)
+    - Keys and values are separated with colon (:)
         - Everything after colon is treated as _string_
         - In some cases, solely numbers are treated as _integers_
             - Unless they are between single or double quotes -> then they are _strings_
@@ -221,7 +221,7 @@ ansible-playbook motd_playbook.yaml
 # Practice
 
 - Create folders 03_Playbooks/00_init and `cd` into it:
-  - Setup `hosts` file and `ansible.cfg` files appropriatly
+  - Setup `hosts` file and `ansible.cfg` files appropriately
   - Create initial playbook called **playbook-ping.yaml**
     - In playbooks create a task that pings all possible hosts
     - [RTFM](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/ping_module.html)
@@ -263,7 +263,7 @@ tasks:
 #### Variables use in playbooks
 
 In some of the playbooks we;ll be able to configure and setup static values to be used during the playbook. This concepts is called `variable` use.
-We create new section in out playbook called `vars` and under its indentention we add a _key_ word which is variable name and  with a _string value_ which is variable value.
+We create new section in out playbook called `vars` and under its indentation we add a _key_ word which is variable name and  with a _string value_ which is variable value.
 Later on we can summon the value by using double curly braces with double quotes: `"{{ variable_name }}"`
 
 Variable playbook example:
@@ -291,7 +291,7 @@ Variable playbook example:
 
 #### Variables use in playbooks
 
-One additinoal features with Variables in playbooks is that, they can also be passed externally with `-e` or `--extra-vars` option to `ansible-playbook` command 
+One additional features with Variables in playbooks is that, they can also be passed externally with `-e` or `--extra-vars` option to `ansible-playbook` command 
 
 ```sh
 ansible-playbook motd_playbook.yaml -e 'motd="This is a TEST motd output"'
@@ -305,8 +305,8 @@ ansible-playbook motd_playbook.yaml -e 'motd="This is a TEST motd output"'
     - Verify that you have `hosts` and `ansible.cfg`
     - Copy **playbook-copy.yaml** to this folder and edit the **vars** section in playbook:
         - Add variable `motd` with value of `Welcome to DB server- deployed by ansible`
-        - Verfiy that you are **NOT** copying the `db_motd` file
-            - Inseted use `content` key in `copy` module and place `"{{ motd }}"` variable
+        - Verify that you are **NOT** copying the `db_motd` file
+            - Inserted use `content` key in `copy` module and place `"{{ motd }}"` variable
         - Use user root to perform the task
         - Run playbook on all db targets
         - Test the MOTD on remote DB node that it has indeed changed
@@ -336,15 +336,15 @@ ansible-playbook motd_playbook.yaml -e 'motd="This is a TEST motd output"'
 ```
 
 ```sh
-anisble-plybook motd_playbook.yaml
-anisble-plybook motd_playbook.yaml -e 'motd="This is TEST motd"'
+ansible-playbook motd_playbook.yaml
+ansible-playbook motd_playbook.yaml -e 'motd="This is TEST motd"'
 ```
 ---
 
 
 # Ansible Playbook/YAML Structure (cont.)
 
-#### Exapanding on target section
+#### Expanding on target section
 
 If have not noticed, when running with Ansible, each time a setup module, aka fact gathering task, is run automatically. It gets values from targets to be used later in playbook.
 The setup module use in many cases adds over head which might not be useful in cases when remote ansible variables are not required.
@@ -412,7 +412,7 @@ Alternatively, handlers can utilize the `listen` keyword. Using this handler key
     - Create **playbook_copy_handlers.yaml** in this folder and add the **handlers** section in playbook:
         - Create task with file module that will remove the /etc/motd file from target hosts
         - Verify that you are not using fact gathering (aka setup module)
-        - Add handler with debug module that provides output message when task succeds
+        - Add handler with debug module that provides output message when task succeeds
         - [RTFM](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/file_module.html)
 ---
 

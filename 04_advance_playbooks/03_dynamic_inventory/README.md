@@ -8,7 +8,7 @@
 - The requirements of dynamic inventories
 - How to Create dynamic inventories with minimal scripting
 - How to interrogate a dynamic inventory
-- Performance enhencements through the use of `_meta`
+- Performance enhancements through the use of `_meta`
 - The use of the Ansible Python framework for Dynamic Inventories
 
 ---
@@ -33,5 +33,4 @@
 
 # Example
 
-- [inventory.py]()
-- []()
+- [inventory.py](../../inventory.py)

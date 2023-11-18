@@ -47,10 +47,10 @@ In case you still do NOT have the gitlab repository mentioned above in note, and
 
 #### The Playground
 
-The lab itself consist of `anisble-host` container, where we will be practicing, running, testing and validating our ansible configurations. All the code management, version control and code will be done on this very container, and the files saved will be outputted on your pc/laptop/environment under folder `99_misc/setup/docker/ansible`.
+The lab itself consist of `ansible-host` container, where we will be practicing, running, testing and validating our ansible configurations. All the code management, version control and code will be done on this very container, and the files saved will be outputted on your pc/laptop/environment under folder `99_misc/setup/docker/ansible`.
 Additionally we will have four more containers, of `debian` and `rockylinux`, that will appear as vm's or remotely connected web/database/application servers, as you have in most of the environments in different organizations.
 The main idea behind this containerized playground is to provide as with practice environment that is able to look like deployment platform, for us to practice and implement various parts of `ansible`.
-The playgound is reporoducable so you may practice on your own when even you wish.
+The playground is reproducible so you may practice on your own when even you wish.
 
 ----
 
@@ -75,8 +75,8 @@ Back to the topic of setting up the local lab based on `docker` and `docker comp
     - If you have pdf project move into `99_misc/setup/docker`
 - Initialize `docker compose` to start the process of building the lab
     - By the end you should have 5 running containers with ansible-host and nodes 1-4 up and running. 
-- Last  but not least, we log into `anisble-host` to start our learning process
-    - We will be logged inside `anisble-host container`, with user named `ansible`, and most of tools already provided in there
+- Last  but not least, we log into `ansible-host` to start our learning process
+    - We will be logged inside `ansible-host container`, with user named `ansible`, and most of tools already provided in there
 
 ```sh
 git clone  https://gitlab.com/silent-mobius/ansible-compose.git
@@ -105,7 +105,7 @@ The design goals of Ansible include:
 
 # Architecture  Description (cont.)
 
-Generally the Ansible architecture should be structures in a manner of remote machine or container that takes your ansible command/script/playbooks/roles/templates/anythong IaC related, and with remote connection executes the task it was requested to do. Usually one illustration is far better then thousand words, thus lets have a look:
+Generally the Ansible architecture should be structures in a manner of remote machine or container that takes your ansible command/script/playbooks/roles/templates/anything IaC related, and with remote connection executes the task it was requested to do. Usually one illustration is far better then thousand words, thus lets have a look:
 
 <img src="../99_misc/.img/ansible_arch.png" alt="our class arch" style="float:right;width:500px;">
 
@@ -146,7 +146,7 @@ The locations ansible will search for config file from the highest to lowest pre
 <!-- Show example from 4 to 1 -->
 1. `ANSIBLE_CONFIG`: Environment variable with filename 
 2. `./ansible.cfg`: An Ansible config file in current directory
-3. `~/.ansible.cfg`: Hidden file in your users hoime directory.
+3. `~/.ansible.cfg`: Hidden file in your users home directory.
 4. `/etc/ansible/ansible.cfg`: Typically provided, through package manager of our system.
 
 - This course works on files as if they were `Infra-As-a-Code` or `IaC`, thus the most usable way for us to use `git` with Ansible config file would be option 2.
@@ -252,7 +252,7 @@ In other words: lets go and practice
 - Generate empty `ansible.cfg` `hosts.ini` `README.md` and `.gitignore` files
 - Setup version control and save it to remote repository
 - Edit gitignore not to save `*.swp` files
-- Edit `anisble.cfg` with the text `[defaults]` and under it `inventory=hosts.ini`: we'll explain it later
+- Edit `ansible.cfg` with the text `[defaults]` and under it `inventory=hosts.ini`: we'll explain it later
 - Edit `hosts.ini` file
   - Write down all the hosts names line by line from `node1` to `node4`
   - Issue an `ansible --list-host all`
@@ -315,11 +315,11 @@ In previous practice we did setup up groups but did not emphasized the explanati
 Lets go back to the lab in docker-compose and edit additional configurations that we'll need.
 ```sh
 # in case you did not login
-docker compose exec -it anisble-host /bin/bash 
+docker compose exec -it ansible-host /bin/bash 
 cd 01_ansible_inventory
 ```
 
-We already have initial building blocks, in shape of `anisble.cfg` and `hosts.ini` files, so all we need is to update files as we learn more and more. In order to keep the files in an uasable manner, I suggest to use git branches and keep each chapter outline and practice in different branches. Before we start updating config files, let us start by testing connectivity with the nodes:
+We already have initial building blocks, in shape of `ansible.cfg` and `hosts.ini` files, so all we need is to update files as we learn more and more. In order to keep the files in an usable manner, I suggest to use git branches and keep each chapter outline and practice in different branches. Before we start updating config files, let us start by testing connectivity with the nodes:
 
 - Lets check connectivity between `ansible-host` and nodes 1 to 4. 
     - Keep in mind that dns resolution is provided by `docker-compose`, so at the moment, there is no need to know IP addresses.

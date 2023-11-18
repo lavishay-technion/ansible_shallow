@@ -15,7 +15,10 @@ All tasks in a block inherit directives applied at the block level. Most of what
 
 ---
 
-# Block example with named tasks inside the block
+# Block example 
+
+#### Named tasks inside the block
+
 ```yaml
  tasks:
    - name: Install, configure, and start Apache
@@ -44,7 +47,9 @@ All tasks in a block inherit directives applied at the block level. Most of what
 ```
 ---
 
-# Block example with named tasks inside the block (cont.)
+# Block example 
+
+#### Named tasks inside the block (cont.)
 
 In the example above, the ‘when’ condition will be evaluated before Ansible runs each of the three tasks in the block. All three tasks also inherit the privilege escalation directives, running as the root user. Finally, ignore_errors: yes ensures that Ansible continues to execute the playbook even if some of the tasks fail.
 
