@@ -1,0 +1,16 @@
+---
+
+- 
+  host: node2
+  tasks:
+    - debug:
+        msg: "==========================  Testing include_tasks =========================="
+
+    - include_tasks: 01_include_task.yaml
+      when: include_task_var is not defined
+
+    - debug:
+        msg: "==========================  Testing import_tasks =========================="
+
+    - include_tasks: 02_import_task.yaml
+      when: import_task_var is not defined
