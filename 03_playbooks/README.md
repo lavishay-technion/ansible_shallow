@@ -3,8 +3,6 @@
 
 # Ansible Playbooks
 
-.footer: Created By Alex M. Schapelle, VAioLabs.io
-
 
 ---
 
