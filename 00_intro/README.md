@@ -134,7 +134,7 @@ But there’s a reason why many developers and sysadmins stick to shell scriptin
 
 # History (cont.)
 
-### Enter Ansible
+#### Enter Ansible
 
 <img src="../99_misc/.img/ansible_logo.png" alt="ansible_logo" style="float:right;width:180px;">
 
@@ -153,7 +153,7 @@ As we can see, Ansible was built by developers and sysadmins who know the comman
 
 # What Is Ansible?
 
-As James Spurin explained in one of his videos, Ansible is multitude of tools, modules, and software defined Infrastructre, that are collectively ansible tool set.
+Ansible is multitude of tools, modules, and software defined Infrastructure, that are collectively ansible tool set.
 For me and majority of other users, Ansible is an open-source software provisioning, configuration management, and application-deployment tool enabling infrastructure as code.
 You are welcome to use either of those definitions.
 
@@ -175,7 +175,7 @@ Let's discuss:
 
 - Code development process
 - Declarative Vs. Scripted
-- Code mainteinance
+- Code maintenance
 - Complexity management
 
 ---
