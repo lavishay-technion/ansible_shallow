@@ -3,6 +3,10 @@
 -
   hosts: all
   tasks:
+    - name: Run hostname and register
+      command: hostname -s
+      register: hostname values
+
     - name: Install Epel-release
       yum:
         update_cache: yes
