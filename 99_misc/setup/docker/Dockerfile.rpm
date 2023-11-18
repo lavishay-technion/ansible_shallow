@@ -1,6 +1,8 @@
 FROM rockylinux/rockylinux:8.6
 EXPOSE 22
 EXPOSE 2222
+EXPOSE 3306
+EXPOSE 5432
 RUN dnf install -y sudo iputils less passwd openssh-clients openssh-server vim nano python39\
     && mkdir /root/.ssh
 COPY id_rsa.pub  /root/.ssh/authorized_keys

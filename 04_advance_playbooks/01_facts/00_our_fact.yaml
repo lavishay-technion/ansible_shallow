@@ -1,0 +1,13 @@
+---
+
+- 
+
+  hosts: node2, node1
+  tasks: 
+    - name: set a facts
+      set_fact: 
+        our_fact: Ansible rocks!
+
+    - name: Show custom facts
+      debug:
+        msg: "{{ out_fact }}"

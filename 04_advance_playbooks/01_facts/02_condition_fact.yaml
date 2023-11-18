@@ -1,0 +1,21 @@
+---
+
+- 
+
+  hosts: node2, node1
+  tasks: 
+    - name: set a facts for Web
+      set_fact: 
+        web_port: 80
+        web_app_path: /usr/share/nginx/html
+      when: ansible_distribution == 'Debian'
+    
+    - name: set a facts for DB
+      set_fact: 
+        db_port: 5432
+        db_path: /usr/share/postgresql
+      when: ansible_distribution == 'Rocky'
+
+    - name: Show pre-set facts
+      debug:
+        msg: "web server port is :{{ web_port }}, web server path is :{{ web_app_path }}, db port is: {{ db_port }}, db storage path is: {{ db_path}}"
