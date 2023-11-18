@@ -1,0 +1,19 @@
+---
+
+- 
+
+  hosts: db
+  gather_facts: False
+  vars_prompt:
+    - name: username
+      private: False
+    - name: password
+      private: True
+
+  tasks: 
+    - name: Test var_prompt
+      debug:
+        msg: "{{ username }}"
+    - name: Test var_prompt password
+      debug:
+        msg: "{{ password }}"
