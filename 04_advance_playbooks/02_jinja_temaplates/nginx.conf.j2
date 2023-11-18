@@ -1,0 +1,9 @@
+server {
+       listen {{ web_server_port }};
+       listen [::]:{{ web_server_port }};
+       root {{ nginx_custom_directory }};
+       index index.html;
+       location / {
+               try_files $uri $uri/ =404;
+       }
+}

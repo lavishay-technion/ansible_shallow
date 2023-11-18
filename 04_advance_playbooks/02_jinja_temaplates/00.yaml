@@ -1,0 +1,19 @@
+
+---
+-
+  hosts: all
+  vars:
+   favorite_color: blue
+   age: 37
+   voting_center: gc-3
+   fruits:
+     - banana
+     - apple
+     - watermelon
+     - melon
+
+  tasks:
+  - name: Template test
+    template:
+      src: example_template.j2
+      dest: /tmp/test.conf
