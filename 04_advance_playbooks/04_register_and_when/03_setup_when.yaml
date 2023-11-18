@@ -1,0 +1,10 @@
+---
+
+- 
+
+  hosts: all
+  tasks:
+    - name: Exploring Registers
+      command: hostname -s
+      when: ansible_distribution == "Rocky" 
+...

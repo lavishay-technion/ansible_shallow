@@ -1,0 +1,9 @@
+---
+
+- 
+
+  hosts: all
+  tasks:
+    - name: Exploring Registers
+      command: hostname -s
+      when: ansible_distribution == "Rocky" and ansible_distribution_major_version == "8"

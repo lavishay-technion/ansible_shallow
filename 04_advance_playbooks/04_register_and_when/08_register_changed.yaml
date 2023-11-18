@@ -1,0 +1,18 @@
+---
+
+- 
+
+  hosts: all
+  tasks:
+    - name: Exploring Registers
+      command: hostname -s
+      when: 
+        - ansible_distribution == "Rocky" 
+        - ansible_distribution_major_version  | int >= 8
+      register: command_register
+
+    - name: install patch when changed
+      yum:
+        name: patch
+        state: present
+      when: command_register.changed
