@@ -225,7 +225,7 @@ Unlike `loop` and `with_<lookup>`, `until` is a the retry pattern that can be us
 
 for example :
 - Lets create shell script that will print out random number within of range of 0 to 10
-- lets create a taslk with until loop that will run this script on all hosts 100 times or until it reaches the output of 10 
+- lets create a task with until loop that will run this script on all hosts 100 times or until it reaches the output of 10 
 
 ```sh
 #!/usr/bin/env bash 

@@ -226,7 +226,7 @@ ansible-playbook motd_playbook.yaml
 - Go back to 03_playbooks and create new folder 01_playbook_copy and `cd` into it:
     - Verify that you have `hosts` and `ansible.cfg`
     - Create file db_motd with message : `Welcome to DB server- deployed by ansible`
-    - Create a plabook called **playbook-copy.yaml**
+    - Create a playbook called **playbook-copy.yaml**
         - use user root to perform the task
         - Copy the db_motd file to `/etc/motd`  on all db targets
         - [RTFM](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html)
