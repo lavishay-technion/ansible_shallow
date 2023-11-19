@@ -31,7 +31,7 @@ We'll learn several topics mainly focused on:
 
 ---
 
-# Course Prerqqusits
+# Course Prerequisite
 
 - TCP/IP knowledge - MUST
 - UNIX/Linux shell usage - MUST
@@ -140,7 +140,7 @@ But there’s a reason why many developers and sysadmins stick to shell scriptin
 
 The term "Ansible" was coined by Ursula K. Le Guin in her 1966 novel Rocannon's World, and refers to fictional **instantaneous communication systems**.
 
-The Ansible tool was developed by [Michael DeHaan](), the author of the provisioning server application Cobbler and co-author of the Fedora Unified Network Controller (Func) framework for remote administration.
+The Ansible tool was developed by [Michael DeHaan](https://www.linkedin.com/in/michaeldehaan/), the author of the provisioning server application Cobbler and co-author of the Fedora Unified Network Controller (Func) framework for remote administration.
 
 Ansible, Inc. (originally AnsibleWorks, Inc.) was the company founded in 2013 by Michael DeHaan, Timothy Gerla, and Saïd Ziouani to commercially support and sponsor Ansible. Red Hat acquired Ansible in October 2015.
 
