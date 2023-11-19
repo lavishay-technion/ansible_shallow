@@ -14,11 +14,11 @@ set -o pipefail
 PROJECT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 WORKDIR="$PROJECT/out"
 THEME="${PROJECT}/99_misc/.theme/"
-BUILD_DIR_ARRAY=($(ls $PROJECT|grep -vE '99_*|README.md|LICENSE|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf|out|spell.txt'))
+BUILD_DIR_ARRAY=($(ls $PROJECT|grep -vE '99_*|.git|README.md|LICENSE|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf|out|spell.txt'))
 BUILD_TOOL=$(which darkslide)
 BUILD_TOOL_VERSION=$(darkslide --version|awk '{print $2}')
 DEPENDENCY_ARRAY=(python3-darkslide python3-landslide weasyprint) # single crucial point of failure for multi-type environments (Linux-Distro's,MacOS)
-SEPERATOR='-------------------------------------------'
+SEPARATOR='-------------------------------------------'
 SPELLCHECK=$(which codespell)
 NULL=/dev/null
 
@@ -35,7 +35,7 @@ main(){
             done
     fi
     
-    BUILD_WORKDIR_ARRAY=($(ls $WORKDIR|grep -vE '99_*|README.md|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf'))
+    BUILD_WORKDIR_ARRAY=($(ls $WORKDIR|grep -vE '99_*|.git|README.md|TODO.md|build.sh|presentation.md|presentation.html|presentation.pdf|out|spell.txt'))
     
     # get_installer
     get_build_tool
@@ -62,10 +62,11 @@ main(){
                 ;;
             t)  
                deco '[+] Checking Spelling'
-                for folder in 0[0-9]_*;
-                    do 
-                        codespell -I spell.txt $folder/README.md 
-                    done            
+                    FOLDER_LIST=$(find  -name '*.md' |sort)
+                    for folder in ${FOLDER_LIST}
+                        do
+                            codespell -I spell.txt "$folder"
+                        done
                 ;;
             *) _help
                 ;;
@@ -77,9 +78,9 @@ main(){
 function deco(){
     IN="$*"
     printf "\n%s \n%s \n%s\n " \
-             "$SEPERATOR" \
+             "$SEPARATOR" \
              "$IN"        \
-             "$SEPERATOR"
+             "$SEPARATOR"
 }
 
 function _help() {
@@ -170,10 +171,7 @@ function convert_html_to_pdf(){
         weasyprint -v  $IN $OUT
 }
 
-function spell_check(){
-    IN=$1
-        $SPELLCHECK --ignore-words spell.txt $IN
-    }
+
 
 #######
 # Main

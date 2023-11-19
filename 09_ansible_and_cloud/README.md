@@ -1,0 +1,6 @@
+
+---
+
+# Ansible with cloud
+
+---
