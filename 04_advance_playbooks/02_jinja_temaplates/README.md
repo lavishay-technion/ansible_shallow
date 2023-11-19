@@ -34,10 +34,10 @@ Jinja2 templates combine plain text files and special syntax to define and subst
 
 # Examples
 
-- [template example](../../example_template.j2)
-- [simple use](../../00.yaml)
-- [config with variables](../../01.yaml)
-- [nginx provision](../../02.yaml)
+- [template example](../04_advance_playbooks/02_jinja_templates/example_template.j2)
+- [simple use](../04_advance_playbooks/02_jinja_templates/00.yaml)
+- [config with variables](../04_advance_playbooks/02_jinja_templates/01.yaml)
+- [nginx provision](../04_advance_playbooks/02_jinja_templates/02.yaml)
 
 > `[!]` Note: value swapping in templates happens before the task is executed on the target on the `anisble host`
 

@@ -5,6 +5,8 @@
 
 ---
 
+# Register and when
+
 Ansible `register` is a way to capture the output from task execution and store it in a variable. This is an important feature, as this output is different for each remote host, and the basis on that, we can use conditions loops to do some other tasks
 
 ---
@@ -16,11 +18,12 @@ We usually run `ansible` command to test out infrastructure, for example:
 ansible all -a 'hostname -s' -o
 ```
 Yet, there are instances when we need to use the output to determine conclusion that `setup` module may not include
-- [Saving hostname](../../00_register.yaml)
+- [Saving hostname](../04_advance_playbooks/04_register_and_when/00_register.yaml)
 
-But saving output without checking it has not much value, thus combination of `register` keyword with `debug` module and `var` keyword. We can get the raw data or just accept the  `stdout` of the returned output
-- [User registered data](../../01_reg_output.yaml)
-- [User registered data with stdout](../../02_reg_stdout.yaml)
+But saving output without checking it has not much value, thus combination of `register` keyword with `debug` module and `var` keyword. We can get the raw data or just accept the  `stdout` of the returned output:
+
+- [User registered data](../04_advance_playbooks/04_register_and_when/01_reg_output.yaml)
+- [User registered data with stdout](../04_advance_playbooks/04_register_and_when/02_reg_stdout.yaml)
 
 
 ---
@@ -64,11 +67,12 @@ You will see most of the fields in the output; we will try to explore some of th
 # When 
 
 In many cases, where we wish to use specific module, plugin or command on specific host and wish to check if host answer the criteria, we use `when` keyword
-Many conditions can be evaluated with `and` and `or` boolean operators.
-- [Setup Modules with when](../../03_setup_when.yaml)
-- [Setup Module with when and `and`](../../04_setup_when_and.yaml)
-- [Setup Module with when and `or` and `and`](../../05_setup_when_and_or.yaml)
-- [Setup Module with when and `or` and `and`](../../06_setup_when_and_list.yaml)
+Many conditions can be evaluated with `and` and `or` boolean operators:
+
+- [Setup Modules with when](../04_advance_playbooks/04_register_and_when/03_setup_when.yaml)
+- [Setup Module with when and `and`](../04_advance_playbooks/04_register_and_when/04_setup_when_and.yaml)
+- [Setup Module with when and `or` and `and`](../04_advance_playbooks/04_register_and_when/05_setup_when_and_or.yaml)
+- [Setup Module with when and `or` and `and`](../04_advance_playbooks/04_register_and_when/06_setup_when_and_list.yaml)
 
 
 ---
@@ -92,10 +96,10 @@ Many conditions can be evaluated with `and` and `or` boolean operators.
 
 It's very useful to combine `register` with `when` keyword, due to their beneficial nature. When working on systems, some of them dynamically can be updated, and those parameters may differ from env to env. In those scenarios ansible comes in handy
 
-- [Registering when condition is triggered](../../07_register_when.yaml)
-- [Registering only changed](../../08_register_changed.yaml)
-- [Registering only when there `is` change](../../09_register_when_is_change.yaml)
-- [Registering when there `is` skip](../../10_register_when_is_skip.yaml)
+- [Registering when condition is triggered](../04_advance_playbooks/04_register_and_when/07_register_when.yaml)
+- [Registering only changed](../04_advance_playbooks/04_register_and_when/08_register_changed.yaml)
+- [Registering only when there `is` change](../04_advance_playbooks/04_register_and_when/09_register_when_is_change.yaml)
+- [Registering when there `is` skip](../04_advance_playbooks/04_register_and_when/10_register_when_is_skip.yaml)
 
 
 ---

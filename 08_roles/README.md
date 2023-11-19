@@ -2,7 +2,7 @@
 ---
 
 # Ansible Roles
-<img src="../../99_misc/.img/galaxy.png" alt="galaxy" style="float:right;width:400px;">
+<img src="../99_misc/.img/galaxy.png" alt="galaxy" style="float:right;width:400px;">
 
 ---
 
@@ -35,9 +35,11 @@ An "Ansible Role" is containing several components or directories, each holding 
 
 The structure looks as follows:
 
-<img src="../../99_misc/.img/ansible_role.png" alt="roles" style="float:right;width:400px;">
+<img src="../99_misc/.img/ansible_role.png" alt="roles" style="float:right;width:400px;">
 
 > `[!]` Note: this structure can be created manually, yet it is suggested to use `ansible-galaxy` instead, as shown in next segment
+
+> `[!]` Note: NOT all folder are required for roles. essentially you could manage with tasks folder only or var and tasks folders only. The use solely depends on what you are trying to accomplish
 
 ---
 

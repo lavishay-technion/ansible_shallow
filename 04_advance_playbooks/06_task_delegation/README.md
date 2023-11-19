@@ -17,5 +17,5 @@ There are many playbooks in the projects that sometimes require to run tasks or 
 
 we have the four tasks which will copy files from the ansible controller to the remote destination; in the second task, we will use the delegate_to parameter to get the URL status from the local or the delegated server only, and in the third task, we will get the output produced by the delegated task, and in the fourth task, ansible will reboot the remote machine.
 
-- [Delegating to localhost](../../00_delegate.yaml)
+- [Delegating to localhost](../04_advance_playbooks/06_task_delegation/00_delegate.yaml)
 

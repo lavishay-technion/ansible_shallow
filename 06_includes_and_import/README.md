@@ -7,7 +7,7 @@
 
 # Imports and include
 
-<img src="../../99_misc/.img/import.png" alt="import include" style="float:left;width:400px;">
+<img src="../99_misc/.img/import.png" alt="import include" style="float:left;width:400px;">
 
 While working on complex playbooks on of the main thing to focus is not to rewrite existing code. This is where  the next list of modules comes in handy
 
@@ -26,7 +26,7 @@ Sadly, the module is going to be deprecated in future versions, yet, some part o
 
 # Example
 
-- [Including task in a playbook](../../00_include_task.yaml)
+- [Including task in a playbook](../06_includes_and_import/00_include_task.yaml)
 
 ---
 
@@ -34,11 +34,19 @@ Sadly, the module is going to be deprecated in future versions, yet, some part o
 
 
 
+Much like the `roles:` keyword, this task loads a role, but it allows you to control when the role tasks run in between other tasks of the play
+
+Most keywords, loops and conditionals will only be applied to the imported tasks, not to this statement itself. If you want the opposite behavior, use ansible.builtin.include_role instead
+
+Roles can not be implemented as part of handlers
+
+
+
 ---
 
 # Example
 
-- [Importing task in a playbook](../../01_import_task.yaml)
+- [Importing task in a playbook](../06_includes_and_import/01_import_task.yaml)
 
 #### So what is the difference between `import_task` and `include_task` ?
 
@@ -56,9 +64,9 @@ This is possible to see while using `when` condition on the tasks, during the ru
 
 # Example
 
-- [import task](../../02_import_task.yaml)
-- [include task](../../03_include_task.yaml)
-- [playbook that uses both of them](../../04_playbook.yaml)
+- [import task](../06_includes_and_import/02_import_task.yaml)
+- [include task](../06_includes_and_import/03_include_task.yaml)
+- [playbook that uses both of them](../06_includes_and_import/04_playbook.yaml)
 
 ---
 

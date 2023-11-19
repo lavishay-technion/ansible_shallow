@@ -7,7 +7,7 @@
     - purpose: provide system calls over the http protocol
     - port: 80
   tasks:
-  - name: Template a file to /etc/file.conf
+  - name: Template a file to /tmp/config.ini
     template:
       src: config.j2
       dest: /tmp/config.ini

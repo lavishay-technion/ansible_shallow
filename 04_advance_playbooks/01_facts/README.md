@@ -16,9 +16,9 @@
 
 # Examples
 
-- [Setting facts](../../00_our_fact.yaml)
-- [Setting multiple facts](../../01_multi_fact.yaml)
-- [Set conditional facts](../../02_condition_fact.yaml)
+- [Setting facts](../04_advance_playbooks/01_facts/00_our_fact.yaml)
+- [Setting multiple facts](../04_advance_playbooks/01_facts/01_multi_fact.yaml)
+- [Set conditional facts](../04_advance_playbooks/01_facts/02_condition_fact.yaml)
 
 ---
 
@@ -38,8 +38,8 @@
 ---
 
 # Examples
-- [Example fact script](../../fact_script.sh)
-- [Setting custom facts](../../03_custom_fact.yaml)
+- [Example fact script](../04_advance_playbooks/01_facts/fact_script.sh)
+- [Setting custom facts](../04_advance_playbooks/01_facts/03_custom_fact.yaml)
 
 ---
 
@@ -61,6 +61,9 @@ cat << EOF
 { "Python_version": "${python_ver}" }
 EOF
 ```
+---
+
+# Practice (cont.)
 
 ```yaml
 ---

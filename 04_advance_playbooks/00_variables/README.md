@@ -10,12 +10,12 @@
 
 We'll go over examples of variables use and expand on the knowledge we just got from previous encounter.
 
-- [simple use](../../00_simple.yaml)
-- [dictionary variable](../../01_dict.yaml)
-- [named_list](../../02_named_list.yaml)
-- [variables in external variable file](../../03_extenal.yaml)
-- [prompting user](../../04_prompt.yaml)
-- [hostvar usage](../../05_hostvar_use.yaml)
+- [simple use](../04_advance_playbooks/00_variables/00_simple.yaml)
+- [dictionary variable](../04_advance_playbooks/00_variables/01_dict.yaml)
+- [named_list](../04_advance_playbooks/00_variables/02_named_list.yaml)
+- [variables in external variable file](../04_advance_playbooks/00_variables/03_extenal.yaml)
+- [prompting user](../04_advance_playbooks/00_variables/04_prompt.yaml)
+- [hostvar usage](../04_advance_playbooks/00_variables/05_hostvar_use.yaml)
 
 
 ---
@@ -61,6 +61,9 @@ list_of_songs:
         Ehud
         Gal
 ```
+---
+
+# Practice (cont.)
 
 ```yaml
 ---

@@ -5,11 +5,15 @@
 
 ---
 
+# Loops
+
 Ansible offers the `loop`, `with_<lookup>`, and `until` keywords to execute a task multiple times. Examples of commonly-used loops include changing ownership on several files and/or directories with the file module, creating multiple users with the user module, and repeating a polling step until a certain result is reached
 
 > `[!]` Note: `loop` was added to Ansible in version 2.5. It is not yet a full replacement for with_<lookup>, but it is recommend it for most use cases.
-> `with_<lookup>` is NOT deprecated, and syntax will still be valid for the foreseeable future.
-> `loop` syntax is not final - [thus keep up with docs](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html)
+
+> `[!]` Note: `with_<lookup>` is NOT deprecated, and syntax will still be valid for the foreseeable future.
+
+> `[!]` Note: `loop` syntax is not final - [thus keep up with docs](https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_loops.html)
 
 ---
 
@@ -48,6 +52,10 @@ tasks:
         - User the same variable list
         - Use `user` module to delete same users
 - [RTFM user module](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html)
+
+---
+
+# Practice
 
 ```yaml
 hosts: all
@@ -129,7 +137,6 @@ vars:
       full_name: "Michael Sepiashvili"
     karen:
       full_name: "Karen Kaufman"
-
 become: True
 tasks:
   - name: Create user "{{ item.key }}"
@@ -147,7 +154,6 @@ tasks:
       comment: "{{ item.value.full_name }}"
     loop:
       - "{{ users | dict2items }}"
-
 ```
 
 ---
@@ -210,9 +216,7 @@ tasks:
         - Use `user` module to delete same users
 - [RTFM user module](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/user_module.html)
 
-```yaml
 
-```
 ---
 
 # `until`

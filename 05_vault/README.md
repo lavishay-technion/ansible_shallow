@@ -3,6 +3,8 @@
 
 # Ansible vault
 
+<img src="../99_misc/.img/vault.png" alt="import include" style="float:right;width:400px;">
+
 ---
 
 Usually at some point in developing ansible playbooks, there is a time, when someone asks regarding the sensitive information. That is when `ansible-vault` come into play. 

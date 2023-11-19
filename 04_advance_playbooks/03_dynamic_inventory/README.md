@@ -33,4 +33,4 @@
 
 # Example
 
-- [inventory.py](../../inventory.py)
+- [inventory.py](../04_advance_playbooks/03_dynamic_inventory/inventory.py)

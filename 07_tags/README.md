@@ -3,7 +3,7 @@
 
 # Ansible tags
 
-<img src="../../99_misc/.img/tags.png" alt="tags" style="float:left;width:400px;">
+<img src="../99_misc/.img/tags.png" alt="tags" style="float:right;width:400px;">
 
 ---
 
