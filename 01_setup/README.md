@@ -79,11 +79,21 @@ Back to the topic of setting up the local lab based on `docker` and `docker comp
     - We will be logged inside `ansible-host container`, with user named `ansible`, and most of tools already provided in there
 
 ```sh
-git clone  https://gitlab.com/silent-mobius/ansible-compose.git
-cd ansible-compose
+sudo apt update && sudo apt install git -y
+
+git clone https://gitlab.com/vaiolabs-io/ansible-shallow-dive.git
+
+curl -L get.docker.com | sudo bash 
+
+sudo usermod -aG docker admin
+
+sudo su - admin
+
+docker version
+
+cd ansible-shallow-dive/99_misc/setup/docker/
+
 docker compose up -d
-docker compose ps
-docker compose exec -it ansible-host /bin/bash
 ```
 
 ---
