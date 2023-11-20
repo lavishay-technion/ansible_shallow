@@ -164,6 +164,19 @@ The locations ansible will search for config file from the highest to lowest pre
   - That's why we'll need to create local config file named `ansible.cfg`
 - If Ansible won't find the local `ansible.cfg` file , it will not work so,
 
+
+---
+
+# Practice
+
+- Create `/etc/ansible/` folder and int add `ansible.cfg`
+- Run `ansible --version` and check `config_file` value
+- Create `~/.ansible.cfg` 
+- Run `ansible --version` and check `config_file` value
+- Create folder test, `cd` into it and create `ansible.cfg`
+- Run `ansible --version` and check `config_file` value
+- Run `ANSIBLE_CONFIG=/tmp/ansible.cfg ansible --version` and check `config_file` value
+
 ---
 
 # Inventories
