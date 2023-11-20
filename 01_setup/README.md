@@ -265,7 +265,7 @@ In other words: lets go and practice
 
 # Practice
 
-- Before starting the lab verify that you have empty repository for version control on gitlab or github. I recommend the first, yet you are free to use which ever you want to, as long as you will be able to debug your own issues that are not part of the course scope
+- **Before starting the lab verify that you have empty repository for version control on gitlab or github. I recommend the first, yet you are free to use which ever you want to, as long as you will be able to debug your own issues that are not part of the course scope**
     - Suggested name for repository: `Ansible-Shallow-Dive`
 - Log in to Ansible host container with : 
     - `docker compose exec -it ansible-host /bin/bash`
