@@ -11,7 +11,7 @@
 
     - name: Show custom facts
       debug:
-        msg: "{{ out_fact }}"
+        msg: "{{ our_fact }}"
 
     - name: Show ansible_distribution
       debug:

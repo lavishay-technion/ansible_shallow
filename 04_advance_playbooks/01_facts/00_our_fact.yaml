@@ -10,4 +10,4 @@
 
     - name: Show custom facts
       debug:
-        msg: "{{ out_fact }}"
+        msg: "{{ our_fact }}"
