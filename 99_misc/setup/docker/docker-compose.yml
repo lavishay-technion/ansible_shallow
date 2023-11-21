@@ -5,7 +5,7 @@ services:
     hostname: ansible-host
     build:
       context: .
-      dockerfile: Dockerfile.main
+      dockerfile: Dockerfile.ansible
     command: ["/usr/sbin/sshd", "-D"]
     networks:
       - vaiolabs.io
