@@ -189,21 +189,21 @@ ansible all -m file -a 'path=/tmp/test state=touch mode=600'
 # Practice
 
 - Create folder 02_fundamentals/modules/copy and move into it.
-- Create a file named `conf_web.yml` and write in it name of web server with the path to `index.html`.
+- Create a file named `conf_web.yaml` and write in it name of web server with the path to `index.html`.
     - In case of nginx -> `/usr/share/nginx/html/index.html`
-- Use `copy` module to copy `conf_web.yml` file to `/opt` on web servers
-- Create a file named `conf_db.yml`  and write in it name of db server with path to its configuration file
+- Use `copy` module to copy `conf_web.yaml` file to `/opt` on web servers
+- Create a file named `conf_db.yaml`  and write in it name of db server with path to its configuration file
     - In case of postgresql15 -> `/etc/postgresql/15/main/postgresql.conf`
-- Use `copy` module to copy `conf_db.yml` file to `/opt` on web servers
+- Use `copy` module to copy `conf_db.yaml` file to `/opt` on web servers
     - Bonus: change the mode of the file to 000 while copying it
 ```sh
 mkdir -p 02_fundamentals/modules/copy && cd 02_fundamentals/modules/copy
-touch conf_web.yml conf_db.yml
-echo 'nginx: /usr/share/nginx/html/index.html' > conf_web.yml
-echo 'postgresql15: /etc/postgresql/15/main/postgresql.conf' >conf_db.yml
-ansible web -m copy -a 'src=./conf_web.yml dest=/opt/conf_web.yml'
-ansible db -m copy -a 'src=./conf_db.yml dest=/opt/conf_db.yml'
-ansible db -m copy -a 'src=./conf_db.yml dest=/opt/conf_db.yml mode=000'
+touch conf_web.yaml conf_db.yaml
+echo 'nginx: /usr/share/nginx/html/index.html' > conf_web.yaml
+echo 'postgresql15: /etc/postgresql/15/main/postgresql.conf' >conf_db.yaml
+ansible web -m copy -a 'src=./conf_web.yaml dest=/opt/conf_web.yaml'
+ansible db -m copy -a 'src=./conf_db.yaml dest=/opt/conf_db.yaml'
+ansible db -m copy -a 'src=./conf_db.yaml dest=/opt/conf_db.yaml mode=000'
 ```
 ---
 
