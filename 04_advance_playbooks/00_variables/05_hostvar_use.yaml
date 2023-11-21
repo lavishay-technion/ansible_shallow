@@ -8,8 +8,8 @@
   tasks: 
     - name: Test hostvars with ansible facts
       debug:
-        msg: "{{ hostvars[ansible_host].ansible_port}}"
+        msg: "{{ hostvars[ansible_host].ansible_architecture}}"
 
     - name: Test hostvars with ansible facts with dict notation
       debug:
-        msg: "{{ hostvars[ansible_host]['ansible_port']}}"
+        msg: "{{ hostvars[ansible_host]['ansible_architecture']}}"
