@@ -79,14 +79,14 @@ Subsystem       sftp    /usr/lib/openssh/sftp-server
   become: True
   tasks:
     - name: backup remote sshd config
-        copy:
-            src: /etc/ssh/sshd_config
-            dest: /etc/ssh/sshd_config.bk
-            remote_src: True
+      copy:
+        src: /etc/ssh/sshd_config
+        dest: /etc/ssh/sshd_config.bk
+        remote_src: True
 
     - name: Template ssh config
-        template:
-            src: sshd.j2
-            dest: /etc/ssh/sshd_config
+      template:
+        src: sshd.j2
+        dest: /etc/ssh/sshd_config
 
 ```

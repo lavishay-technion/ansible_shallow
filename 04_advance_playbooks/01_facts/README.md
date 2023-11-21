@@ -79,10 +79,12 @@ EOF
         path: /etc/ansible/facts.d/
         state: directory
         mode: 755
+
     - name: Copy script to fact folder
         copy:
           src: python.sh
           dest: /etc/ansible/facts.d/python_version.fact
+          
     - name:
         setup:
           filter: 

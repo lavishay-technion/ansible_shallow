@@ -14,3 +14,4 @@
     - name: Show registered value
       debug:
         var: command_register
+

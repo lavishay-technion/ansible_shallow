@@ -16,3 +16,4 @@
         name: patch
         state: present
       when: command_register.changed
+

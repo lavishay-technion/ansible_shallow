@@ -22,3 +22,4 @@
         name: patch
         state: present
       when: command_register is skipped
+
