@@ -3,6 +3,30 @@
 -
   hosts: all
   become: True
-  tasks:
-    - name: 
+  vars:
+    packages: 
+      - patch
+      - htop
+      - uptimed
+      - telnetd 
 
+  tasks:
+    - name: Install packages on Debian
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: True
+      loop: 
+        - vim-nox
+        - arp-scan
+        - wget
+         
+      when: ansible_os_family == 'Debian'
+
+    - name: Install packages on Rocky
+      yum:
+        name: "{{ item }}"
+        state: present
+        update_cache: True
+      loop: "{{ packages }}"
+      when: ansible_distribution == 'Rocky'

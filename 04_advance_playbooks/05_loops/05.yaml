@@ -1,0 +1,12 @@
+---
+
+- 
+  hosts: all
+  tasks:
+    - name: Run a script until we get 10
+      script: random.sh
+      register: result
+      retries: 100
+      until: result.stdout.find("10") != -1
+      # default delay time is 5 seconds when not provided to playbook
+      delay: 1

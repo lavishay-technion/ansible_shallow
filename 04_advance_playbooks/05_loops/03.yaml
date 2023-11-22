@@ -1,0 +1,18 @@
+---
+
+- 
+  hosts: all
+  vars:
+    packages:
+    pkg1: git
+    pkg2: build-essential
+    pkg3: python3-poetry
+  
+  become: True
+
+  tasks:
+    - name: Installing "{{ item.key }}"
+      package:
+        name: "{{ item.value }}"
+        state: latest
+      loop: "{{ packages | dict2items }}"

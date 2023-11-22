@@ -4,11 +4,14 @@
   hosts: all
   become: True
   tasks:
-    - name: Configure MOTD
-      copy:
-        content: "Welcome to {{ item }} Linux: Ansible Rocks"
-        dest: /etc/motd
-      with_items:
-        - Rocky
-        - Debian
-      when: ansible_distribution == item
+    - name: Install packages on Debian
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: True
+      loop: 
+        - vim-nox
+        - arp-scan
+        - wget
+         
+      when: ansible_os_family == 'Debian'
