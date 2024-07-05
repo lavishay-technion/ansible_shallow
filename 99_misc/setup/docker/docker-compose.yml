@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.ansible
-    command: ["/usr/sbin/sshd", "-D"]
+    command: ["sleep", "500000"]
     networks:
       - vaiolabs.io
     volumes:
