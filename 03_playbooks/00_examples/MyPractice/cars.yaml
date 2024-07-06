@@ -1,0 +1,29 @@
+---
+Acura:
+  founded_time: 1980
+  website: acura.com
+  founded_by: 
+    - Tomer
+    - Alex
+
+Mazda:
+  founded_time: 1990
+  website: mazda.com
+  founded_by: 
+    - Shlomi
+
+Honda:
+  founded_time: 1900
+  website: honda.com
+  founded_by:
+    - Haim
+
+Chevroulet:
+  founded_time: 1800
+  website: chevroulet.com
+  founded_by: 
+    - Nahum
+    - Asaf
+
+
+...
