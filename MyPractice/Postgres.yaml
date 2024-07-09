@@ -1,0 +1,33 @@
+---
+-
+  hosts: all
+  become: true
+  
+  tasks: 
+    - name: install Nginx
+      apt:
+        name: nginx
+        state: present
+      when: ansible_distribution == "Debian"
+      notify: Nginx install
+    - name: install postgresql
+      dnf:
+        name: postgresql
+        state: present
+      when: ansible_distribution == "Rocky"
+      notify: Postgresql install
+
+
+  handlers:
+    - name: Nginx install
+      service:
+        name: nginx
+        state: restarted
+      listen: "restart web services"
+
+    - name: Postgresql install
+      ansible.builtin.service:
+        name: postgresqld
+        state: restarted
+      listen: "restart db services"
+...

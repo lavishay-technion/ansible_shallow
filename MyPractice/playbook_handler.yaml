@@ -1,0 +1,11 @@
+-
+
+  hosts: all
+  vars: 
+  become: True
+  tasks:
+    - name: RemoveMOTD
+      file:
+        path: /etc/motd
+        state: absent 
+...

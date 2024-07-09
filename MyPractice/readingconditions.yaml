@@ -1,0 +1,27 @@
+---
+-
+  hosts: all
+  vars:
+    motd_db: 'Welcome to DB server - This is DB'
+    motd_web: 'Welcome to DB Server - This is web'
+  
+  become: true
+  tasks:
+    - name: Configure MOTD on DB
+      copy:
+        content: "{{ motd_db }}"
+        dest: /etc/motd
+      when: ansible_distribution == "Rocky"
+      notify: MOTD Creation
+    - name: Configure MOTD on Web
+      copy:
+        content: "{{ motd_web }}"
+        dest: /etc/motd
+      when: ansible_distribution == "Debian"
+      notify: MOTD Creation
+  handlers:
+    - name:  MOTD Creation
+      debug:
+        msg: "MOTD Created in Web or DB"
+
+...

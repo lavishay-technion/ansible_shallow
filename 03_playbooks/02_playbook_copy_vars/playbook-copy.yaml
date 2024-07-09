@@ -9,13 +9,14 @@
     test: 'This is Test MOTD'
   # Vars: variables that apply to the play on all target systems
   # Tasks: list of tasks that will be executed  within play, including pre and post tasks
+  become: True
   tasks:
     - name: Configure a MOTD (Message Of The Way) on DB server
       copy:
         content: "{{ motd }}  \n{{ test }}\n"
         dest: /tmp/motd
       notify: Configure MOTD on DB servers
-
+    
   # Handlers: list of handlers (notification tasks) that are executed with `notify` keyword from `tasks`
   handlers:
     - name: Configure MOTD on DB servers
@@ -27,3 +28,4 @@
 
 ...
 
+                                     
