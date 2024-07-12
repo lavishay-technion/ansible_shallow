@@ -14,5 +14,8 @@
       register: var
     - name: finish
       debug:
-        msg: "{{var.stdout}}"
+        msg: 
+          - "Standard input: {{var.stdout}}"
+          - "Standard output: {{var.rc}}"
+          - "Code: {{var.stderr}}"
 ...

@@ -1,0 +1,30 @@
+---
+-
+## This playbook contains loading facts from a script called users.sh
+##  to facts.d folder, and load it with ansible_local.
+## Also contains a conditional - only Debian systems will be affected.
+  hosts: all
+  become: true
+  tasks: 
+    - name: Creates a directory for storing the scripts to set facts values
+      ansible.builtin.file:
+        path: /etc/ansible/facts.d
+        state: directory
+        mode: '0755'
+      when: ansible_distribution == "Debian"
+    - name: Copying the script to facts.d folder
+      ansible.builtin.copy:
+        src: ./users.sh
+        dest: /etc/ansible/facts.d/users.fact
+        mode: +rwx
+      when: ansible_distribution == "Debian"
+
+    - name: Re-read facts
+      ansible.builtin.setup:
+        filter: ansible_local
+      when: ansible_distribution == "Debian"
+    - name: Showing facts
+      debug:
+        msg: '{{ ansible_local["users"] }}'
+      when: ansible_distribution == "Debian"
+...

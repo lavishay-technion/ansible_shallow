@@ -1,0 +1,21 @@
+---
+-
+### This playbook loads 2 facts and displays them. 
+### Also displays some other existing facts
+## Conditioned to Debian systems
+  hosts:  all
+
+  tasks:
+    - name: set facts
+      set_fact:
+        fact1: Value1
+        fact2: Value2
+      when: ansible_distribution == "Debian"
+    - name: Displaying facts
+      debug:
+        msg: 
+          - '{{ fact1 }}'
+          - '{{ ansible_distribution }}'
+          - 'Free Real Memory: {{ ansible_facts["memory_mb"]["real"]["free"] }}'
+      when: ansible_distribution == "Debian"
+...

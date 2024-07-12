@@ -1,0 +1,22 @@
+---
+-
+
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: copy vars
+      include_vars:
+        file: details.yaml
+        name: vari
+    - name: Display vars
+      debug:
+        msg: 
+          - "Username:  {{ vari['username'] }}"
+          - "Family members: {{ vari['family'] }}"
+          - "Father: {{ vari['family']['father'] }}"
+
+
+
+
+...

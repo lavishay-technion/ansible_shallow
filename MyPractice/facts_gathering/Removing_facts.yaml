@@ -1,0 +1,6 @@
+---
+-
+## Creating yaml to remove the files in facts.d for testing purposes - so I can repeat the AddingFacts.YAML
+  hosts: all
+  tasks: 
+    -  name: 
