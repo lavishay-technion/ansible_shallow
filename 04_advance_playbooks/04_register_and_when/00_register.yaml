@@ -7,5 +7,8 @@
     - name: Exploring Registers
       command: hostname -s
       register: hostname_output
+    - name: showing
+      debug:
+        msg: "{{ hostname_output.stdout }}"
 
 ...

@@ -6,10 +6,12 @@
     - name: Install with block 
       block:
         - name: Install patch
-          package:
+          package:           
             name: patch
 
         - name: Install python3-dnspython
           package:
             name: python3-dnspython
-
+            state: present
+    
+      

@@ -3,7 +3,7 @@
 -
   hosts: all
   vars:
-   favorite_color: blue
+   favourite_color: blue
    age: 37
    voting_center: gc-3
    fruits:

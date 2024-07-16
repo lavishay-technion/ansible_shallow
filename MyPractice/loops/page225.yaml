@@ -1,0 +1,27 @@
+---
+
+- 
+  hosts: all
+  vars:
+    users:
+      avishay: Avishay Layani
+      ori: Ori Nahum
+      yuval: Yuval Ben David 
+  become: True
+
+  tasks:
+  ## creating the user in a loop, going over each user on the list
+    - name: "Creating {{ item.key }}"
+      user:
+        name: "{{ item.key }}"
+        state: present
+        comment: "{{ item.value }}"
+      loop: "{{ users | dict2items}}"
+      register: "task_1_output"
+  ## Reviewing the report from the creation of users - a way of getting info on the users created, like uid or groups. 
+    - name: "task 2"
+      debug:
+
+        msg: "Changed: {{ item.changed }}"
+
+      loop: "{{task_1_output.results }}"

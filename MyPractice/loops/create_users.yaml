@@ -1,0 +1,35 @@
+---
+
+- 
+  hosts: node1
+
+  vars:
+    users:
+    - lastname: Schapelle
+      members:
+        - Alex
+        - Sharon
+      team: 
+        - Yuval
+        - Charlie
+    - lastname: Golan
+      members:
+        - Yoni
+      team: 
+        - David
+        - Ori
+  become: True
+
+  tasks:
+    - name: Create user
+      debug:
+        msg: "{{ item.0.team}}"
+
+      loop: "{{ users | subelements('members')}}"
+      when: item.0.lastname == "Schapelle"
+    # - name: Create user "{{ item.1 }}"
+    #   user:
+    #     name: "{{ item.1 }}"
+    #     state: present
+    #     comment: "{{ item.1 | title }} {{ item.0 }}"
+    #   loop: "{{ users | subelements('members') }}"

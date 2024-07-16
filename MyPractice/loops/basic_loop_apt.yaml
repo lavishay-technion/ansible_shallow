@@ -1,0 +1,15 @@
+---
+-
+
+  hosts: all
+  tasks:
+    - name:
+      apt: "{{ item }}"
+      when: ansible_distribution == "Debian"
+      loop:
+        - python3
+        - wget
+        - vim
+      become: true
+
+...

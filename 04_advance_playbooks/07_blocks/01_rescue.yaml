@@ -2,6 +2,7 @@
 
 - 
   hosts: all
+  become: true
   tasks:
     - name: Install with block 
       block:
@@ -9,9 +10,15 @@
           package:
             name: patch
 
-        - name: Install python3-dnspython
+        - name: Install python3-dnspython on Debian
           package:
             name: python3-dnspython
+          when: ansible_distribution == "Debian"
+
+        - name: Install python3-dnspython for Rocky
+          ansible.builtin.pip: 
+            name: dnspython
+          when: ansible_distribution == "Rocky"
 
       rescue:
         - name: Rolling back patch

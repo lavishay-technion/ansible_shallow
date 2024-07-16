@@ -1,13 +1,23 @@
 ---
 
 -
-  hosts: web
+  hosts: all
   vars:
     - server: web
     - purpose: provide system calls over the http protocol
     - port: 80
   tasks:
+  - name: Backuping the existing config file on the remote host
+    copy:
+      src: /etc/ssh/sshd_config.d/sshd.config
+      dest: /etc/ssh/sshd_config.d/sshd.config.backup
   - name: Template a file to /tmp/config.ini
     template:
       src: config.j2
-      dest: /tmp/config.ini
+      dest: /etc/ssh/sshd_config.d/sshd.config
+  - name: Restart service
+    service: 
+      name: sshd
+      pattern: /usr/bin/sshd
+      state: present
+

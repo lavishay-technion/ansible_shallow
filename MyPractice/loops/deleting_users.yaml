@@ -1,0 +1,24 @@
+---
+
+- 
+  hosts: all
+
+  vars:
+    users:
+    - lastname: Schapelle
+      members:
+        - avishay
+        - ori
+    - lastname: Golan
+      members:
+        - yuval
+  become: True
+
+  tasks:
+    - name: remove user "{{ item.1 }}"
+      user:
+        name: "{{ item.1 }}"
+        state: absent
+        remove: yes
+        comment: "{{ item.1 | title }} {{ item.0.members }}"
+      loop: "{{ users | subelements('members') }}"

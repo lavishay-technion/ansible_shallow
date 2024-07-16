@@ -1,0 +1,22 @@
+---
+-
+  hosts: all
+  vars_files: 
+    - vars.yaml
+
+  tasks:
+    # - name: Backuping the existing config file on the remote host
+    #   copy:
+    #     src: /etc/ssh/sshd_config.d/sshd.config
+    #     dest: /etc/ssh/sshd_config.d/sshd.config.backup
+    #     remote_src: true  
+    - name: Use Jinja template to create conf file for ssh
+      template:
+        src : sshd_template.j2
+        dest: /tmp/sshd.conf
+    - name: Restart service
+      service: 
+        name: sshd
+        pattern: /usr/bin/sshd
+        state: started
+...

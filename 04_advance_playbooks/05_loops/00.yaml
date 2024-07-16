@@ -13,5 +13,14 @@
         - vim-nox
         - arp-scan
         - wget
-         
       when: ansible_os_family == 'Debian'
+    - name: Install packages on Debian
+      dnf:
+        name: "{{ item }}"
+        state: present
+        update_cache: True
+      loop: 
+        - vim-nox
+        - arp-scan
+        - wget
+      when: ansible_os_family == 'Rocky'      

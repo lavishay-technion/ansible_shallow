@@ -1,0 +1,7 @@
+include /etc/ssh/sshd_config.d/*.conf
+port {{ sshd_port }}
+ListenAddress {{ ssh_address }}
+ChallengeResponseAuthentication no
+UsePAM {{ pam_use }}
+AcceptEnv LANG LC *
+Subsystem   sftp    /usr/lib/openssh/sftp-server

@@ -1,0 +1,23 @@
+---
+-
+
+  hosts: node01
+  vars: 
+
+  tasks: 
+    - name:
+      block:
+        - name:
+
+
+
+        - name:
+
+      rescue: 
+        - name: 
+
+
+        - name: 
+
+       
+      

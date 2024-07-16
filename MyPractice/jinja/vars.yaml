@@ -1,0 +1,5 @@
+---
+sshd_port: "22"
+ssh_address: "0.0.0.0"
+pam_use: "yes"
+...

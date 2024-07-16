@@ -3,4 +3,16 @@
 ## Creating yaml to remove the files in facts.d for testing purposes - so I can repeat the AddingFacts.YAML
   hosts: all
   tasks: 
-    -  name: 
+    - name:
+      file:
+        path: /etc/ansible/facts.d/users.fact
+        state: absent
+      become: true
+      notify: File deleted
+  handlers:
+    - name: File deleted
+      debug:
+        msg: "File Deleted"
+
+...
+
